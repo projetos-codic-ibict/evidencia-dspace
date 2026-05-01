@@ -1524,6 +1524,227 @@
                 </field>
             </row>
         </form>
+        <!-- ============================================================ -->
+        <!-- Formulário RDAPP — HU002 v1.4 (homologada 29/04/2026)        -->
+        <!-- Campos customizados usam schema local.*                       -->
+        <!-- ============================================================ -->
+        <form name="rdappStep">
+
+            <!-- SEÇÃO 1 — IDENTIFICAÇÃO -->
+            <row>
+                <field>
+                    <dc-schema>dc</dc-schema>
+                    <dc-element>title</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Título</label>
+                    <input-type>onebox</input-type>
+                    <hint>Informe o título completo da avaliação. Inclua o subtítulo, se aplicável. Limite de 300 caracteres.</hint>
+                    <required>O campo Título é obrigatório.</required>
+                </field>
+            </row>
+
+            <row>
+                <field>
+                    <dc-schema>dc</dc-schema>
+                    <dc-element>description</dc-element>
+                    <dc-qualifier>abstract</dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Resumo</label>
+                    <input-type>textarea</input-type>
+                    <hint>Preencha com a descrição sintética da avaliação, incluindo objetivos, método e resultados. Limite de 2000 caracteres.</hint>
+                    <required>O campo Resumo é obrigatório.</required>
+                </field>
+            </row>
+
+            <row>
+                <field>
+                    <dc-schema>dc</dc-schema>
+                    <dc-element>date</dc-element>
+                    <dc-qualifier>issued</dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Ano de Publicação/Conclusão</label>
+                    <input-type>date</input-type>
+                    <hint>Selecione o ano de publicação ou de conclusão do documento.</hint>
+                    <required>O campo Ano de Publicação/Conclusão é obrigatório.</required>
+                </field>
+            </row>
+
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>tipodocumento</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Tipo de Documento</label>
+                    <input-type value-pairs-name="rdapp-tipos-documento">dropdown</input-type>
+                    <hint>Selecione o tipo principal de documento da avaliação.</hint>
+                    <required>O campo Tipo de Documento é obrigatório.</required>
+                </field>
+            </row>
+
+            <!-- SEÇÃO 2 — INFORMAÇÕES INSTITUCIONAIS -->
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>instituicao</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Instituição</label>
+                    <input-type value-pairs-name="rdapp-instituicoes">dropdown</input-type>
+                    <hint>Selecione a instituição responsável pelo upload do documento.</hint>
+                    <required>O campo Instituição é obrigatório.</required>
+                </field>
+            </row>
+
+            <row>
+                <field>
+                    <dc-schema>dc</dc-schema>
+                    <dc-element>contributor</dc-element>
+                    <dc-qualifier>author</dc-qualifier>
+                    <repeatable>true</repeatable>
+                    <label>Autor</label>
+                    <input-type>onebox</input-type>
+                    <hint>Quando houver autoria, informe o nome completo dos autores responsáveis pela elaboração do documento. Limite de 300 caracteres.</hint>
+                    <required></required>
+                </field>
+            </row>
+
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>uf</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>UF</label>
+                    <style>col-sm-4</style>
+                    <input-type>onebox</input-type>
+                    <hint>Selecione a Unidade da Federação associada à instituição.</hint>
+                    <required>O campo UF é obrigatório.</required>
+                    <vocabulary closed="true">rdapp-ufs</vocabulary>
+                </field>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>cidade</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Cidade</label>
+                    <input-type>onebox</input-type>
+                    <hint>Selecione o município associado à instituição responsável pela avaliação.</hint>
+                    <required>O campo Cidade é obrigatório.</required>
+                </field>
+            </row>
+
+            <!-- SEÇÃO 3 — CARACTERIZAÇÃO -->
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>areatematica</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>true</repeatable>
+                    <label>Área Temática</label>
+                    <input-type value-pairs-name="rdapp-areas-tematicas">dropdown</input-type>
+                    <hint>Selecione as áreas temáticas associadas à política pública ou objeto avaliado.</hint>
+                    <required>O campo Área Temática é obrigatório.</required>
+                </field>
+            </row>
+
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>abrangencia</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>true</repeatable>
+                    <label>Abrangência Territorial</label>
+                    <input-type value-pairs-name="rdapp-abrangencia">dropdown</input-type>
+                    <hint>Selecione o recorte territorial da política pública avaliada.</hint>
+                    <required>O campo Abrangência Territorial é obrigatório.</required>
+                </field>
+            </row>
+
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>politicapublica</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>true</repeatable>
+                    <label>Política Pública ou Objeto Avaliado</label>
+                    <input-type>onebox</input-type>
+                    <hint>Selecione as políticas públicas ou objetos avaliados. Caso não encontre, selecione "Outros" e preencha com o nome e sigla. Limite de 300 caracteres.</hint>
+                    <required>O campo Política Pública ou Objeto Avaliado é obrigatório.</required>
+                    <vocabulary>rdapp-politicas</vocabulary>
+                </field>
+            </row>
+
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>tipoavaliacao</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>true</repeatable>
+                    <label>Tipo de Avaliação</label>
+                    <input-type value-pairs-name="rdapp-tipos-avaliacao">dropdown</input-type>
+                    <hint>Selecione os tipos de avaliação realizadas.</hint>
+                    <required>O campo Tipo de Avaliação é obrigatório.</required>
+                </field>
+            </row>
+
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>ods</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>true</repeatable>
+                    <label>Objetivos de Desenvolvimento Sustentável (ODS)</label>
+                    <input-type value-pairs-name="rdapp-ods">dropdown</input-type>
+                    <hint>Quando houver, selecione os ODSs relacionados à política pública avaliada.</hint>
+                    <required></required>
+                </field>
+            </row>
+
+            <!-- SEÇÃO 4 — INFORMAÇÕES COMPLEMENTARES -->
+            <row>
+                <field>
+                    <dc-schema>dc</dc-schema>
+                    <dc-element>subject</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>true</repeatable>
+                    <label>Palavras-chave</label>
+                    <input-type>tag</input-type>
+                    <hint>Informe termos ou expressões que representem os assuntos centrais tratados no documento. Limite de 300 caracteres por termo.</hint>
+                    <required>O campo Palavras-chave é obrigatório.</required>
+                </field>
+            </row>
+
+            <row>
+                <field>
+                    <dc-schema>dc</dc-schema>
+                    <dc-element>language</dc-element>
+                    <dc-qualifier>iso</dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Idioma</label>
+                    <style>col-sm-4</style>
+                    <input-type value-pairs-name="rdapp-idiomas">dropdown</input-type>
+                    <hint>Selecione o idioma em que o documento da avaliação está redigido.</hint>
+                    <required>O campo Idioma é obrigatório.</required>
+                </field>
+            </row>
+
+            <row>
+                <field>
+                    <dc-schema>dc</dc-schema>
+                    <dc-element>relation</dc-element>
+                    <dc-qualifier>uri</dc-qualifier>
+                    <repeatable>true</repeatable>
+                    <label>Link Externo</label>
+                    <input-type>onebox</input-type>
+                    <hint>Quando houver, informe o endereço eletrônico (URL) da fonte primária de hospedagem do documento. Limite de 300 caracteres.</hint>
+                    <required></required>
+                </field>
+            </row>
+
+        </form>
+
     </form-definitions>
 
 
@@ -2178,6 +2399,324 @@
             <pair>
                 <displayed-value>Neither</displayed-value>
                 <stored-value>neither</stored-value>
+            </pair>
+        </value-pairs>
+
+        <!-- Vocabulários RDAPP -->
+        <value-pairs value-pairs-name="rdapp-tipos-documento" dc-term="local_tipodocumento">
+            <pair>
+                <displayed-value>Relatório de Avaliação</displayed-value>
+                <stored-value>Relatório de Avaliação</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Relatório de Recomendações</displayed-value>
+                <stored-value>Relatório de Recomendações</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Resumo Executivo / Sumário Executivo</displayed-value>
+                <stored-value>Resumo Executivo / Sumário Executivo</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Resumo de 2 Páginas / One-page Report</displayed-value>
+                <stored-value>Resumo de 2 Páginas / One-page Report</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Nota Técnica / Policy brief</displayed-value>
+                <stored-value>Nota Técnica / Policy brief</stored-value>
+            </pair>
+        </value-pairs>
+
+        <value-pairs value-pairs-name="rdapp-instituicoes" dc-term="local_instituicao">
+            <pair>
+                <displayed-value>Conselho de Monitoramento e Avaliação de Políticas Públicas - CMAP</displayed-value>
+                <stored-value>Conselho de Monitoramento e Avaliação de Políticas Públicas - CMAP</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Secretaria de Monitoramento e Avaliação de Políticas Públicas e Assuntos Econômicos - SMA</displayed-value>
+                <stored-value>Secretaria de Monitoramento e Avaliação de Políticas Públicas e Assuntos Econômicos - SMA</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Instituto de Pesquisa Econômica Aplicada - IPEA</displayed-value>
+                <stored-value>Instituto de Pesquisa Econômica Aplicada - IPEA</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Escola Nacional de Administração Pública - ENAP</displayed-value>
+                <stored-value>Escola Nacional de Administração Pública - ENAP</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ministério da Saúde - MS</displayed-value>
+                <stored-value>Ministério da Saúde - MS</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ministério do Desenvolvimento Social e Combate à Fome - MDS</displayed-value>
+                <stored-value>Ministério do Desenvolvimento Social e Combate à Fome - MDS</stored-value>
+            </pair>
+        </value-pairs>
+
+        <value-pairs value-pairs-name="rdapp-areas-tematicas" dc-term="local_areatematica">
+            <pair>
+                <displayed-value>Assistência e Previdência Sociais</displayed-value>
+                <stored-value>Assistência e Previdência Sociais</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Agropecuária e Questão Agrária</displayed-value>
+                <stored-value>Agropecuária e Questão Agrária</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ciência, Tecnologia e Inovação</displayed-value>
+                <stored-value>Ciência, Tecnologia e Inovação</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Defesa, Justiça e Segurança Pública</displayed-value>
+                <stored-value>Defesa, Justiça e Segurança Pública</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Desenvolvimento Regional</displayed-value>
+                <stored-value>Desenvolvimento Regional</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Educação</displayed-value>
+                <stored-value>Educação</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Energia</displayed-value>
+                <stored-value>Energia</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Turismo, Desporto e Lazer</displayed-value>
+                <stored-value>Turismo, Desporto e Lazer</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Habitação, Urbanismo e Saneamento</displayed-value>
+                <stored-value>Habitação, Urbanismo e Saneamento</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Indústria, Comércio e Empreendedorismo</displayed-value>
+                <stored-value>Indústria, Comércio e Empreendedorismo</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Infraestrutura e Transporte</displayed-value>
+                <stored-value>Infraestrutura e Transporte</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Meio Ambiente</displayed-value>
+                <stored-value>Meio Ambiente</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Saúde</displayed-value>
+                <stored-value>Saúde</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Trabalho e Emprego</displayed-value>
+                <stored-value>Trabalho e Emprego</stored-value>
+            </pair>
+        </value-pairs>
+
+        <value-pairs value-pairs-name="rdapp-abrangencia" dc-term="local_abrangencia">
+            <pair>
+                <displayed-value>Internacional</displayed-value>
+                <stored-value>Internacional</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Nacional</displayed-value>
+                <stored-value>Nacional</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Macrorregional</displayed-value>
+                <stored-value>Macrorregional</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Regional</displayed-value>
+                <stored-value>Regional</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Interestadual</displayed-value>
+                <stored-value>Interestadual</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Estadual</displayed-value>
+                <stored-value>Estadual</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Distrital</displayed-value>
+                <stored-value>Distrital</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Intermunicipal</displayed-value>
+                <stored-value>Intermunicipal</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Municipal</displayed-value>
+                <stored-value>Municipal</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Territorialidades específicas (Indígenas, quilombolas, fronteiras, biomas, ...)</displayed-value>
+                <stored-value>Territorialidades específicas (Indígenas, quilombolas, fronteiras, biomas, ...)</stored-value>
+            </pair>
+        </value-pairs>
+
+        <value-pairs value-pairs-name="rdapp-tipos-avaliacao" dc-term="local_tipoavaliacao">
+            <pair>
+                <displayed-value>Ex ante</displayed-value>
+                <stored-value>Ex ante</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ex post: Avaliação executiva</displayed-value>
+                <stored-value>Ex post: Avaliação executiva</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ex post: Análise de diagnóstico do problema</displayed-value>
+                <stored-value>Ex post: Análise de diagnóstico do problema</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ex post: Avaliação de desenho</displayed-value>
+                <stored-value>Ex post: Avaliação de desenho</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ex post: Avaliação de implementação</displayed-value>
+                <stored-value>Ex post: Avaliação de implementação</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ex post: Avaliação de governança da política pública</displayed-value>
+                <stored-value>Ex post: Avaliação de governança da política pública</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ex post: Avaliação de resultados</displayed-value>
+                <stored-value>Ex post: Avaliação de resultados</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ex post: Avaliação de impacto</displayed-value>
+                <stored-value>Ex post: Avaliação de impacto</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ex post: Avaliação econômica ou de retorno econômico e social</displayed-value>
+                <stored-value>Ex post: Avaliação econômica ou de retorno econômico e social</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ex post: Análise de eficiência</displayed-value>
+                <stored-value>Ex post: Análise de eficiência</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ex post: FSDL (Fragmentações, Sobreposições, Duplicidade e Lacunas)</displayed-value>
+                <stored-value>Ex post: FSDL (Fragmentações, Sobreposições, Duplicidade e Lacunas)</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Ex post: Outros</displayed-value>
+                <stored-value>Ex post: Outros</stored-value>
+            </pair>
+        </value-pairs>
+
+        <value-pairs value-pairs-name="rdapp-ods" dc-term="local_ods">
+            <pair>
+                <displayed-value>1 - Erradicação da Pobreza</displayed-value>
+                <stored-value>1 - Erradicação da Pobreza</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>2 - Fome Zero e Agricultura Sustentável</displayed-value>
+                <stored-value>2 - Fome Zero e Agricultura Sustentável</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>3 - Saúde e Bem-Estar</displayed-value>
+                <stored-value>3 - Saúde e Bem-Estar</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>4 - Educação de Qualidade</displayed-value>
+                <stored-value>4 - Educação de Qualidade</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>5 - Igualdade de Gênero</displayed-value>
+                <stored-value>5 - Igualdade de Gênero</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>6 - Água Potável e Saneamento</displayed-value>
+                <stored-value>6 - Água Potável e Saneamento</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>7 - Energia Limpa e Acessível</displayed-value>
+                <stored-value>7 - Energia Limpa e Acessível</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>8 - Trabalho Decente e Crescimento Econômico</displayed-value>
+                <stored-value>8 - Trabalho Decente e Crescimento Econômico</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>9 - Indústria, Inovação e Infraestrutura</displayed-value>
+                <stored-value>9 - Indústria, Inovação e Infraestrutura</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>10 - Redução das Desigualdades</displayed-value>
+                <stored-value>10 - Redução das Desigualdades</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>11 - Cidades e Comunidades Sustentáveis</displayed-value>
+                <stored-value>11 - Cidades e Comunidades Sustentáveis</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>12 - Consumo e Produção Responsáveis</displayed-value>
+                <stored-value>12 - Consumo e Produção Responsáveis</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>13 - Ação Contra a Mudança Global do Clima</displayed-value>
+                <stored-value>13 - Ação Contra a Mudança Global do Clima</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>14 - Vida na Água</displayed-value>
+                <stored-value>14 - Vida na Água</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>15 - Vida Terrestre</displayed-value>
+                <stored-value>15 - Vida Terrestre</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>16 - Paz, Justiça e Instituições Eficazes</displayed-value>
+                <stored-value>16 - Paz, Justiça e Instituições Eficazes</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>17 - Parcerias e Meios de Implementação</displayed-value>
+                <stored-value>17 - Parcerias e Meios de Implementação</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>18 - Igualdade Étnico-Racial</displayed-value>
+                <stored-value>18 - Igualdade Étnico-Racial</stored-value>
+            </pair>
+        </value-pairs>
+
+        <value-pairs value-pairs-name="rdapp-idiomas" dc-term="language_iso">
+            <pair>
+                <displayed-value>Português (pt_BR)</displayed-value>
+                <stored-value>Português (pt_BR)</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Inglês (en)</displayed-value>
+                <stored-value>Inglês (en)</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Espanhol (es)</displayed-value>
+                <stored-value>Espanhol (es)</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Francês (fr)</displayed-value>
+                <stored-value>Francês (fr)</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Alemão (de)</displayed-value>
+                <stored-value>Alemão (de)</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Árabe (ar)</displayed-value>
+                <stored-value>Árabe (ar)</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Mandarim (zh)</displayed-value>
+                <stored-value>Mandarim (zh)</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Russo (ru)</displayed-value>
+                <stored-value>Russo (ru)</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Outros</displayed-value>
+                <stored-value>Outros</stored-value>
             </pair>
         </value-pairs>
 

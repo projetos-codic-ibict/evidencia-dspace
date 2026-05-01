@@ -1,0 +1,1004 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node id="rdapp-politicas" label="Política Pública ou Objeto Avaliado">
+    <isComposedBy>
+        <node id="pol-0001" label="Política Nacional de Combate à Perda e ao Desperdício de Alimentos (PNCPDA)"/>
+        <node id="pol-0002" label="Programa Nacional de Prestação de Serviço Civil Voluntário"/>
+        <node id="pol-0003" label="Programa de Proteção e Promoção da Saúde Menstrual"/>
+        <node id="pol-0004" label="Programa Nacional do Bioquerosene"/>
+        <node id="pol-0005" label="Política Nacional de Atenção à Oncologia Pediátrica"/>
+        <node id="pol-0006" label="Plano Brasil Sem Miséria"/>
+        <node id="pol-0007" label="Política de Inteligência de Defesa"/>
+        <node id="pol-0008" label="Política Nacional de Informação e Informática em Saúde"/>
+        <node id="pol-0009" label="Programa Prioritário Pró-Pesquisa Covid-19"/>
+        <node id="pol-0010" label="Plano de Desenvolvimento Territorial Sustentável do Xingu"/>
+        <node id="pol-0011" label="Plano Nacional de Proteção a Defensoras e Defensores de Direitos Humanos"/>
+        <node id="pol-0012" label="Programa de Transição Energética Justa (TEJ)"/>
+        <node id="pol-0013" label="Programa de Energia Renovável Social (PERS)"/>
+        <node id="pol-0014" label="Programa de Venda em Balcão"/>
+        <node id="pol-0015" label="Política de Ciência, Tecnologia e Inovação de Defesa"/>
+        <node id="pol-0016" label="Plano de Ação 2023-2025 da Estratégia Nacional de Propriedade Intelectual"/>
+        <node id="pol-0017" label="Programa Nacional de Centros de Educação Ambiental"/>
+        <node id="pol-0018" label="Política Nacional de Prevenção da Automutilação e do Suicídio"/>
+        <node id="pol-0019" label="Plano Integrado de Longo Prazo da Infraestrutura - 2021-2050"/>
+        <node id="pol-0020" label="Plano Nacional de combate à pirataria, ao contrabando, à sonegação fiscal delas decorrentes e aos delitos contra a propriedade intelectual (PNCP 2022-2025)"/>
+        <node id="pol-0021" label="Política de Governança da Administração Pública Federal Direta, Autárquica e Fundacional"/>
+        <node id="pol-0022" label="Plano Nacional pelo Fim da Tuberculose como Problema de Saúde Pública"/>
+        <node id="pol-0023" label="Política de Acervos Documentais Presidenciais Privados da Comissão Memória dos Presidentes da República"/>
+        <node id="pol-0024" label="Programa Governo na Rua"/>
+        <node id="pol-0025" label="Plano de Ação Regional da Rede de Atenção às Urgências e Emergências, referente à Região Ampliada de Saúde Triângulo do Sul"/>
+        <node id="pol-0026" label="Política Nacional de Migrações, Refúgio e Apatridia"/>
+        <node id="pol-0027" label="Programa Brasileiro de Rastreabilidade Fiscal (Rota Brasil)"/>
+        <node id="pol-0028" label="Plano de Desenvolvimento Territorial Sustentável para a área de influência da Rodovia BR-163 no Trecho Cuiabá/MT - Santarém/PA (Plano BR-163 Sustentável)"/>
+        <node id="pol-0029" label="Programa de Formação Paul Singer - Agentes de Economia Popular e Solidária"/>
+        <node id="pol-0030" label="Programa da Educação de Jovens e Adultos Integrada à Educação Profissional (EJA Integrada)"/>
+        <node id="pol-0031" label="Programa de Qualificação da Assistência Cardiovascular (QualiSUS Cardio)"/>
+        <node id="pol-0032" label="Programa de Regularização Fiscal de débitos do Regime Especial Unificado de Arrecadação de Tributos e Contribuições devidos pelas Microempresas e Empresas de Pequeno Porte (Simples Nacional) inscritos em dívida ativa da União."/>
+        <node id="pol-0033" label="Programa de Incentivo à Redução Voluntária do Consumo de Energia Elétrica para unidades consumidoras do Sistema Interligado Nacional"/>
+        <node id="pol-0034" label="Programa Combustível do Futuro"/>
+        <node id="pol-0035" label="Programa Caminhos do Sul Global"/>
+        <node id="pol-0036" label="Programa de revitalização de Unidades Básicas de Saúde por meio do trabalho de pessoas privadas de liberdade."/>
+        <node id="pol-0037" label="Programa Educação e Família"/>
+        <node id="pol-0038" label="Programa Itinerários Formativos"/>
+        <node id="pol-0039" label="Programa Município Amigo da Família (PMAF)"/>
+        <node id="pol-0040" label="Programa Nacional de Controle da Ferrugem Asiática da Soja"/>
+        <node id="pol-0041" label="Política Nacional de Educação Especial Inclusiva"/>
+        <node id="pol-0042" label="Programa Aproxima"/>
+        <node id="pol-0043" label="Programa Institucional de Fomento e Indução da Inovação da Formação Inicial Continuada de Professores e Diretores Escolares"/>
+        <node id="pol-0044" label="Programa Nacional de Moluscos Bivalves Seguros - MoluBiS"/>
+        <node id="pol-0045" label="Plano Nacional de Reforma Agrária (PNRA)"/>
+        <node id="pol-0046" label="Política Nacional de Atenção Oncológica"/>
+        <node id="pol-0047" label="Programa Nacional de Educação Continuada em Direitos Humanos (PNEC-DH), no âmbito do Ministério da Mulher, da Família e dos Direitos Humanos"/>
+        <node id="pol-0048" label="Política de Bem-Estar, Saúde e Qualidade de Vida no Trabalho e Valorização dos Profissionais da Educação"/>
+        <node id="pol-0049" label="Política Nacional de Indução à Docência na Educação Básica - Mais Professores para o Brasil"/>
+        <node id="pol-0050" label="Política Nacional de Inteligência de Segurança Pública"/>
+        <node id="pol-0051" label="Programa de Aceleração do Crescimento - Novo PAC"/>
+        <node id="pol-0052" label="Política Nacional para Assuntos Antárticos"/>
+        <node id="pol-0053" label="Política Mineral Brasileira"/>
+        <node id="pol-0054" label="Política Nacional para Recuperação das Aprendizagens na Educação Básica"/>
+        <node id="pol-0055" label="Política Nacional de Atenção Especializada em Saúde (PNAES)"/>
+        <node id="pol-0056" label="Estratégia Nacional de Contratações Públicas para o Desenvolvimento Sustentável"/>
+        <node id="pol-0057" label="Programa de Aquisição de Alimentos (PAA)"/>
+        <node id="pol-0058" label="Plano Nacional de Segurança Pública e Defesa Social 2021-2030"/>
+        <node id="pol-0059" label="Programa Amazônia Integrada Sustentável"/>
+        <node id="pol-0060" label="Plano Nacional de Saneamento Básico (Plansab)"/>
+        <node id="pol-0061" label="Política Nacional de Acesso ao Sistema de Transmissão"/>
+        <node id="pol-0062" label="Programa de Aumento da Produtividade da Frota Rodoviária no País"/>
+        <node id="pol-0063" label="Programa de Simplificação do Microcrédito Digital para Empreendedores - SIM Digital"/>
+        <node id="pol-0064" label="Programa Cozinha Solidária"/>
+        <node id="pol-0065" label="Programa Nacional de Prevenção e Combate à Fraude e Clandestinidade em Produtos de Origem Vegetal (PNFRAUDE)"/>
+        <node id="pol-0066" label="Programa Nacional de Prevenção e Controle à doença denominada Huanglongbing (HLB) - PNCHLB"/>
+        <node id="pol-0067" label="Programa Emprega + Mulheres e Jovens"/>
+        <node id="pol-0068" label="Programa Mães do Brasil"/>
+        <node id="pol-0069" label="Programa Nacional de Qualidade de Produtos de Origem Vegetal (PNQUALIPOV)"/>
+        <node id="pol-0070" label="Programa Nacional de Redução de Emissões de Metano - Metano Zero"/>
+        <node id="pol-0071" label="Programa Nacional de Resgate de Fauna Silvestre - Resgate+ no âmbito do Ministério do Meio Ambiente"/>
+        <node id="pol-0072" label="Programa Nacional de Segurança nas Fronteiras e Divisas - VIGIA "/>
+        <node id="pol-0073" label="Programa Novos Destinos "/>
+        <node id="pol-0074" label="Programa Primeira Infância na Escola"/>
+        <node id="pol-0075" label="Programa Brasil Quilombola"/>
+        <node id="pol-0076" label="Política Nacional de Linguagem Simples"/>
+        <node id="pol-0077" label="Programa Regulariza+ "/>
+        <node id="pol-0078" label="Política Nacional de Compartilhamento de Postes - &quot;Poste Legal&quot;"/>
+        <node id="pol-0079" label="Programa Parque +."/>
+        <node id="pol-0080" label="Política de Inovação do Observatório Nacional."/>
+        <node id="pol-0081" label="Programa Startup Gov.br"/>
+        <node id="pol-0082" label="Política de Uso do Sistema Eletrônico de Informações Patrimoniais e de Conflito de Interesses - e-Patri"/>
+        <node id="pol-0083" label="Programa de Ações Básicas para a Defesa do Meio Ambiente"/>
+        <node id="pol-0084" label="Política de Educação Financeira da Comissão de Valores Mobiliários"/>
+        <node id="pol-0085" label="Plano Amazônia 2021/2022, e dá outras providências"/>
+        <node id="pol-0086" label="Programa de Apoio ao Processo de Internacionalização de Instituições de Ensino e de Pesquisa Brasileiras - PAPRI."/>
+        <node id="pol-0087" label="Programa de Certificação de Boas Práticas em Atenção à Saúde de Operadoras de Planos Privados de Assistência à Saúde "/>
+        <node id="pol-0088" label="Programa de Monitoramento da Qualidade do Biodiesel - PMQBio "/>
+        <node id="pol-0089" label="Programa de Serviço Voluntário do Instituto Brasileiro de Museus"/>
+        <node id="pol-0090" label="Política de Inovação do Laboratório Nacional de Computação Científica - LNCC"/>
+        <node id="pol-0091" label="Programa de Operações Especiais de Proteção Etnoambiental e Territorial - Proepet"/>
+        <node id="pol-0092" label="Programa de Apoio ao Desenvolvimento do Audiovisual Brasileiro (PRODAV)"/>
+        <node id="pol-0093" label="Politica de Regulação da Gestão Coletiva dos Direitos Autorais"/>
+        <node id="pol-0094" label="Programa de Apoio ao Desenvolvimento do Cinema Brasileiro (Prodecine)"/>
+        <node id="pol-0095" label="Programa de Apoio ao Desenvolvimento da Infraestrutura do Cinema e do Audiovisual (Proinfra)"/>
+        <node id="pol-0096" label="Programa de Desenvolvimento e Preservação do Livro (Prodelivro)"/>
+        <node id="pol-0097" label="Política de Promoção e Defesa dos Direitos Autorais"/>
+        <node id="pol-0098" label="Política Nacional de Leitura e Escrita (PNLE)"/>
+        <node id="pol-0099" label="Programa do Artesanato Brasileiro (PAB)"/>
+        <node id="pol-0100" label="Plano Nacional de Livro e Leitura (PNLL)"/>
+        <node id="pol-0101" label="Programa de Dispêndios Globais (PDG)"/>
+        <node id="pol-0102" label="Política de Direito Autoral"/>
+        <node id="pol-0103" label="Programa Nacional do Livro Didático (PNLD)"/>
+        <node id="pol-0104" label="Programa Nacional Biblioteca na Escola (PNBE)"/>
+        <node id="pol-0105" label="Política Nacional de Cultura Exportadora"/>
+        <node id="pol-0106" label="Plano Nacional de Cultura (PNC)"/>
+        <node id="pol-0107" label="Programa Nacional de Cultura, Educação e Cidadania - CULTURA VIVA"/>
+        <node id="pol-0108" label="Plano Nacional dos Direitos da Pessoa com Deficiência (Plano Viver sem Limite)"/>
+        <node id="pol-0109" label="Política Nacional de Estímulo ao Empreendedorismo do Jovem do Campo (PNEEJC)"/>
+        <node id="pol-0110" label="Programa de Formação de Agentes Educadoras e Educadores Populares de Saúde"/>
+        <node id="pol-0111" label="Política Nacional de Museus"/>
+        <node id="pol-0112" label="Programa Especial de Sustentabilidade da Indústria Química – PRESIQ"/>
+        <node id="pol-0113" label="Política de Fomento à Atividade Audiovisual - Lei do Audiovisual"/>
+        <node id="pol-0114" label="Lei Sarney de Incentivo à Cultura"/>
+        <node id="pol-0115" label="Programa de Irrigação do Nordeste (PROINE)"/>
+        <node id="pol-0116" label="Programa Nacional de Desenvolvimento do Artesanato"/>
+        <node id="pol-0117" label="Política de Desenvolvimento da Ciência Nacional, no âmbito do Ministério da Ciência, Tecnologia e Inovações."/>
+        <node id="pol-0118" label="Política Nacional de Medicamentos"/>
+        <node id="pol-0119" label="Programa de Volta pra Casa"/>
+        <node id="pol-0120" label="Programa Dinheiro Direto na Escola aos Alunos da Educação Básica"/>
+        <node id="pol-0121" label="Programa Disque Idoso"/>
+        <node id="pol-0122" label="Programa Diversidade na Universidade"/>
+        <node id="pol-0123" label="Política Nacional de Incentivo à Cultura de Flores e de Plantas Ornamentais de Qualidade"/>
+        <node id="pol-0124" label="Política Nacional de Saúde da Pessoa com Deficiência"/>
+        <node id="pol-0125" label="Programa Brasil na Escola"/>
+        <node id="pol-0126" label="Política Nacional de Saúde do Idoso"/>
+        <node id="pol-0127" label="Plano Nacional de Resíduos Sólidos"/>
+        <node id="pol-0128" label="Programa Nacional de Crescimento Verde"/>
+        <node id="pol-0129" label="Programa Rios + Limpos"/>
+        <node id="pol-0130" label="Programa Federal de Desregulamentação"/>
+        <node id="pol-0131" label="Política Nacional de Incentivo à Produção Melífera e ao Desenvolvimento de Produtos e Serviços Apícolas e Meliponícolas de Qualidade"/>
+        <node id="pol-0132" label="Programa de Gestão de Soluções Negociais para Devedores da Área Cultural - AGU Pró-Cultura"/>
+        <node id="pol-0133" label="Política de Desenvolvimento da Biotecnologia"/>
+        <node id="pol-0134" label="Política Nacional de Transportes"/>
+        <node id="pol-0135" label="Programa Nacional de Qualificação da Assistência Farmacêutica (QUALIFAR/SUS)"/>
+        <node id="pol-0136" label="Política Nacional de Outorgas Rodoviárias"/>
+        <node id="pol-0137" label="Programa de Reforma Tributária do Consumo"/>
+        <node id="pol-0138" label="Programa Nacional de Conservação das Espécies Ameaçadas de Extinção - Pró-Espécies"/>
+        <node id="pol-0139" label="Plano Anual de Investimentos dos Recursos Não Reembolsáveis do Fundo Nacional de Desenvolvimento Científico e Tecnológico - FNDCT"/>
+        <node id="pol-0140" label="Programa Brasil Alfabetizado"/>
+        <node id="pol-0141" label="Plano Amazônia: Segurança e Soberania - Plano Amas"/>
+        <node id="pol-0142" label="Programa Emergencial de Renegociação de Dívidas de Pessoas Físicas Inadimplentes - Desenrola Brasil"/>
+        <node id="pol-0143" label="Política Nacional de Desenvolvimento Regional"/>
+        <node id="pol-0144" label="Política Nacional para a Prevenção e Controle do Câncer na Rede de Atenção à Saúde das Pessoas com Doenças Crônicas no âmbito do Sistema Único de Saúde"/>
+        <node id="pol-0145" label="Política Nacional de Assistência Farmacêutica"/>
+        <node id="pol-0146" label="Plano Brasil Sem Fome"/>
+        <node id="pol-0147" label="Programa Energias da Amazônia"/>
+        <node id="pol-0148" label="Política Nacional de Abastecimento Alimentar"/>
+        <node id="pol-0149" label="Política Nacional de Recuperação da Vegetação Nativa"/>
+        <node id="pol-0150" label="Política Nacional para a Integração da Pessoa Portadora de Deficiência"/>
+        <node id="pol-0151" label="Programa Nacional de Qualificação para a Doação de Órgãos e de Tecidos para Transplantes"/>
+        <node id="pol-0152" label="Programa Saúde na Hora"/>
+        <node id="pol-0153" label="Programa Auxiliar de Apuração do Imposto sobre a Renda da Pessoa Física incidente sobre operações de Renda Variável"/>
+        <node id="pol-0154" label="Programa Envelhecer nos Territórios"/>
+        <node id="pol-0155" label="Política Nacional de Cibersegurança"/>
+        <node id="pol-0156" label="Política Nacional de Assistência Social"/>
+        <node id="pol-0157" label="Programa Cadastro Único"/>
+        <node id="pol-0158" label="Programa Escola em Tempo Integral"/>
+        <node id="pol-0159" label="Política Nacional de Conscientização e Incentivo à Doação e ao Transplante de Órgãos e Tecidos."/>
+        <node id="pol-0160" label="Política Nacional de Direitos das Populações Atingidas por Barragens (PNAB)"/>
+        <node id="pol-0161" label="Política Nacional de Educação Digital"/>
+        <node id="pol-0162" label="Programa de Acompanhamento Gerencial de Gastos e Avaliação Institucional"/>
+        <node id="pol-0163" label="Programa Esperança Garcia - Trajetórias Negras na Advocacia Pública Nacional"/>
+        <node id="pol-0164" label="Política Nacional de Gestão Territorial e Ambiental Quilombola"/>
+        <node id="pol-0165" label="Política Nacional de Cuidados Paliativos para o SUS"/>
+        <node id="pol-0166" label="Programa de Prevenção e Proteção Individual de Gestantes em Situação de Vulnerabilidade Socioeconômica contra o Aedes Aegypti"/>
+        <node id="pol-0167" label="Programa de Integração da Educação Profissional ao Ensino Médio na Modalidade de Educação de Jovens e Adultos (PROEJA)"/>
+        <node id="pol-0168" label="Programa Manuel Querino de Qualificação Social e Profissional - PMQ"/>
+        <node id="pol-0169" label="Política Nacional de Prevenção e Controle do Câncer no âmbito do Sistema Único de Saúde (SUS)"/>
+        <node id="pol-0170" label="Programa Nacional de Navegação da Pessoa com Diagnóstico de Câncer"/>
+        <node id="pol-0171" label="Plano de Ação para Recuperação e Manejo de Florestas - Plano Floresta + Sustentável"/>
+        <node id="pol-0172" label="Plano Nacional dos Direitos da Pessoa com Deficiência - Novo Viver sem Limite."/>
+        <node id="pol-0173" label="Programa do Bom Menino"/>
+        <node id="pol-0174" label="Programa Nacional de Agricultura Urbana e Periurbana"/>
+        <node id="pol-0175" label="Programa Brasil Mais Produtivo"/>
+        <node id="pol-0176" label="Programa do Livro Didático para o Ensino Fundamental (PLIDEF)"/>
+        <node id="pol-0177" label="Programa Selo Amazônia"/>
+        <node id="pol-0178" label="Programa Integra Brasil"/>
+        <node id="pol-0179" label="Programa Nacional de Irrigação (PRONI)"/>
+        <node id="pol-0180" label="Programa SPU+"/>
+        <node id="pol-0181" label="Programa do Seguro-Desemprego"/>
+        <node id="pol-0182" label="Plano Nacional de Enfrentamento ao Feminicídio"/>
+        <node id="pol-0183" label="Programa Emergencial de Manutenção do Emprego e da Renda"/>
+        <node id="pol-0184" label="Programa Emergencial de Retomada do Setor de Eventos (PERSE)"/>
+        <node id="pol-0185" label="Programa Internet Brasil"/>
+        <node id="pol-0186" label="Plano Nacional de Regularização Ambiental de Imóveis Rurais"/>
+        <node id="pol-0187" label="Programa Nacional de Arrendamento de Áreas e Instalações Portuárias"/>
+        <node id="pol-0188" label="Programa Emergencial de Suporte a Empregos"/>
+        <node id="pol-0189" label="Programa Emergencial e Excepcional de Apoio às Concessionárias de Serviços Públicos de Distribuição de Energia Elétrica"/>
+        <node id="pol-0190" label="Lei Aldir Blanc"/>
+        <node id="pol-0191" label="Programa Nacional de Apoio à Qualificação da Gestão dos Empreendimentos da Agricultura Familiar - Mais Gestão"/>
+        <node id="pol-0192" label="Programa Nacional de Cooperação em Adoção Internacional"/>
+        <node id="pol-0193" label="Programa Empresa Cidadã"/>
+        <node id="pol-0194" label="Programa Emprega + Mulheres"/>
+        <node id="pol-0195" label="Programa Nacional de Cidadania e Bem Viver para Mulheres Rurais"/>
+        <node id="pol-0196" label="Programa Nacional de Conservação da Biodiversidade - CONSERVA+"/>
+        <node id="pol-0197" label="Programa Nacional de Pesquisa e Inovação para a Agricultura Familiar e a Agroecologia"/>
+        <node id="pol-0198" label="Programa Nacional de Manejo Sustentável do Solo e da Água em Microbacias Hidrográficas - Águas do Agro"/>
+        <node id="pol-0199" label="Programa Nacional de Educação Sanitária em Defesa Agropecuária"/>
+        <node id="pol-0200" label="Programa Especial de Fortalecimento do Ensino Médio"/>
+        <node id="pol-0201" label="Programa Especial de Regularização Tributária (PERT)"/>
+        <node id="pol-0202" label="Programa Meu Melhor"/>
+        <node id="pol-0203" label="Programa Nacional de Controle da Ferrugem Asiática da Soja - Phakopsora pachyrhizi (PNCFS)"/>
+        <node id="pol-0204" label="Programa Federal de Assistência a Vítimas e a Testemunhas Ameaçadas"/>
+        <node id="pol-0205" label="Programa Grande Fronteira do Mercosul"/>
+        <node id="pol-0206" label="Programa de Governança e Modernização das Empresas Estatais – Inova"/>
+        <node id="pol-0207" label="Programa Nacional do Hidrogênio"/>
+        <node id="pol-0208" label="Programa Nacional de Enfrentamento às Organizações Criminosas"/>
+        <node id="pol-0209" label="Programa de Enfrentamento à Fila da Previdência Social (PEFPS)"/>
+        <node id="pol-0210" label="Programa Nacional de Fortalecimento da Gestão Municipal de Segurança Pública"/>
+        <node id="pol-0211" label="Programa Nacional de Racionalização da Produção e do Uso de Energia"/>
+        <node id="pol-0212" label="Sistema Brasileiro de Comércio de Emissões de Gases de Efeito Estufa (SBCE)"/>
+        <node id="pol-0213" label="Programa Nacional de Melhoria da Cobertura e da Qualidade da Banda Larga Móvel - &quot;ConectaBR&quot;"/>
+        <node id="pol-0214" label="Programa Mais Médicos"/>
+        <node id="pol-0215" label="Programa Médicos pelo Brasil"/>
+        <node id="pol-0216" label="Programa Minha Casa, Minha Vida (PMCMV)"/>
+        <node id="pol-0217" label="Programa Nacional de Acesso ao Ensino Técnico e Emprego (PRONATEC)"/>
+        <node id="pol-0218" label="Programa Nacional de Apoio à Atenção Oncológica"/>
+        <node id="pol-0219" label="Programa Nacional de Popularização da Ciência - Pop Ciência"/>
+        <node id="pol-0220" label="Programa de Fortalecimento do Cadastro Único no Sistema Único da Assistência Social (PROCAD-SUAS)"/>
+        <node id="pol-0221" label="Política Nacional para o Manejo Sustentável, Plantio, Extração, Consumo, Comercialização e Transformação do Pequi (Caryocar brasiliense) e demais Frutos e Produtos Nativos do Cerrado."/>
+        <node id="pol-0222" label="Programa Nacional de Qualificação e Ampliação dos Serviços Prestados por Hospitais Universitários Federais Integrantes do Sistema Único de Saúde"/>
+        <node id="pol-0223" label="Programa Nacional de Apoio à Cultura (PRONAC) - Lei Rouanet"/>
+        <node id="pol-0224" label="Programa Nacional de Apoio ao Transporte do Escolar (PNATE)"/>
+        <node id="pol-0225" label="Programa Nacional de Arborização Urbana (PRO-FRUTI)"/>
+        <node id="pol-0226" label="Programa Nacional de Assistência Técnica e Extensão Rural na Agricultura Familiar e na Reforma Agrária (PRONATER)"/>
+        <node id="pol-0227" label="Programa Nacional de Controle do Câncer de Próstata"/>
+        <node id="pol-0228" label="Programa Nacional dos Comitês de Cultura"/>
+        <node id="pol-0229" label="Programa de Fortalecimento e Desenvolvimento Institucional de Organizações Periféricas de Defesa dos Direitos Humanos e da Cidadania - Programa FortaleceDH"/>
+        <node id="pol-0230" label="Política Nacional de Saúde da Pessoa Idosa (PNPI)"/>
+        <node id="pol-0231" label="Programa Nacional de Regularização de Embarcação de Pesca"/>
+        <node id="pol-0232" label="Política Nacional de Saúde Integral da População Negra"/>
+        <node id="pol-0233" label="Programa Maria da Penha vai à escola"/>
+        <node id="pol-0234" label="Programa OI, MULHERES!"/>
+        <node id="pol-0235" label="Programa de Apoio à Conservação Ambiental (Bolsa Verde)"/>
+        <node id="pol-0236" label="Programa Nacional de Desestatização"/>
+        <node id="pol-0237" label="Programa de Produção e Desenvolvimento Tecnológico para Populações e Doenças Negligenciadas - PPDN."/>
+        <node id="pol-0238" label="Programa Povos da Pesca Artesanal"/>
+        <node id="pol-0239" label="Programa de Valorização da Gestão do Trabalho e da Educação na Saúde no âmbito do Sistema Único de Saúde - ValorizaGTES-SUS."/>
+        <node id="pol-0240" label="Política Nacional de Cuidados"/>
+        <node id="pol-0241" label="Programa Pró-Equidade"/>
+        <node id="pol-0242" label="Programa Selo Digital &quot;Seu imposto foi aplicado aqui&quot;"/>
+        <node id="pol-0243" label="Programa Nacional Qualifica Mulher"/>
+        <node id="pol-0244" label="Plano de Ação Nacional para a Conservação do Patrimônio Espeleológico Brasileiro - PAN Cavernas do Brasil"/>
+        <node id="pol-0245" label="Programa Pró-Equidade de Gênero e Raça"/>
+        <node id="pol-0246" label="Plano de Ação Nacional para a Conservação dos Insetos Polinizadores Ameaçados de Extinção - PAN Insetos Polinizadores"/>
+        <node id="pol-0247" label="Programa Nacional de Dragagem Portuária e Hidroviária"/>
+        <node id="pol-0248" label="Programa Nacional de Estímulo ao Primeiro Emprego para os Jovens (PNPE)"/>
+        <node id="pol-0249" label="Política de Assistência Social (LOAS)"/>
+        <node id="pol-0250" label="Plano de Gestão Local do Guaiamum (Cardisoma guanhumi) na APA da Bacia do Rio São João/Mico-leão-dourado"/>
+        <node id="pol-0251" label="Plano Nacional Anual de Proteção Ambiental - Pnapa 2023"/>
+        <node id="pol-0252" label="Plano Nacional de Políticas sobre Drogas 2022-2027"/>
+        <node id="pol-0253" label="Plano Nossa Amazônia"/>
+        <node id="pol-0254" label="Programa Cuida Mais Brasil para o ano de 2022"/>
+        <node id="pol-0255" label="Programa para a Incorporação e Desenvolvimento de Processos de Internacionalização - PIDP"/>
+        <node id="pol-0256" label="Programa Nacional de Fomento às Cooperativas de Trabalho (PRONACOOP)"/>
+        <node id="pol-0257" label="Programa Nacional de Renda Mínima"/>
+        <node id="pol-0258" label="Programa Nacional destinado às Comemorações do Centenário de Nascimento do Escritor Graciliano Ramos"/>
+        <node id="pol-0259" label="Programa Nacional do Milho (PROMILHO)"/>
+        <node id="pol-0260" label="Política de Inovação da Comissão Executiva do Plano da Lavoura Cacaueira"/>
+        <node id="pol-0261" label="Política Nacional de Promoção da Igualdade Racial (PNPIR)"/>
+        <node id="pol-0262" label="Política Nacional de Energia Nuclear"/>
+        <node id="pol-0263" label="Plano Anual de Fiscalização para 2023 - PAF 2023"/>
+        <node id="pol-0264" label="Plano Nacional de Segurança de Infraestruturas Críticas"/>
+        <node id="pol-0265" label="Política Nacional de Incentivo ao Manejo Sustentado e ao Cultivo do Bambu"/>
+        <node id="pol-0266" label="Política Nacional de Saúde Integral de Lésbicas, Gays, Bissexuais, Travestis e Transexuais"/>
+        <node id="pol-0267" label="Programa Nacional de Navegação de Pacientes para Pessoas com Neoplasia Maligna de Mama."/>
+        <node id="pol-0268" label="Política de Gestão de Pessoas"/>
+        <node id="pol-0269" label="Política Nacional de Desenvolvimento Sustentável dos Povos e Comunidades Tradicionais"/>
+        <node id="pol-0270" label="Política Nacional de Pagamento por Serviços Ambientais"/>
+        <node id="pol-0271" label="Política Nacional da Base Industrial de Defesa - PNBID"/>
+        <node id="pol-0272" label="Programa de Estímulo à Conformidade Normativa Trabalhista - Governo Mais Legal"/>
+        <node id="pol-0273" label="Plano de Ação Nacional para a Conservação dos Faveiros"/>
+        <node id="pol-0274" label="Plano de Desenvolvimento Agropecuário da Amazônia - Plano Amazônia + Sustentável"/>
+        <node id="pol-0275" label="Plano Macrorregional de Gestão de Impactos Sinérgicos das Atividades Marítimas de Produção e Escoamento de Petróleo e Gás Natural, doravante Plano Macro"/>
+        <node id="pol-0276" label="Plano Plurianual do Sistema Unificado de Atenção à Sanidade Agropecuária - PPA-SUASA"/>
+        <node id="pol-0277" label="Política Nacional de Desfazimento e Recondicionamento de Equipamentos Eletroeletrônicos e dispõe sobre o Programa Computadores para Inclusão"/>
+        <node id="pol-0278" label="Programa de modernização da capacidade tecnológica e transformação digital para os Institutos Federais de Educação, Ciência e Tecnologia - IF, Centros Federais de Educação Tecnológica - Cefets e Colégio Pedro II"/>
+        <node id="pol-0279" label="Programa &quot;Mulher Cidadã - cidadania fiscal para mulheres&quot;"/>
+        <node id="pol-0280" label="Programa Permanente de Combate à Seca (PROSECA)"/>
+        <node id="pol-0281" label="Programa Rota 2030"/>
+        <node id="pol-0282" label="Programa Um Computador por Aluno (PROUCA)"/>
+        <node id="pol-0283" label="Política Nacional de Incentivo à Agricultura e Pecuária de Precisão"/>
+        <node id="pol-0284" label="Brasil Afroatitude - programa integrado de ações afirmativas para universitários negros"/>
+        <node id="pol-0285" label="Programa Aquilomba Brasil"/>
+        <node id="pol-0286" label="Programa Bolsa Família"/>
+        <node id="pol-0287" label="Programa Cidadania Marajó para enfrentamento ao abuso e exploração sexual de crianças e adolescentes e promoção de direitos humanos e acesso a políticas públicas no Arquipélago de Marajó, no Estado do Pará"/>
+        <node id="pol-0288" label="Programa de Aquisição de Alimentos"/>
+        <node id="pol-0289" label="Programa AgroHub Brasil"/>
+        <node id="pol-0290" label="Programa de Organização Produtiva e Econômica de Mulheres Rurais e o seu Comitê Gestor"/>
+        <node id="pol-0291" label="Programa Universidade para Todos (PROUNI)"/>
+        <node id="pol-0292" label="Programa Voluntários"/>
+        <node id="pol-0293" label="Renda Básica de Cidadania"/>
+        <node id="pol-0294" label="Sistema de Proteção ao Programa Nuclear Brasileiro (SIPRON)"/>
+        <node id="pol-0295" label="Programa de Desenvolvimento Integrado e Sustentável do Semiárido (Conviver)"/>
+        <node id="pol-0296" label="Programa Campeonatos Escolares Municipais - CEM"/>
+        <node id="pol-0297" label="Programa de Prevenção e Enfrentamento ao Assédio Sexual e demais Crimes contra a Dignidade Sexual e à Violência Sexual no âmbito da administração pública, direta e indireta, federal, estadual, distrital e municipal."/>
+        <node id="pol-0298" label="Programa Diogo de Sant’Ana Pró-Catadoras e Pró-Catadores para a Reciclagem Popular"/>
+        <node id="pol-0299" label="Programa Emergencial de Renegociação de Dívidas de Pessoas Físicas Inadimplentes - Desenrola Brasil"/>
+        <node id="pol-0300" label="Programa Mulher Viver sem Violência"/>
+        <node id="pol-0301" label="Programa de Aumento da Produtividade da Frota Rodoviária no País (Renovar)"/>
+        <node id="pol-0302" label="Programa Mulheres Mil"/>
+        <node id="pol-0303" label="Programa de Incentivo às Fontes Alternativas de Energia Elétrica (Proinfa)"/>
+        <node id="pol-0304" label="Programa de Revitalização de Cooperativas de Produção Agropecuária (RECOOP)"/>
+        <node id="pol-0305" label="Auxílio Brumadinho"/>
+        <node id="pol-0306" label="Programa de Desinstitucionalização integrante do componente Estratégias de Desinstitucionalização da Rede de Atenção Psicossocial (RAPS)"/>
+        <node id="pol-0307" label="Política Nacional de Cinema"/>
+        <node id="pol-0308" label="Programa Nacional de Controle do Tabagismo (PNCT)"/>
+        <node id="pol-0309" label="Programa Nacional de Equidade de Gênero, Raça e Valorização das Trabalhadoras no Sistema Único de Saúde - SUS"/>
+        <node id="pol-0310" label="Programa Nacional de Redução das Filas de Cirurgias Eletivas, Exames Complementares e Consultas Especializadas"/>
+        <node id="pol-0311" label="Programa Promoção de Integridade por Mentoria e Assessoramento para órgãos e entidades do Poder Executivo Federal - PRISMA"/>
+        <node id="pol-0312" label="Programa Skate por Lazer"/>
+        <node id="pol-0313" label="Programa de Desenvolvimento Acadêmico Abdias Nascimento"/>
+        <node id="pol-0314" label="Programa Emergencial de Frentes Produtivas"/>
+        <node id="pol-0315" label="Programa Auxílio Brasil"/>
+        <node id="pol-0316" label="Programa Nacional de Apoio à Aquisição de Habitação para Profissionais da Segurança Pública (Programa Habite Seguro)"/>
+        <node id="pol-0317" label="Programa de Fomento a Agroindustrialização, à comercialização e atividades pluriativas solidárias (Terra Sol)"/>
+        <node id="pol-0318" label="Programa Nacional de Documentação da Trabalhadora Rural (PNDTR)"/>
+        <node id="pol-0319" label="Programa Quintais Produtivos para Mulheres Rurais"/>
+        <node id="pol-0320" label="Programa Mais Alimentos"/>
+        <node id="pol-0321" label="Estratégia Nacional de Fortalecimento dos Vínculos Familiares"/>
+        <node id="pol-0322" label="Força Nacional de Segurança Pública"/>
+        <node id="pol-0323" label="Plano de Desenvolvimento Territorial Sustentável para o Arquipélago do Marajó"/>
+        <node id="pol-0324" label="Plano Nacional de Segurança Pública"/>
+        <node id="pol-0325" label="Plano Progredir"/>
+        <node id="pol-0326" label="Plano Setorial de Mitigação e de Adaptação às Mudanças Climáticas para a Consolidação de uma Economia de Baixa Emissão de Carbono na Agricultura (Plano ABC)"/>
+        <node id="pol-0327" label="Política de Educação do Campo"/>
+        <node id="pol-0328" label="Política de Livre Acesso ao Subsistema Ferroviário Federal"/>
+        <node id="pol-0329" label="Política de Segurança da Informação nos órgãos e entidades da Administração Pública Federal"/>
+        <node id="pol-0330" label="Política de Mobilização Nacional"/>
+        <node id="pol-0331" label="Política Nacional da Biodiversidade"/>
+        <node id="pol-0332" label="Política Nacional de Alfabetização"/>
+        <node id="pol-0333" label="Política Nacional de Avaliação e Exames da Educação Básica"/>
+        <node id="pol-0334" label="Política Nacional de Capacitação dos Servidores para a Administração Pública Federal Direta, Autárquica e Fundacional"/>
+        <node id="pol-0335" label="Política Nacional de Desenvolvimento das Atividades Espaciais"/>
+        <node id="pol-0336" label="Política Nacional de Desenvolvimento de Pessoal"/>
+        <node id="pol-0337" label="Política Nacional de Educação Especial"/>
+        <node id="pol-0338" label="Política Nacional de Enfrentamento ao Tráfico de Pessoas"/>
+        <node id="pol-0339" label="Política Industrial e de Comércio Exterior"/>
+        <node id="pol-0340" label="Programa de Erradicação do Trabalho Infantil (PETI)"/>
+        <node id="pol-0341" label="Política Nacional de Gestão Territorial e Ambiental de Terras Indígenas"/>
+        <node id="pol-0342" label="Política Nacional de Governo Aberto"/>
+        <node id="pol-0343" label="Política Nacional de Inovação"/>
+        <node id="pol-0344" label="Programa de Governo Eletrônico - Serviço de Atendimento ao Cidadão (GESAC)"/>
+        <node id="pol-0345" label="Politica Nacional de Plantas Medicinais e Fitoterápicos"/>
+        <node id="pol-0346" label="Política Nacional de Proteção aos Defensores dos Direitos Humanos (PNPDDH)"/>
+        <node id="pol-0347" label="Programa de Avaliação Externa da Qualidade em Hemocomponentes (AEQ Hemocomponentes)"/>
+        <node id="pol-0348" label="Política Nacional de Repressão ao Furto e Roubo de Veículos e Cargas"/>
+        <node id="pol-0349" label="Política Nacional de Segurança de Infraestruturas Críticas"/>
+        <node id="pol-0350" label="Política Nacional de Segurança e Saúde no Trabalho"/>
+        <node id="pol-0351" label="Política Nacional de Trabalho no âmbito do Sistema Prisional"/>
+        <node id="pol-0352" label="Programa Farmácia Popular do Brasil"/>
+        <node id="pol-0353" label="Programa Abrace o Marajó"/>
+        <node id="pol-0354" label="Programa Adote um Parque"/>
+        <node id="pol-0355" label="Programa Áreas Protegidas da Amazônia (ARPA)"/>
+        <node id="pol-0356" label="Programa Auxílio-Gás"/>
+        <node id="pol-0357" label="Programa Bolsa Atleta"/>
+        <node id="pol-0358" label="Política Nacional sobre Drogas"/>
+        <node id="pol-0359" label="Política Nacional sobre o Álcool"/>
+        <node id="pol-0360" label="Programa Brasil Inteligente"/>
+        <node id="pol-0361" label="Programa Brasil Mais produtivo"/>
+        <node id="pol-0362" label="Programa Brasil Profissionalizado"/>
+        <node id="pol-0363" label="Programa Brasileiro de Ecologia Molecular para o Uso Sustentável da Biodiversidade da Amazônia (PROBEM)"/>
+        <node id="pol-0364" label="Programa Cerrado Sustentável"/>
+        <node id="pol-0365" label="Programa Ciência sem Fronteiras"/>
+        <node id="pol-0366" label="Programa Complementar de Assistência Médica do Serviço Exterior"/>
+        <node id="pol-0367" label="Programa Comunidade Solidária"/>
+        <node id="pol-0368" label="Programa Criança Feliz"/>
+        <node id="pol-0369" label="Programa de Ação Social em Saneamento (PROSEGE)"/>
+        <node id="pol-0370" label="Programa de Aceleração do Crescimento (PAC)"/>
+        <node id="pol-0371" label="Plano Nacional de Promoção das Cadeias de Produtos da Sociobiodiversidade "/>
+        <node id="pol-0372" label="Programa Nacional de Bolsas para Residências Multiprofissionais e em Área Profissional da Saúde (Pró-Residência em Área Profissional da Saúde)"/>
+        <node id="pol-0373" label="Programa de Apoio a Núcleos de Excelência (PRONEX)"/>
+        <node id="pol-0374" label="Programa de Apoio a Organizações de Pequenos Produtores Rurais do Nordeste"/>
+        <node id="pol-0375" label="Programa de Apoio à Pesquisa, Desenvolvimento e Inovação em Tecnologias Digitais de Informação e Comunicação (ProTIC)"/>
+        <node id="pol-0376" label="Programa de Apoio a Planos de Reestruturação e Expansão das Universidades Federais (REUNI)"/>
+        <node id="pol-0377" label="Programa de Apoio ao Complexo Industrial de Barcarena"/>
+        <node id="pol-0378" label="Programa de Apoio às Micro e Pequena Empresas das Regiões Norte e Nordeste"/>
+        <node id="pol-0379" label="Programa de Arrendamento Rural para a Agricultura Familiar"/>
+        <node id="pol-0380" label="Programa de Colaboração Financeira para a Edição de Livros Texto"/>
+        <node id="pol-0381" label="Programa de Desenvolvimento da Região Nordeste"/>
+        <node id="pol-0382" label="Programa de Desenvolvimento de Sistemas Unificados e Descentralizados de Saúde nos Estados (SUDS)"/>
+        <node id="pol-0383" label="Programa de Desenvolvimento do Sistema Federal de Inspeção do Trabalho"/>
+        <node id="pol-0384" label="Programa de Desenvolvimento Integrado para o Centro Espacial de Alcântara"/>
+        <node id="pol-0385" label="Programa de Desenvolvimento Sustentável da Unidade de Produção Familiar (Pronaf Sustentável)"/>
+        <node id="pol-0386" label="Programa de Equipagem e de Modernização da Infraestrutura dos Órgãos, das Entidades e das Instâncias Colegiadas de Promoção e de Defesa dos Direitos Humanos"/>
+        <node id="pol-0387" label="Programa de Estímulo à Competitividade da Cadeia Produtiva, ao Desenvolvimento e ao Aprimoramento de Fornecedores do Setor de Petróleo e Gás Natural (Pedefor)"/>
+        <node id="pol-0388" label="Programa de Estudantes-Convênio de Graduação (PEC-G)"/>
+        <node id="pol-0389" label="Programa de Extensão Universitária (PROEXT)"/>
+        <node id="pol-0390" label="Programa de Formação Inicial em Serviço dos Profissionais da Educação Básica dos Sistemas de Ensino Público (Profuncionário)"/>
+        <node id="pol-0391" label="Programa de Fortalecimento da Capacidade Institucional para Gestão em Regulação (PRO-REG)"/>
+        <node id="pol-0392" label="Programa de Garantia de Preços para a Agricultura Familiar (PGPAF)"/>
+        <node id="pol-0393" label="Programa de Gestão das Empresas Estatais"/>
+        <node id="pol-0394" label="Programa de Gestão Estratégica e Transformação do Estado"/>
+        <node id="pol-0395" label="Política Nacional de Atenção Integral às Pessoas com Doença Falciforme e outras Hemoglobinopatias"/>
+        <node id="pol-0396" label="Programa de Incentivo à Implementação de Projetos de Interesse Social (PIPS)"/>
+        <node id="pol-0397" label="Programa de Incentivo ao Transporte Rodoviário de Cargas (Programa Gigantes do Asfalto)"/>
+        <node id="pol-0398" label="Programa de Interiorização do Trabalho em Saúde"/>
+        <node id="pol-0399" label="Programa de Mobilização da Indústria Nacional de Petróleo e Gás Natural (PROMINP)"/>
+        <node id="pol-0400" label="Política Nacional de Atenção Integral em Genética Clínica"/>
+        <node id="pol-0401" label="Programa de Modernização, Agilização, Aprimoramento e Segurança da Fiscalização do Tráfego Internacional e do Passaporte Brasileiro (PROMASP)"/>
+        <node id="pol-0402" label="Programa de Participação de Estudantes em Trabalho de Magistério"/>
+        <node id="pol-0403" label="Programa de Prorrogação da Licença à Gestante e à Adotante"/>
+        <node id="pol-0404" label="Programa de Prorrogação da Licença-Paternidade para os servidores"/>
+        <node id="pol-0405" label="Programa de Proteção a Crianças e Adolescentes Ameaçados de Morte (PPCAAM)"/>
+        <node id="pol-0406" label="Programa de Proteção aos Defensores de Direitos Humanos"/>
+        <node id="pol-0407" label="Programa de Proteção aos Defensores de Direitos Humanos, Comunicadores e Ambientalistas"/>
+        <node id="pol-0408" label="Programa de Proteção Integrada de Fronteiras"/>
+        <node id="pol-0409" label="Programa de Qualificação de Docente e Ensino de Língua Portuguesa no Timor-Leste"/>
+        <node id="pol-0410" label="Programa de Revitalização da Bacia Hidrográfica do Rio São Francisco"/>
+        <node id="pol-0411" label="Política Nacional de Empreendedorismo e Negócios"/>
+        <node id="pol-0412" label="Programa Emergencial de Ações Sociais para o Estado do Rio de Janeiro e os seus Municípios"/>
+        <node id="pol-0413" label="Programa Federal de Apoio à Regularização Ambiental de Imóveis Rurais (Programa Mais Ambiente)"/>
+        <node id="pol-0414" label="Programa Federal de Desestatização"/>
+        <node id="pol-0415" label="Programa Federal de Manejo Florestal Comunitário e Familiar (PMCF)"/>
+        <node id="pol-0416" label="Programa FINOR-ALIMENTOS"/>
+        <node id="pol-0417" label="Programa Florestas Nacionais"/>
+        <node id="pol-0418" label="Programa Forças no Esporte (Segundo Tempo)"/>
+        <node id="pol-0419" label="Programa Identidade Jovem"/>
+        <node id="pol-0420" label="Programa Institucional de Bolsa de Iniciação à Docência (PIBID)"/>
+        <node id="pol-0421" label="Programa Mais Ambiente Brasil"/>
+        <node id="pol-0422" label="Programa Mais Cultura"/>
+        <node id="pol-0423" label="Política de Serviços Socioassistenciais - Tipificação Nacional"/>
+        <node id="pol-0424" label="Programa Mais Educação"/>
+        <node id="pol-0425" label="Programa Mais Leite Sustentável"/>
+        <node id="pol-0426" label="Programa Mercosul Social e Participativo"/>
+        <node id="pol-0427" label="Programa Mulher Segura e Protegida"/>
+        <node id="pol-0428" label="Programa Mulher: Viver sem Violência"/>
+        <node id="pol-0429" label="Programa Nacional da Diversidade Biológica"/>
+        <node id="pol-0430" label="Programa Nacional das Escolas Cívico-Militares"/>
+        <node id="pol-0431" label="Programa Nacional de Ações Afirmativas"/>
+        <node id="pol-0432" label="Programa Nacional de Apoio à Inclusão Digital nas Comunidades (Telecentros.BR)"/>
+        <node id="pol-0433" label="Programa TEAtivo"/>
+        <node id="pol-0434" label="Programa Mais Professores para o Brasil – Mais Professores"/>
+        <node id="pol-0435" label="Programa Bem Mais Simples Brasil"/>
+        <node id="pol-0436" label="Programa Federal de Ações Afirmativas"/>
+        <node id="pol-0437" label="Programa Nacional de Incentivo à Leitura (PROLER)"/>
+        <node id="pol-0438" label="Programa Territórios da Cultura"/>
+        <node id="pol-0439" label="Programa Mais Saúde com Agente"/>
+        <node id="pol-0440" label="Programa Nacional de Conversão de Pastagens Degradadas em Sistemas de Produção Agropecuários e Florestais Sustentáveis"/>
+        <node id="pol-0441" label="Programa Nacional de Desenvolvimento Sustentável da Aquicultura - ProAqui"/>
+        <node id="pol-0442" label="Programa Nacional de Reestruturação dos Hospitais Universitários Federais (REHUF)"/>
+        <node id="pol-0443" label="Programa Viva Mais Cidadania"/>
+        <node id="pol-0444" label="Programa Nacional de Fortalecimento das Casas de Acolhimento LGBTQIA+ - Programa Acolher+."/>
+        <node id="pol-0445" label="Programa de Aceleração da Transição Energética (Paten)"/>
+        <node id="pol-0446" label="Plano de Ação Nacional para a Conservação da Flora Ameaçada de Extinção da Bacia do Alto Tocantins - PAN Bacia do Alto Tocantins"/>
+        <node id="pol-0447" label="Programa para Ampliação e Modernização de Infraestrutura do Complexo Econômico-Industrial da Saúde - PDCEIS."/>
+        <node id="pol-0448" label="Programa para Preparação em Vacinas, Soros e Hemoderivados - PPVACSH."/>
+        <node id="pol-0449" label="Programa Parceiros do Bom Condutor"/>
+        <node id="pol-0450" label="Programa Pontos de Apoio da Rua (PAR)"/>
+        <node id="pol-0451" label="Política Federal de Estímulo ao Transporte Rodoviário Coletivo Interestadual e Internacional de Passageiros"/>
+        <node id="pol-0452" label="Programa especial de assistência financeira ao setor de borracha vegetal da Amazônia"/>
+        <node id="pol-0453" label="Plano de Ação Nacional para a Conservação de Árvores Ameaçadas de Extinção do Sul da Bahia - PAN Hileia Baiana"/>
+        <node id="pol-0454" label="Política Nacional de Atenção à Pessoa Egressa do Sistema Prisional."/>
+        <node id="pol-0455" label="Programa de Avaliação Externa da Qualidade em Imunohematologia (AEQ Imunohematologia)"/>
+        <node id="pol-0456" label="Política Agrária (Estatuto da Terra)"/>
+        <node id="pol-0457" label="Política de Acolhimento Familiar e Adoção"/>
+        <node id="pol-0458" label="Política de Ciência, Tecnologia e Inovação de Materiais Avançados"/>
+        <node id="pol-0459" label="Política de Fiscalização de Insumos Agrícolas"/>
+        <node id="pol-0460" label="Política de Saúde Mental"/>
+        <node id="pol-0461" label="Política Nacional de Arquivos Públicos e Privados"/>
+        <node id="pol-0462" label="Programa Nacional para Melhoria do Ambiente de Investimentos"/>
+        <node id="pol-0463" label="Política Nacional de Atenção Integral à Saúde das Pessoas com Albinismo (PNAISPA)"/>
+        <node id="pol-0464" label="Política Nacional de Combate à Desertificação e Mitigação dos Efeitos da Seca"/>
+        <node id="pol-0465" label="Política Nacional de Conservação e Uso Racional de Energia"/>
+        <node id="pol-0466" label="Política Nacional de Segurança Pública e Defesa Social"/>
+        <node id="pol-0467" label="Programa Manuel Querino de Qualificação Social e Profissional - PMQ"/>
+        <node id="pol-0468" label="Política Nacional de Cuidados Paliativos no âmbito do SUS (PNCP)."/>
+        <node id="pol-0469" label="Política Nacional da Pessoa Idosa"/>
+        <node id="pol-0470" label="Programa de Estímulo à Geração e Divulgação de Dados e Informações sobre a Qualidade das Águas - QUALIÁGUA"/>
+        <node id="pol-0471" label="Política Nacional de Atenção Psicossocial nas Comunidades Escolares"/>
+        <node id="pol-0472" label="Política Nacional de Salários"/>
+        <node id="pol-0473" label="Política Nacional de Reforma Agrária"/>
+        <node id="pol-0474" label="Política Nacional de Proteção dos Direitos da Pessoa com Transtorno do Espectro Autista"/>
+        <node id="pol-0475" label="Política Urbana"/>
+        <node id="pol-0476" label="Política Nacional de Saneamento"/>
+        <node id="pol-0477" label="Política Nacional de Trabalho Digno e Cidadania para a População em Situação de Rua (PNTC PopRua)"/>
+        <node id="pol-0478" label="Plano Juventude Negra Viva"/>
+        <node id="pol-0479" label="Programa Ancestralidade Viva. Apoio e incentivo à Cultura dos Povos Indígenas"/>
+        <node id="pol-0480" label="Programa Aldeia Cidadã"/>
+        <node id="pol-0481" label="Política Nacional de Formação Continuada para o Sistema de Garantia dos Direitos da Criança e do Adolescente (SGDCA)"/>
+        <node id="pol-0482" label="Programa Nacional de Processo Eletrônico"/>
+        <node id="pol-0483" label="Política para a Primeira Infância"/>
+        <node id="pol-0484" label="Política para as Crianças e os Adolescentes (Estatuto da Criança e do Adolescente)"/>
+        <node id="pol-0485" label="Política Nacional do Petróleo"/>
+        <node id="pol-0486" label="Programa Mosarambihára: Semeadores do Bem Viver para Cura da Terra"/>
+        <node id="pol-0487" label="Programa de Regularização de Dívidas e Facilitação de Acesso ao Crédito Rural da Agricultura Familiar – Desenrola Rural"/>
+        <node id="pol-0488" label="Programa Nacional de Política Fundiária"/>
+        <node id="pol-0489" label="Programa de Ciência e Tecnologia para o Setor Aeronáutico"/>
+        <node id="pol-0490" label="Programa de Complementação ao Atendimento Educacional Especializado às Pessoas Portadoras de Deficiência"/>
+        <node id="pol-0491" label="Programa de Estabilização Econômica "/>
+        <node id="pol-0492" label="Programa de Regularização de Débitos não Tributários (PRD)"/>
+        <node id="pol-0493" label="Programa Emergencial de Acesso a Crédito (PEAC)"/>
+        <node id="pol-0494" label="Programa Emergencial de Combate aos Efeitos da Seca"/>
+        <node id="pol-0495" label="Programa Especial de Financiamento"/>
+        <node id="pol-0496" label="Programa Especial de Habitação Popular (PEHP)"/>
+        <node id="pol-0497" label="Programa de Avaliação Externa da Qualidade em Sorologia (AEQ Sorologia)"/>
+        <node id="pol-0498" label="Programa Asas para o Futuro"/>
+        <node id="pol-0499" label="Programa Especial de Financiamento para combate aos efeitos da estiagem"/>
+        <node id="pol-0500" label="Programa Garantia Safra"/>
+        <node id="pol-0501" label="Programa Nacional de Apoio à Atenção da Saúde da Pessoa com Deficiência"/>
+        <node id="pol-0502" label="Programa de Integridade da Autoridade Nacional de Proteção de Dados (ANPD)"/>
+        <node id="pol-0503" label="Programa Nacional de Armazenagem"/>
+        <node id="pol-0504" label="Programa Nacional de Microcrédito Produtivo Orientado (PNMPO)"/>
+        <node id="pol-0505" label="Auxílio pescadores"/>
+        <node id="pol-0506" label="Programa Língua Indígena Viva no Direito"/>
+        <node id="pol-0507" label="Programa Nacional de Expansão e Qualificação da Atenção Ambulatorial Especializada, no âmbito do Sistema Único de Saúde (SUS)"/>
+        <node id="pol-0508" label="Política Nacional de Redução da Mortalidade Materna"/>
+        <node id="pol-0509" label="Política Nacional de Saúde Bucal (Brasil Sorridente)"/>
+        <node id="pol-0510" label="Política de Defesa Nacional"/>
+        <node id="pol-0511" label="Política Nacional de Habitação"/>
+        <node id="pol-0512" label="Política Nacional para a Atenção às Pessoas com Coagulopatias, Outras Doenças Hemorrágicas Hereditárias e Plaquetopatias"/>
+        <node id="pol-0513" label="Programa de Pesquisa em Saneamento Básico (Prosab)"/>
+        <node id="pol-0514" label="Programa de Promoção da Sustentabilidade dos Espaços Sub-regionais (PROMESO)"/>
+        <node id="pol-0515" label="Programa Gestão de Riscos e Desastres"/>
+        <node id="pol-0516" label="Política Nacional da Erva-Mate"/>
+        <node id="pol-0517" label="Programa Nacional de Controle do Tabagismo"/>
+        <node id="pol-0518" label="Programa Nacional de Segurança Turística"/>
+        <node id="pol-0519" label="Programa Nacional de Talassemias"/>
+        <node id="pol-0520" label="Programa Nacional de Territórios Rurais (PRONAT)"/>
+        <node id="pol-0521" label="Programa Nacional de Turismo Gastronômico"/>
+        <node id="pol-0522" label="Programa Novos Caminhos"/>
+        <node id="pol-0523" label="Programa &quot;Revelar Talentos: especialização e aperfeiçoamento&quot;"/>
+        <node id="pol-0524" label="Política Nacional de Atenção Cardiovascular de Alta Complexidade"/>
+        <node id="pol-0525" label="Programa Nacional de Modernização e Apoio à Produção Agrícola - PROMAQ"/>
+        <node id="pol-0526" label="Plano Nacional de Combate à Violência no Campo"/>
+        <node id="pol-0527" label="Programa Terra da Gente"/>
+        <node id="pol-0528" label="Programa União com Municípios pela Redução do Desmatamento e Incêndios Florestais"/>
+        <node id="pol-0529" label="Programa de Vigilância da Segurança da Aviação Civil contra Atos de Interferência Ilícita dos Serviços de Navegação Aérea"/>
+        <node id="pol-0530" label="Política Nacional de Recuperação de Ativos"/>
+        <node id="pol-0531" label="Programa Escola e Comunidade - Proec"/>
+        <node id="pol-0532" label="Política Nacional de Educação Museal (PNEM)"/>
+        <node id="pol-0533" label="Programa Nacional de Estradas Rurais"/>
+        <node id="pol-0534" label="Programa de Fomento às Escolas de Ensino Médio em Tempo Integral (EMTI)"/>
+        <node id="pol-0535" label="Programa de Racionalização das Unidades Descentralizadas do Governo Federal"/>
+        <node id="pol-0536" label="Programa de Hipertensão e Diabetes (Hiperdia)"/>
+        <node id="pol-0537" label="Política Nacional de Desenvolvimento das Microempresas e das Empresas de Pequeno Porte - Política Nacional das MPEs"/>
+        <node id="pol-0538" label="Programa de Combate às Carências Nutricionais (PCCN)"/>
+        <node id="pol-0539" label="Programa de Educação Fiscal Virtual para crianças e adolescentes "/>
+        <node id="pol-0540" label="Programa China e Ásia no âmbito do Ministério da Agricultura, Pecuária e Abastecimento"/>
+        <node id="pol-0541" label="Programa de Desenvolvimento da Agricultura Orgânica (PRO-ORGÂNICO)"/>
+        <node id="pol-0542" label="Programa de Educação para Diabéticos"/>
+        <node id="pol-0543" label="Programa de Equilíbrio Trabalho-Família"/>
+        <node id="pol-0544" label="Programa Nacional de Promoção, Proteção e Defesa dos Direitos Humanos dos Profissionais de Segurança Pública e Defesa Social e dos Profissionais do Sistema Socioeducativo"/>
+        <node id="pol-0545" label="Programa Nacional de Controle de Resíduos e Contaminantes em Produtos de Origem Vegetal (PNCRC/Vegetal)"/>
+        <node id="pol-0546" label="Programa Nacional de Combate ao Câncer de Colo Uterino"/>
+        <node id="pol-0547" label="Programa de Incentivo à Inovação Tecnológica e Adensamento da Cadeia Produtiva de Veículos Automotores"/>
+        <node id="pol-0548" label="Programa Horizontes"/>
+        <node id="pol-0549" label="Programa Nacional de Avaliação do Sistema Hospitalar/Psiquiatria (PNASH/PSIQUATRIA)"/>
+        <node id="pol-0550" label="Programa Nacional de Melhoria do Acesso e da Qualidade da Atenção Básica (PMAQ-AB)"/>
+        <node id="pol-0551" label="Programa Nacional de Incentivo à Parceria entre os Hospitais Filantrópicos Sem Fins Lucrativos"/>
+        <node id="pol-0552" label="Programa Nacional de Monitoramento das Cadeias Produtivas dos Produtos de Origem Vegetal (PNMONITOR)"/>
+        <node id="pol-0553" label="Política Nacional de Proteção e Defesa Civil (PNPDEC)"/>
+        <node id="pol-0554" label="Programa Intersetorial para Mulheres Quilombolas"/>
+        <node id="pol-0555" label="Programa Nacional de Alimentação e Nutrição (PRONAN)"/>
+        <node id="pol-0556" label="Programa Ciência na Escola"/>
+        <node id="pol-0557" label="Programa Energia Limpa no Minha Casa, Minha Vida – Programa Energia Limpa MCMV"/>
+        <node id="pol-0558" label="Política Nacional de Infraestrutura de Esporte"/>
+        <node id="pol-0559" label="Política Nacional de Trânsito"/>
+        <node id="pol-0560" label="Projeto-piloto Qualifica Mulher"/>
+        <node id="pol-0561" label="Estratégia Nacional de Defesa"/>
+        <node id="pol-0562" label="Projeto Piloto Mais Mulheres no Poder"/>
+        <node id="pol-0563" label="Política de Economia de Museus e Pontos de Memória"/>
+        <node id="pol-0564" label="Programa Nacional de Capacitação do SUAS (CapacitaSUAS)"/>
+        <node id="pol-0565" label="Programa Nacional de Florestas Produtivas"/>
+        <node id="pol-0566" label="Programa de Incentivo à Conformidade em Defesa Agropecuária"/>
+        <node id="pol-0567" label="Política de Governança Digital"/>
+        <node id="pol-0568" label="Programa Nacional de Acesso à Alimentação (PNAA-Fome Zero)"/>
+        <node id="pol-0569" label="Programa Nacional de Promoção do Acesso ao Mundo do Trabalho (ACESSUAS TRABALHO)"/>
+        <node id="pol-0570" label="Programa Nacional de Fortalecimento do Cooperativismo, do Associativismo e dos Empreendimentos Solidários da Agricultura Familiar"/>
+        <node id="pol-0571" label="Política de Aumento da Alíquota Específica do Imposto sobre Produtos Industrializados – IPI Incidente Sobre Cigarros"/>
+        <node id="pol-0572" label="Política Nacional do Hidrogênio de Baixa Emissão de Carbono"/>
+        <node id="pol-0573" label="Política Nacional de Conservação e Uso Sustentável dos Recursos Genéticos para a Alimentação, a Agricultura e a Pecuária"/>
+        <node id="pol-0574" label="Projeto Banco Vermelho"/>
+        <node id="pol-0575" label="Plano Nacional de Turismo 2024 - 2027"/>
+        <node id="pol-0576" label="Programa Nacional de Segurança Pública com Cidadania (PRONASCI)"/>
+        <node id="pol-0577" label="Programa Seguro-Emprego (PSE)"/>
+        <node id="pol-0578" label="Política Nacional de Agricultura Urbana e Periurbana"/>
+        <node id="pol-0579" label="Política Nacional de Manejo Integrado do Fogo"/>
+        <node id="pol-0580" label="Programa de Apoio ao Pequeno Produtor Rural"/>
+        <node id="pol-0581" label="Programas Atleta Pódio"/>
+        <node id="pol-0582" label="Programa Federal de Prevenção e Enfrentamento do Assédio e da Discriminação"/>
+        <node id="pol-0583" label="Política de Atividades Espaciais Nacionais"/>
+        <node id="pol-0584" label="Plano Nacional de Políticas para Povos Ciganos"/>
+        <node id="pol-0585" label="Programa Sociedade da Informação"/>
+        <node id="pol-0586" label="Fundo Nacional de Investimento em Infraestrutura Social"/>
+        <node id="pol-0587" label="Programa Nacional de Universalização do Acesso e Uso da Energia Elétrica (Luz para Todos)"/>
+        <node id="pol-0588" label="Programa de Estímulo ao Crédito"/>
+        <node id="pol-0589" label="Programa para Aprimoramento das Licitações de Exploração e Produção de Petróleo e Gás Natural"/>
+        <node id="pol-0590" label="Programa Nacional de Incubadoras de Cooperativas Populares (PRONINC)"/>
+        <node id="pol-0591" label="Plano Nacional de Fertilizantes 2022-2050"/>
+        <node id="pol-0592" label="Projeto Adote um Museu"/>
+        <node id="pol-0593" label="Medidas Excepcionais para a Aquisição de Bens e a Contratação de Obras e de Serviços - Eventos Climáticos Extremos"/>
+        <node id="pol-0594" label="Programa de Promoção e Inserção Econômica de Sub-regiões (Promover)"/>
+        <node id="pol-0595" label="Programa Nacional de Banda Larga (PNBL)"/>
+        <node id="pol-0596" label="Programa Alimenta Brasil"/>
+        <node id="pol-0597" label="Política Agrícola"/>
+        <node id="pol-0598" label="Medidas Excepcionais de Apoio a Ações de Prevenção e Combate à Ocorrência de Queimadas Irregulares e de Incêndios Florestais."/>
+        <node id="pol-0599" label="Programa Federativo de Enfrentamento ao Coronavírus SARS-CoV-2 (Covid-19)"/>
+        <node id="pol-0600" label="Programa Nacional de Combustível Sustentável de Aviação (ProBioQAV)"/>
+        <node id="pol-0601" label="Política Nacional de Agroecologia e Produção Orgânica"/>
+        <node id="pol-0602" label="Política de Inovação Educação Conectada"/>
+        <node id="pol-0603" label="Política Nacional de Incentivo à Cocoicultura de Qualidade"/>
+        <node id="pol-0604" label="Programa Nacional de Diesel Verde (PNDV)"/>
+        <node id="pol-0605" label="Política Nacional de Controle a Desertificação"/>
+        <node id="pol-0606" label="Programa de Apoio ao Desenvolvimento da Mineração Artesanal"/>
+        <node id="pol-0607" label="Programa Nacional de Bibliotecas de Instituições de Ensino Superior"/>
+        <node id="pol-0608" label="Política de Modernização do Turismo"/>
+        <node id="pol-0609" label="Programa Nacional de Descarbonização do Produtor e Importador de Gás Natural e de Incentivo ao Biometano"/>
+        <node id="pol-0610" label="Política Nacional de Atenção Integral à Saúde da Mulher"/>
+        <node id="pol-0611" label="Programa para Desenvolvimento em Energias Renováveis e Eficiência Energética nas Instituições Federais de Educação - EnergIFE"/>
+        <node id="pol-0612" label="Estratégia Federal de Governo Digital (2024 - 2027) e Infraestrutura Nacional de Dados"/>
+        <node id="pol-0613" label="Programa de Mobilização de Capital Privado Externo e Proteção  Cambial – Programa Eco Invest Brasil"/>
+        <node id="pol-0614" label="Política Nacional de Saúde do Trabalhador e da Trabalhadora"/>
+        <node id="pol-0615" label="Política Nacional de Busca de Pessoas Desaparecidas"/>
+        <node id="pol-0616" label="Plano Nacional de Produção de Biodiesel (PNPB)"/>
+        <node id="pol-0617" label="Programa de Desenvolvimento do Hidrogênio de Baixa Emissão de Carbono (PHBC)"/>
+        <node id="pol-0618" label="Programa de Crédito e Financiamento de Dívidas de Microempreendedores Individuais e Microempresas – Procred 360"/>
+        <node id="pol-0619" label="Diretrizes Nacionais para prevenção do suicídio"/>
+        <node id="pol-0620" label="Política Nacional de Dados e Informações relacionadas à Violência contra as Mulheres (PNAINFO)"/>
+        <node id="pol-0621" label="Política Nacional de Incentivo à Produção do Cacau de Qualidade"/>
+        <node id="pol-0622" label="Programa de Renegociação de Dívidas de Microempreendedores Individuais, Microempresas, Empresas de Pequeno Porte e Sociedades Cooperativas – Desenrola Pequenos Negócios"/>
+        <node id="pol-0623" label="Política Nacional de Saneamento Básico"/>
+        <node id="pol-0624" label="Política Nacional de Apoio e Desenvolvimento de Micro e Pequenas Empresas"/>
+        <node id="pol-0625" label="Política Nacional de Integração Lavoura-Pecuária-Floresta"/>
+        <node id="pol-0626" label="Programa Nacional de Triagem Neonatal"/>
+        <node id="pol-0627" label="Política de Controle de Material Genético Animal"/>
+        <node id="pol-0628" label="Política Nacional Aldir Blanc de Fomento à Cultura"/>
+        <node id="pol-0629" label="Plano de Desenvolvimento e Integração Fronteiriço (PDIF)"/>
+        <node id="pol-0630" label="Política Nacional de Ordenamento Territorial"/>
+        <node id="pol-0631" label="Programa de Desenvolvimento da Faixa de Fronteiro (PDFF)"/>
+        <node id="pol-0632" label="Política Nacional de Ciência, Tecnologia e Inovação"/>
+        <node id="pol-0633" label="Programa Rotas Negras"/>
+        <node id="pol-0634" label="Previdência Rural"/>
+        <node id="pol-0635" label="Programa de Organização Produtiva de Comunidades Pobres (Produzir)"/>
+        <node id="pol-0636" label="Programa Turismo Acessível "/>
+        <node id="pol-0637" label="Programa Viaja Mais Melhor Idade"/>
+        <node id="pol-0638" label="Programa Nacional de Segurança nas Fronteiras e Divisas (VIGIA-Vigilância, Integração, Governança, Interoperabilidade e Autonomia)"/>
+        <node id="pol-0639" label="Programa Nacional de Bioinsumos"/>
+        <node id="pol-0640" label="Política Nacional para Povos e Comunidades Tradicionais de Terreiro e de Matriz Africana"/>
+        <node id="pol-0641" label="Sistema Nacional de Habitação de Interesse Social"/>
+        <node id="pol-0642" label="Política para a Juventude (Estatuto da Juventude)"/>
+        <node id="pol-0643" label="Diretrizes de Vigilância, Atenção e Eliminação da Hanseníase como Problema de Saúde Pública"/>
+        <node id="pol-0644" label="Programa Nacional de Centros Sociais Urbanos (CSU)"/>
+        <node id="pol-0645" label="Programa Nacional de Combate ao Contrabando e ao Descaminho"/>
+        <node id="pol-0646" label="Programa Nacional de Conservação de Energia Elétrica (PROCEL)"/>
+        <node id="pol-0647" label="Programa Nacional de Crédito Fundiário (Terra Brasil)"/>
+        <node id="pol-0648" label="Programa Periferia Viva"/>
+        <node id="pol-0649" label="Política Agrícola para Florestas Plantadas"/>
+        <node id="pol-0650" label="Programa Nacional de Desburocratização"/>
+        <node id="pol-0651" label="Programa Nacional de Descentralização"/>
+        <node id="pol-0652" label="Política de Ensino de Defesa"/>
+        <node id="pol-0653" label="Programa de Controle de Pênfigo Foliáceo Endêmico"/>
+        <node id="pol-0654" label="Programa Acredita no Primeiro Passo"/>
+        <node id="pol-0655" label="Política Marítima Nacional"/>
+        <node id="pol-0656" label="Programa Nacional de Educação e Trabalho (PLANTE)"/>
+        <node id="pol-0657" label="Programa Nacional de Educação na Reforma Agrária (PRONERA)"/>
+        <node id="pol-0658" label="Programa de cooperação Sinal Vermelho contra a Violência Doméstica"/>
+        <node id="pol-0659" label="Programa de Crédito Educativo"/>
+        <node id="pol-0660" label="Programa de Cultura do Trabalhador"/>
+        <node id="pol-0661" label="Programa Nacional de Enfrentamento da Violência contra Crianças e Adolescentes"/>
+        <node id="pol-0662" label="Política Nacional da Educação Escolar Indígena"/>
+        <node id="pol-0663" label="Programa Nacional de Florestas (PNF)"/>
+        <node id="pol-0664" label="Programa Nacional de Fortalecimento da Agricultura Familiar (PRONAF)"/>
+        <node id="pol-0665" label="Programa Nacional de Gestão Pública e Desburocratização (GESPÚBLICA)"/>
+        <node id="pol-0666" label="Programa Nacional de Incentivo ao Voluntariado"/>
+        <node id="pol-0667" label="Programa Nacional de Material Escolar"/>
+        <node id="pol-0668" label="Programa Nacional de Microbacias Hidrográficas"/>
+        <node id="pol-0669" label="Programa Nacional de Plataformas do Conhecimento "/>
+        <node id="pol-0670" label="Programa Nacional de Reestruturação e Aquisição de Equipamentos para a Rede Escolar Pública de Educação Infantil (Pro-Infância)"/>
+        <node id="pol-0671" label="Programa Nacional de Segurança da Aviação Civil Contra Atos de Interferência Ilícita (PNAVSEC)"/>
+        <node id="pol-0672" label="Programa Nacional de Tecnologia da Habitação (PRONATH)"/>
+        <node id="pol-0673" label="Programa de Inclusão Digital"/>
+        <node id="pol-0674" label="Programa de Qualificação dos Serviços Turísticos"/>
+        <node id="pol-0675" label="Programa Rotas de Integração Nacional"/>
+        <node id="pol-0676" label="Programa Brasileiro da Qualidade e Produtividade na Construção Habitacional (PBQP-H)"/>
+        <node id="pol-0677" label="Política Nacional de Dados Abertos"/>
+        <node id="pol-0678" label="Programa Nacional de Tecnologia Educacional (ProInfo)"/>
+        <node id="pol-0679" label="Programa Nacional de Universalização do Acesso e Uso da Água (ÁGUA PARA TODOS)"/>
+        <node id="pol-0680" label="Programa de Revisão de Benefícios por Incapacidade"/>
+        <node id="pol-0681" label="Programa de Regularização Tributária Rural (PRR)"/>
+        <node id="pol-0682" label="Programa Nacional de Voluntariado"/>
+        <node id="pol-0683" label="Programa Nacional de Atenção Integral à Criança e ao Adolescente (Pronaica)"/>
+        <node id="pol-0684" label="Política Nacional de Defesa"/>
+        <node id="pol-0685" label="Programa Nacional de Universalização do Acesso e Uso da Energia Elétrica na Amazônia Legal (Mais Luz para a Amazônia)"/>
+        <node id="pol-0686" label="Programa Nacional de Zoneamento Agrícola de Risco Climático"/>
+        <node id="pol-0687" label="Programa Nacional de Levantamento e Interpretação de Solos (Pronasolos)"/>
+        <node id="pol-0688" label="Programa Nacional do Centenário da República"/>
+        <node id="pol-0689" label="Programa Nacional do Leite para Crianças Carentes"/>
+        <node id="pol-0690" label="Programa Nacional do Livro e do Material Didático"/>
+        <node id="pol-0691" label="Programa Nacional do Patrimônio Imaterial"/>
+        <node id="pol-0692" label="Programa Nacional para Cooperação no Regresso de Crianças e Adolescentes Brasileiros Seqüestrados Internacionalmente"/>
+        <node id="pol-0693" label="Programa Nova Universidade"/>
+        <node id="pol-0694" label="Política Nacional de Inovação Tecnológica na Saúde"/>
+        <node id="pol-0695" label="Programa Prioritário de Termeletricidade"/>
+        <node id="pol-0696" label="Programa Piloto para a Proteção das Florestas Tropicais do Brasil"/>
+        <node id="pol-0697" label="Programa Pró-Catador"/>
+        <node id="pol-0698" label="Programa Pró-Leitos"/>
+        <node id="pol-0699" label="Política Nacional de Inteligência"/>
+        <node id="pol-0700" label="Programa Saúde na Escola (PSE)"/>
+        <node id="pol-0701" label="Programa Territórios da Cidadania (PTC)"/>
+        <node id="pol-0702" label="Política Nacional de Atenção Básica"/>
+        <node id="pol-0703" label="Programa Nacional de Apoio à Captação de Água de Chuva e Outras Tecnologias Sociais de Acesso à Água (Programa Cisternas)"/>
+        <node id="pol-0704" label="Programa Nacional de Apoio às Microempresas e Empresas de Pequeno Porte (Pronampe)"/>
+        <node id="pol-0705" label="Programa Viver - Envelhecimento Ativo e Saudável"/>
+        <node id="pol-0706" label="Programas de Material Didático"/>
+        <node id="pol-0707" label="Política Nacional de Participação Social"/>
+        <node id="pol-0708" label="Programas de Segurança Ambiental denominados Guarda Ambiental Nacional e Corpo de Guarda-Parques"/>
+        <node id="pol-0709" label="Plano Nacional de Prevenção e Erradicação do Trabalho Infantil e Proteção ao Adolescente Trabalhador"/>
+        <node id="pol-0710" label="Projeto Alvorada - Programa de Combate à Pobreza IDH-14"/>
+        <node id="pol-0711" label="Projeto de Integração do Rio São Francisco (PISF)"/>
+        <node id="pol-0712" label="Projovem Adolescente - Serviço Socioeducativo"/>
+        <node id="pol-0713" label="Política de Garantia de Preço Mínimo (PGPN)"/>
+        <node id="pol-0714" label="Política Nacional do Turismo"/>
+        <node id="pol-0715" label="Plano Nacional de Redução de Mortes e Lesões no Trânsito"/>
+        <node id="pol-0716" label="Plano Estratégico de Desenvolvimento Sustentável do Semi-árido (PDSA)"/>
+        <node id="pol-0717" label="Programa Nacional de Imunizações (PNI)"/>
+        <node id="pol-0718" label="Programa de Desenvolvimento do Centro-Oeste (PRODOESTE)"/>
+        <node id="pol-0719" label="Programa de Incentivo à Produção de Borracha Vegetal"/>
+        <node id="pol-0720" label="Programa de Integração Nacional"/>
+        <node id="pol-0721" label="Programa de Redistribuição de Terras e de Estímulo à Agro-indústria do Norte e do Nordeste (PROTERRA)"/>
+        <node id="pol-0722" label="Política Nacional de Formação de Profissionais da Educação Básica"/>
+        <node id="pol-0723" label="Programa Especial para o Vale do São Francisco (PROVALE)"/>
+        <node id="pol-0724" label="Programa Tecnológico Nacional"/>
+        <node id="pol-0725" label="Programa de Bibliotecas Rurais (Arca das Letras)"/>
+        <node id="pol-0726" label="Programa Pesquisa para o SUS: gestão compartilhada em saúde (PPSUS)"/>
+        <node id="pol-0727" label="Política Nacional de Segurança Alimentar e Nutricional (PNSAN)"/>
+        <node id="pol-0728" label="Programa Trienal de Aperfeiçoamento da Arrecadação das Receitas Federais"/>
+        <node id="pol-0729" label="Programa de Desenvolvimento Urbano (Pró-Cidades)"/>
+        <node id="pol-0730" label="Plano Amazonia Sustentável (PAS)"/>
+        <node id="pol-0731" label="Estratégia Nacional para  Enfrentamento da Hanseníase 2019-2022"/>
+        <node id="pol-0732" label="Estratégia Saúde da Família (ESF)"/>
+        <node id="pol-0733" label="Programa Nacional de Produção e Uso do Biodiesel - PNPB"/>
+        <node id="pol-0734" label="Plano de Articulação e Equipamento da Defesa"/>
+        <node id="pol-0735" label="Plano Nacional de Mobilização e Intensifação das Ações para Eliminação da Hanseníase e Controle da Tuberculose"/>
+        <node id="pol-0736" label="Política Nacional de Telecomunicações"/>
+        <node id="pol-0737" label="Programa Nacional do Álcool - PRO-ALCOOL"/>
+        <node id="pol-0738" label="Política Nacional de Gestão de Tecnologias em Saúde"/>
+        <node id="pol-0739" label="Política Nacional de Saúde Integral das Populações do Campo, da Floresta e das Águas (PNSIPCFA)"/>
+        <node id="pol-0740" label="Política Nacional de Atenção Obstétrica e Neonatal"/>
+        <node id="pol-0741" label="Pacto Nacional pela Recomposição das Aprendizagens"/>
+        <node id="pol-0742" label="Política Nacional para a População em Situação de Rua"/>
+        <node id="pol-0743" label="Política Nacional de Qualificação no Turismo"/>
+        <node id="pol-0744" label="Política Nacional para os Hospitais de Pequeno Porte"/>
+        <node id="pol-0745" label="Programa Redes para Internacionalização Institucional"/>
+        <node id="pol-0746" label="Política do Auxílio Gás dos Brasileiros"/>
+        <node id="pol-0747" label="Programa Meninas nas Ciências Exatas, Engenharias e Computação"/>
+        <node id="pol-0748" label="Programa de Infraestrutura de Transporte e da Mobilidade Urbana (Pró-Transporte)"/>
+        <node id="pol-0749" label="Política Nacional para os Recursos do Mar (PNRM)"/>
+        <node id="pol-0750" label="Programa Avançar Cidades (Mobilidade Urbana)"/>
+        <node id="pol-0751" label="Programa Reconecte"/>
+        <node id="pol-0752" label="Programa Titula Brasil"/>
+        <node id="pol-0753" label="Plano Regional de Desenvolvimento da Amazônia (PRDA)"/>
+        <node id="pol-0754" label="Proágua Semiárido"/>
+        <node id="pol-0755" label="Programa Nacional das Salas Lilás"/>
+        <node id="pol-0756" label="Programa Mais Saúde: Direito de Todos"/>
+        <node id="pol-0757" label="Política Nacional para os Trabalhadores Rurais Empregados"/>
+        <node id="pol-0758" label="Programa de Multiplicadores em Gestão de Pessoas"/>
+        <node id="pol-0759" label="Programa Escola que Protege - ProEP"/>
+        <node id="pol-0760" label="Política para concessão de quotas diferenciadas de depreciação acelerada para navios-tanque novos produzidos no Brasil"/>
+        <node id="pol-0761" label="Plano Regional de Desenvolvimento do Centro Oeste"/>
+        <node id="pol-0762" label="Plano Regional de Desenvolvimento do Nordeste (PRDNE)"/>
+        <node id="pol-0763" label="Programa Nacional de Controle da Tuberculose"/>
+        <node id="pol-0764" label="Programa Nacional de Coagulopatias Hereditárias"/>
+        <node id="pol-0765" label="Política Nacional de Exportação e Importação de Produtos de Defesa"/>
+        <node id="pol-0766" label="Programa de Reconstrução Dentária para Mulheres Vítimas de Violência Doméstica"/>
+        <node id="pol-0767" label="Política de Apoio ao Licenciamento Ambiental de Projetos de Investimentos para a Produção de Minerais Estratégicos"/>
+        <node id="pol-0768" label="Programa de Acompanhamento e Transparência Fiscal"/>
+        <node id="pol-0769" label="Programa de Assistência ao Trabalhador Rural"/>
+        <node id="pol-0770" label="Programa de Formação do Patrimônio do Servidor Público"/>
+        <node id="pol-0771" label="Política Nacional de Desenvolvimento Sustentável da Aquicultura e Pesca"/>
+        <node id="pol-0772" label="Programa Mobilidade Verde e Inovação (Programa Mover)"/>
+        <node id="pol-0773" label="Política de Exploração e Produção de Petróleo e Gás Natural"/>
+        <node id="pol-0774" label="Programa Moradia Digna"/>
+        <node id="pol-0775" label="Programa Mais Alimentos"/>
+        <node id="pol-0776" label="Projeto Piloto Mães Unidas"/>
+        <node id="pol-0777" label="Política Nacional de Humanização (Humaniza SUS)"/>
+        <node id="pol-0778" label="Programa Nacional de Proteção e Manejo Populacional Ético de Cães e Gatos"/>
+        <node id="pol-0779" label="Programa de Incentivo e Revitalização das Atividades de E&amp;amp;P de Petróleo e Gás Natural - Potencializa E&amp;amp;P"/>
+        <node id="pol-0780" label="Programa Amazônia Terra Legal"/>
+        <node id="pol-0781" label="Programa de Apoio ao Desenvolvimento Tecnológico da Indústria de Semicondutores (PADIS)"/>
+        <node id="pol-0782" label="Programa Nacional de Atenção Comunitária Integrada a Usuários de Álcool e Outras Drogas"/>
+        <node id="pol-0783" label="Política de Fomento à Implementação de Escolas de Ensino Médio em Tempo Integral"/>
+        <node id="pol-0784" label="Política Nacional de Enfrentamento à Violência contra as Mulheres"/>
+        <node id="pol-0785" label="Programa de Integração Social"/>
+        <node id="pol-0786" label="Política Nacional do Cooperativismo"/>
+        <node id="pol-0787" label="Promoção da descarbonização das atividades de exploração e produção de petróleo e gás natural"/>
+        <node id="pol-0788" label="Programa de Fomento às Atividades Produtivas Rurais"/>
+        <node id="pol-0789" label="Política Nacional de Metrologia"/>
+        <node id="pol-0790" label="Política Nacional de Transição Energética - PNTE"/>
+        <node id="pol-0791" label="Programa Nacional de Apoio à Aquisição de Habitação para Profissionais da Segurança Pública (Programa Habite Seguro)"/>
+        <node id="pol-0792" label="Política de Educação para o Consumo Sustentável"/>
+        <node id="pol-0793" label="Programa Nacional do Hidrogênio (PNH2)"/>
+        <node id="pol-0794" label="Programa Nacional de Alimentação Escolar (PNAE)"/>
+        <node id="pol-0795" label="Carteira da pessoa idosa"/>
+        <node id="pol-0796" label="Programa Nacional de Financiamento da Ampliação e Modernização da Frota Pesqueira Nacional (Profrota Pesqueira)"/>
+        <node id="pol-0797" label="Programa Nacional de Publicização"/>
+        <node id="pol-0798" label="Programa Nacional de Renda Mínima vinculado à Saúde (Bolsa Alimentação)"/>
+        <node id="pol-0799" label="Política Nacional Antidrogas"/>
+        <node id="pol-0800" label="Política Econômica da Borracha"/>
+        <node id="pol-0801" label="Política Nacional de Assistência, Conscientização e Orientação sobre as Doenças Inflamatórias Intestinais - Doença de Crohn e Retocolite Ulcerativa"/>
+        <node id="pol-0802" label="Política Energética Nacional"/>
+        <node id="pol-0803" label="Política Nacional de Humanização do Luto Materno e Parental"/>
+        <node id="pol-0804" label="Programa Brasil Mais"/>
+        <node id="pol-0805" label="Política Nacional de Assistência Técnica e Extensão Rural"/>
+        <node id="pol-0806" label="Política Nacional de Proteção dos Direitos da Pessoa com Albinismo"/>
+        <node id="pol-0807" label="Programa de Qualificação das Ações de Vigilância em Saúde (PQA-VS)"/>
+        <node id="pol-0808" label="Política Nacional de Cultura Viva"/>
+        <node id="pol-0809" label="Programa Agora Tem Especialistas"/>
+        <node id="pol-0810" label="Programa de Inovação Educação Conectada"/>
+        <node id="pol-0811" label="Política Nacional de Alternativas Penais"/>
+        <node id="pol-0812" label="Política Marítima Nacional"/>
+        <node id="pol-0813" label="Sistema Nacional de Atendimento Socioeducativo (SINASE)"/>
+        <node id="pol-0814" label="Sistema de Integridade, Transparência e Acesso à Informação – Sitai"/>
+        <node id="pol-0815" label="Programa de Formação de Profissional de Nível Médio para a Saúde (PROFAPS)"/>
+        <node id="pol-0816" label="Programa Nacional de Assistência Estudantil (PNAES)"/>
+        <node id="pol-0817" label="Política Nacional de Segurança da Informação"/>
+        <node id="pol-0818" label="Política Econômica do Sal"/>
+        <node id="pol-0819" label="Política Nacional de Recursos Hídricos"/>
+        <node id="pol-0820" label="Estratégia Nacional para a Conservação e o Uso Sustentável dos Recifes de Coral – ProCoral"/>
+        <node id="pol-0821" label="Política de Cotas para Mulheres em Situação de Violência Doméstica nas Contratações Públicas"/>
+        <node id="pol-0822" label="Política de Transparência e Acesso à Informação"/>
+        <node id="pol-0823" label="Estratégia Nacional de Cibersegurança"/>
+        <node id="pol-0824" label="Programa de Atendimento aos Desnutridos e às Gestantes em Risco Nutricional (Programa Leite é Saúde)"/>
+        <node id="pol-0825" label="Política de Controle da Natalidade de Cães e Gatos"/>
+        <node id="pol-0826" label="Política Nacional de Resíduos Sólidos"/>
+        <node id="pol-0827" label="Programa Especial de Desenvolvimento da Grande Teresina"/>
+        <node id="pol-0828" label="Programa Mais Igualdade"/>
+        <node id="pol-0829" label="Programa de Integridade do MIDR – Progride"/>
+        <node id="pol-0830" label="Política Nacional de Segurança de Barragens"/>
+        <node id="pol-0831" label="Programa Especial para Análise de Benefícios com Indícios de Irregularidade"/>
+        <node id="pol-0832" label="Programa Especial de Desenvolvimento do Entorno do Distrito Federal "/>
+        <node id="pol-0833" label="Programa de Valorização do Profissional da Atenção Básica (PROVAB)"/>
+        <node id="pol-0834" label="Política Nacional do Livro"/>
+        <node id="pol-0835" label="Política Nacional Integrada da Primeira Infância"/>
+        <node id="pol-0836" label="Programa Especial de Desenvolvimento do Pólo Petrolina/PE e Juazeiro/BA"/>
+        <node id="pol-0837" label="Política Nacional de Vigilância em Saúde"/>
+        <node id="pol-0838" label="Plano Brasil Soberano"/>
+        <node id="pol-0839" label="Auxílio Emergencial de abril a junho de 2020"/>
+        <node id="pol-0840" label="Benefício de Prestação Continuada Idoso"/>
+        <node id="pol-0841" label="Programa Nacional de Apoio à Formação de Médicos Especialistas em Áreas Estratégicas (Pró-Residência)"/>
+        <node id="pol-0842" label="Política de Ciência, Tecnologia e Inovação em Saúde (PNCTIS)"/>
+        <node id="pol-0843" label="Política Nacional de Defesa Civil (PNDC)"/>
+        <node id="pol-0844" label="Política Nacional de Educação Profissional e Tecnológica – PNEPT"/>
+        <node id="pol-0845" label="Programa Nacional de Vigilância da Qualidade da Água para Consumo Humano (VIGIAGUA)"/>
+        <node id="pol-0846" label="Programa Nacional de Inclusão de Jovens (ProJovem)"/>
+        <node id="pol-0847" label="Política Nacional de Atenção Integral à Saúde da Criança"/>
+        <node id="pol-0848" label="Política Nacional de Atendimento Educacional Especializado a Crianças de Zero a Três Anos (Atenção Precoce)"/>
+        <node id="pol-0849" label="Benefício de Prestação Continuada para pessoas com deficiência"/>
+        <node id="pol-0850" label="Brasil Carinhoso"/>
+        <node id="pol-0851" label="Fundo de Financiamento Estudantil (FIES)"/>
+        <node id="pol-0852" label="Programa Nacional de Gestão de Custos"/>
+        <node id="pol-0853" label="Política Nacional da Industria da Defesa"/>
+        <node id="pol-0854" label="Política de Atenção Integral à Saúde Mental das Populações Indígenas"/>
+        <node id="pol-0855" label="Política Nacional Integrada para a primeira infância"/>
+        <node id="pol-0856" label="Programa Nacional de Prevenção e Controle dos Distúrbios por Deficiência de Iodo (DDI)"/>
+        <node id="pol-0857" label="Política de Ciência, Teconologia e Inovação de Defesa"/>
+        <node id="pol-0858" label="Programa de Regionalização do Turismo"/>
+        <node id="pol-0859" label="Programa de Educação pelo Trabalho para a Saúde (PET Saúde)"/>
+        <node id="pol-0860" label="Programa Nacional de Suplementação de Ferro (PNSF)"/>
+        <node id="pol-0861" label="Política Nacional de Alimentação e Nutrição"/>
+        <node id="pol-0862" label="Política Nacional de Atenção ao Portador de Doença Renal"/>
+        <node id="pol-0863" label="Programa Nacional de Capacitação das Cidades"/>
+        <node id="pol-0864" label="Programa Núcleo de Apoio à Família (NAF)"/>
+        <node id="pol-0865" label="Política Nacional de Atenção em Oftalmologia"/>
+        <node id="pol-0866" label="Política Nacional de Atenção Integral à Saúde de Adolescentes em Conflito com a Lei, em Regime de Internação e Internação Provisória"/>
+        <node id="pol-0867" label="Programa Nacional de Avaliação de Serviços de Saúde (PNASS)"/>
+        <node id="pol-0868" label="Programa Nacional para Qualificação, Produção e Inovação em Equipamentos e Materiais de Uso em Saúde no Complexo Industrial da Saúde"/>
+        <node id="pol-0869" label="Política Nacional de Atenção Integral à Saúde de Pessoas Privadas de Liberdade no Sistema Prisional"/>
+        <node id="pol-0870" label="Política de Crédito Rural (SNCR)"/>
+        <node id="pol-0871" label="Política de Defesa Agropecuária"/>
+        <node id="pol-0872" label="Política de Prevenção e Atenção Integral à Saúde da Pessoa Portadora de Hepatite"/>
+        <node id="pol-0873" label="Programa de Humanização no Pré-natal e Nascimento"/>
+        <node id="pol-0874" label="Política Nacional da Agricultura Familiar  e Empreendimentos Familiares Rurais"/>
+        <node id="pol-0875" label="Política Nacional de Biocombustíveis (Renovabio)"/>
+        <node id="pol-0876" label="Política Nacional de Educação Ambiental"/>
+        <node id="pol-0877" label="Política Nacional de Incentivo à Ovinocaprinocultura"/>
+        <node id="pol-0878" label="Política Nacional de Informática"/>
+        <node id="pol-0879" label="Programa Melhor em Casa"/>
+        <node id="pol-0880" label="Política Nacional de Irrigação"/>
+        <node id="pol-0881" label="Política Nacional de Mobilidade Urbana"/>
+        <node id="pol-0882" label="Política Nacional de Pisos Mínimos do Transporte Rodoviário de Cargas"/>
+        <node id="pol-0883" label="Política Nacional de Prevenção da Automutilação e Suicídio"/>
+        <node id="pol-0884" label="Política Nacional de Prevenção do Diabetes e de Assistência Integral à Pessoa Diabética"/>
+        <node id="pol-0885" label="Política Nacional de Sangue, Componentes e Hemoderivados"/>
+        <node id="pol-0886" label="Política Nacional de Transplantes de Órgãos e Tecidos"/>
+        <node id="pol-0887" label="Política Nacional de Atenção à Saúde dos Povos Indígenas"/>
+        <node id="pol-0888" label="Política Nacional de Atenção ao Portador de Doença Neurológica"/>
+        <node id="pol-0889" label="Programa Bicicleta Brasil (PBB)"/>
+        <node id="pol-0890" label="Política Nacional do Meio Ambiente"/>
+        <node id="pol-0891" label="Programa Biotecnologia e Recursos Genéticos (Genoma)"/>
+        <node id="pol-0892" label="Política Nacional sobre Mudança do Clima"/>
+        <node id="pol-0893" label="Política para os Idosos (Estatuto do Idoso)"/>
+        <node id="pol-0894" label="Programa Bolsa Família (PBF)"/>
+        <node id="pol-0895" label="Programa Bolsa-Renda "/>
+        <node id="pol-0896" label="Programa Cartão Reforma"/>
+        <node id="pol-0897" label="Programa Casa Verde e Amarela"/>
+        <node id="pol-0898" label="Programa Cidade Esportiva"/>
+        <node id="pol-0899" label="Programa Cinema Perto de Você"/>
+        <node id="pol-0900" label="Programa de Administração Patrimonial Imobiliária da União (PROAP)"/>
+        <node id="pol-0901" label="Programa de Alimentação do Trabalhador (PAT)"/>
+        <node id="pol-0902" label="Programa de Apoio à Produção Nacional do Leite"/>
+        <node id="pol-0903" label="Programa de Apoio ao Desenvolvimento Institucional do Sistema Único de Saúde (PROADI/SUS)"/>
+        <node id="pol-0904" label="Programa de Apoio ao Desenvolvimento Tecnológico da Indústria de Equipamentos para a TV Digital (PATVD)"/>
+        <node id="pol-0905" label="Programa de Apoio aos Sistemas de Ensino para Atendimento à Educação de Jovens e Adultos"/>
+        <node id="pol-0906" label="Programa Nacional de Suplementação de Vitamina A"/>
+        <node id="pol-0907" label="Programa de Aquisição de Alimentos"/>
+        <node id="pol-0908" label="Programa de Arrendamento Residencial"/>
+        <node id="pol-0909" label="Programa de Bolsas para a Educação pelo Trabalho"/>
+        <node id="pol-0910" label="Programa de Ciência e Tecnologia para o Agronegócio"/>
+        <node id="pol-0911" label="Programa de Combate à Intimidação Sistemática (bullying)"/>
+        <node id="pol-0912" label="Programa de Desenvolvimento Científico e Tecnológico do Setor Espacial"/>
+        <node id="pol-0913" label="Programa Organização Produtiva de Mulheres Rurais (POPMR)"/>
+        <node id="pol-0914" label="Programa de Desligamento Voluntário de Servidores civis"/>
+        <node id="pol-0915" label="Programa de Distribuição Emergencial de Alimentos (PRODEA)"/>
+        <node id="pol-0916" label="Programa de Educação Tutorial (PET)"/>
+        <node id="pol-0917" label="Programa de Estímulo à Interação Universidade-Empresa para o Apoio à Inovação"/>
+        <node id="pol-0918" label="Programa de Estímulo à Reestruturação e ao Fortalecimento das Instituições de Ensino Superior (PROIES)"/>
+        <node id="pol-0919" label="Programa de Financiamento Preferencial às Instituições Filantrópicas e Sem Fins Lucrativos (Pro-Santas Casas)"/>
+        <node id="pol-0920" label="Programa de Fomento à Pesquisa em Saúde"/>
+        <node id="pol-0921" label="Programa de Fortalecimento das Entidades Privadas Filantrópicas e das Entidades sem Fins Lucrativos que Atuam na Área da Saúde e que Participam de Forma Complementar do Sistema Único de Saúde (PROSUS)"/>
+        <node id="pol-0922" label="Programa de Garantia aos Setores Críticos (PGSC)"/>
+        <node id="pol-0923" label="Programa de Garantia da Atividade Agropecuária da Agricultura Familiar (PROAGRO)"/>
+        <node id="pol-0924" label="Programa de Inovação para Competitividade"/>
+        <node id="pol-0925" label="Programa de Modernização da Gestão e de Responsabilidade Fiscal do Futebol Brasileiro"/>
+        <node id="pol-0926" label="Programa de Modernização do Parque Industrial Nacional (Modermaq)"/>
+        <node id="pol-0927" label="Programa de Parcerias de Investimentos (PPI)"/>
+        <node id="pol-0928" label="Programa de Previdência Social aos Estudantes "/>
+        <node id="pol-0929" label="Programa de Proteção ao Emprego (PPE)"/>
+        <node id="pol-0930" label="Programa de Recuperação Fiscal (Refis)"/>
+        <node id="pol-0931" label="Programa de Redução de Litígios Tributários (PRORELIT)"/>
+        <node id="pol-0932" label="Programa de Subsídio à Habitação de Interesse Social"/>
+        <node id="pol-0933" label="Programa de Subvenção ao Prêmio do Seguro Rural (PSR)"/>
+        <node id="pol-0934" label="Programa de Residência Profissional Agrícola (AgroResidência)"/>
+        <node id="pol-0935" label="Programa de Acompanhamento e Monitoramento do Acesso e Permanência na Escola das Pessoas com Deficiência Beneficiárias do Benefício de Prestação Continuada da Assistência Social (BPC Escola)"/>
+        <node id="pol-0936" label="Plano de Expansão da Radioterapia no SUS (PER/SUS)"/>
+        <node id="pol-0937" label="Política de Patrimônio Cultural Material do Iphan"/>
+        <node id="pol-0938" label="Política Nacional de Atenção às Urgências"/>
+        <node id="pol-0939" label="Política Nacional de Atenção de Alta Complexidade em Traumato-Ortopedia"/>
+        <node id="pol-0940" label="Política Nacional de Atenção Hospitalar"/>
+        <node id="pol-0941" label="Política Nacional de Gestão Estratégica e Participativa (ParticipaSUS)"/>
+        <node id="pol-0942" label="Política Nacional de Atenção Integral à Saúde do Povo Cigano/Romani"/>
+        <node id="pol-0943" label="Política Nacional de Atenção Integral às Pessoas com Doenças Raras"/>
+        <node id="pol-0944" label="Política Nacional de Atenção Integral à Saúde do Homem"/>
+        <node id="pol-0945" label="Política Nacional de Educação Permanente em Saúde"/>
+        <node id="pol-0946" label="Política Nacional de Educação Popular em Saúde (PNEPS/SUS)"/>
+        <node id="pol-0947" label="Política Nacional de Expansão das Escolas Médicas das Instituições Federais de Educação Superior"/>
+        <node id="pol-0948" label="Política Nacional de Gestão do Trabalho e Educação na Saúde"/>
+        <node id="pol-0949" label="Política Nacional de Práticas Integrativas e Complementares"/>
+        <node id="pol-0950" label="Política Nacional de Promoção à Saúde"/>
+        <node id="pol-0951" label="Política Nacional de Redução da Morbimortalidade por acidentes e violências"/>
+        <node id="pol-0952" label="Política Nacional de Regulação do Sistema Único de Saúde"/>
+        <node id="pol-0953" label="Previne Brasil"/>
+        <node id="pol-0954" label="Programa Academia da Saúde"/>
+        <node id="pol-0955" label="Programa de Atenção Integral à Família (Paif)"/>
+        <node id="pol-0956" label="Programa Bioeconomia Brasil (Sociobiodiversidade)"/>
+        <node id="pol-0957" label="Programa Conecte SUS"/>
+        <node id="pol-0958" label="Programa Conta para Mim"/>
+        <node id="pol-0959" label="Programa de Apoio à Informatização e Qualificação dos Dados da Atenção Primária à Saúde (Informatiza APS)"/>
+        <node id="pol-0960" label="Programa de Assistência aos Portadores da Doença de Alzheimer"/>
+        <node id="pol-0961" label="Programa de Assistência Ventilatória Não Invasiva aos Portadores de Doenças Neuromusculares"/>
+        <node id="pol-0962" label="Programa de Atenção Integral a Usuários de Álcool e outras Drogas"/>
+        <node id="pol-0963" label="Programa de Mamografia Móvel"/>
+        <node id="pol-0964" label="Programa de Melhoria do Acesso e Qualidade dos Centros de Especialidades Odontológicas (PMAQ-CEO)"/>
+        <node id="pol-0965" label="Programa de Necessidades da Estrutura Física Mínima dos Polos da Academia da Saúde"/>
+        <node id="pol-0966" label="Programa de Qualificação e Estruturação da Gestão do Trabalho e da Educação no SUS (ProgeSUS)"/>
+        <node id="pol-0967" label="Programa de Qualificação Internacional em Turismo e Hospitalidade."/>
+        <node id="pol-0968" label="Programa de Requalificação das Unidades Básicas de Saúde (Requalifica UBS)"/>
+        <node id="pol-0969" label="Programa Nacional de Competitividade em Vacinas (INOVACINA)"/>
+        <node id="pol-0970" label="Programa de Treinamento em Epidemiologia Aplicada aos Serviços do Sistema Único de Saúde (EpiSUS)"/>
+        <node id="pol-0971" label="Programa Digitaliza Brasil"/>
+        <node id="pol-0972" label="Programa Meio Ambiente Integrado e Seguro (Programa Brasil MAIS)"/>
+        <node id="pol-0973" label="Programa Município Amigo da Família (PMAF)"/>
+        <node id="pol-0974" label="Programa Nacional de Agricultura Urbana e Periurbana"/>
+        <node id="pol-0975" label="Programa Nacional de Avaliação dos Serviços Hospitalares"/>
+        <node id="pol-0976" label="Programa Nacional de Vigilância, Prevenção e Controle das IST e do HIV/AIDS"/>
+        <node id="pol-0977" label="Programa Nacional de Controle da Dengue (PNCD)"/>
+        <node id="pol-0978" label="Programa Nacional de Controle de Qualidade Externo em Sorologia e lmunohematologia para Unidades Hemoterápicas (PNCQES)"/>
+        <node id="pol-0979" label="Programa Nacional de Controle e Eliminação da Hanseníase e de Outras Dermatoses de Interesse Sanitário"/>
+        <node id="pol-0980" label="Programa Nacional de Desenvolvimento Gerencial no Sistema Único de Saúde (PNDG)"/>
+        <node id="pol-0981" label="Programa Nacional de Fomento à Produção Pública e Inovação no Complexo Industrial da Saúde"/>
+        <node id="pol-0982" label="Programa Nacional para a Prevenção e o Controle das Hepatites Virais"/>
+        <node id="pol-0983" label="Programa Nacional de Genômica e Saúde de Precisão (Genomas Brasil)"/>
+        <node id="pol-0984" label="Programa Nacional de Prevenção e Controle da Malária (PNCM)"/>
+        <node id="pol-0985" label="Programa Nacional de Qualidade em Mamografia (PNQM)"/>
+        <node id="pol-0986" label="Programa Nacional de Reorientação da Formação Profissional em Saúde (Pró-Saúde)"/>
+        <node id="pol-0987" label="Programa Nacional de Segurança do Paciente"/>
+        <node id="pol-0988" label="Programa Nacional Telessaúde Brasil Redes"/>
+        <node id="pol-0989" label="Programa para o Desenvolvimento do Complexo Industrial da Saúde (PROCIS)"/>
+        <node id="pol-0990" label="Programa Permanente de Capacitação de Recursos Humanos da rede SUS para os Serviços de Atenção aos Pacientes com Transtornos causados pelo Uso Prejudicial e/ou Dependência de Álcool e Outras Drogas"/>
+        <node id="pol-0991" label="Programa Permanente de Organização e Acompanhamento das Ações Assistenciais em Saúde Mental"/>
+        <node id="pol-0992" label="Programa SOS Emergências"/>
+        <node id="pol-0993" label="Programa Tempo de Aprender"/>
+        <node id="pol-0994" label="Programas de Residência Médica em Medicina de Família e Comunidade (PRM-MFC)"/>
+        <node id="pol-0995" label="Programa de Estímulo ao Transporte por Cabotagem (BR do Mar)"/>
+        <node id="pol-0996" label="Programa Universidades e Institutos Empreendedores e Inovadores (Future-se)"/>
+        <node id="pol-0997" label="Política Nacional do Esporte"/>
+        <node id="pol-0998" label="Política Nacional de Atenção Integral em Reprodução Humana Assistida"/>
+        <node id="outros" label="Outros"/>
+    </isComposedBy>
+</node>

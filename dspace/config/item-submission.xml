@@ -73,6 +73,10 @@
         <name-map community-handle="123456789/1234" submission-name="xxxx"/>
         -->
 
+        <!-- RDAPP — mapeia o processo rdapp para todas as coleções da comunidade RDAPP (123456789/1).
+             Cobre automaticamente Col 01 (123456789/6) a Col 06 (123456789/11). -->
+        <name-map community-handle="123456789/1" submission-name="rdapp"/>
+
     </submission-map>
 
 
@@ -268,6 +272,13 @@
             <heading>submit.progressbar.duplicates</heading>
             <processing-class>org.dspace.app.rest.submit.step.DuplicateDetectionStep</processing-class>
             <type>duplicates</type>
+        </step-definition>
+
+        <!-- RDAPP — HU002 v1.4 (homologada 29/04/2026) -->
+        <step-definition id="rdappStep" mandatory="true">
+            <heading>submit.progressbar.describe.stepone</heading>
+            <processing-class>org.dspace.app.rest.submit.step.DescribeStep</processing-class>
+            <type>submission-form</type>
         </step-definition>
 
     </step-definitions>
@@ -568,6 +579,15 @@
             <step id="collection"/>
             <step id="openaireOrganizationForm"/>
         </submission-process>
+
+        <!-- RDAPP — processo de submissão para todas as 6 coleções -->
+        <submission-process name="rdapp" is-default="false">
+            <step id="collection"/>
+            <step id="rdappStep"/>
+            <step id="upload"/>
+            <step id="license"/>
+        </submission-process>
+
     </submission-definitions>
 
 </item-submission>

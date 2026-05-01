@@ -23,13 +23,69 @@
     <namespace>http://dspace.org/namespace/local/</namespace>
   </dc-schema>
 
-<!--
+  <!-- Campos customizados RDAPP — HU002 v1.4 (homologada 29/04/2026) -->
+
   <dc-type>
     <schema>local</schema>
-    <element></element>
+    <element>tipodocumento</element>
     <qualifier></qualifier>
-    <scope_note>Description of example metadata field.</scope_note>
+    <scope_note>Tipo principal do documento de avaliação (ex: Relatório de avaliação, Nota Técnica).</scope_note>
   </dc-type>
--->
+
+  <dc-type>
+    <schema>local</schema>
+    <element>tipoavaliacao</element>
+    <qualifier></qualifier>
+    <scope_note>Tipo de avaliação realizada (ex: Ex ante, Ex post: Avaliação de impacto). Repetível.</scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>local</schema>
+    <element>politicapublica</element>
+    <qualifier></qualifier>
+    <scope_note>Política pública ou objeto avaliado no documento. Lista controlada + texto livre. Repetível.</scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>local</schema>
+    <element>areatematica</element>
+    <qualifier></qualifier>
+    <scope_note>Área temática associada à política pública ou objeto avaliado. Repetível.</scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>local</schema>
+    <element>instituicao</element>
+    <qualifier></qualifier>
+    <scope_note>Instituição responsável pelo upload do documento (ex: CMAP, IPEA, ENAP).</scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>local</schema>
+    <element>abrangencia</element>
+    <qualifier></qualifier>
+    <scope_note>Recorte territorial da política pública avaliada (ex: Nacional, Estadual, Municipal). Repetível.</scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>local</schema>
+    <element>ods</element>
+    <qualifier></qualifier>
+    <scope_note>Objetivo de Desenvolvimento Sustentável relacionado à política avaliada. Repetível.</scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>local</schema>
+    <element>uf</element>
+    <qualifier></qualifier>
+    <scope_note>Unidade da Federação associada à instituição responsável pela avaliação.</scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>local</schema>
+    <element>cidade</element>
+    <qualifier></qualifier>
+    <scope_note>Município associado à instituição responsável pela avaliação. Populado via API IBGE filtrado por local.uf.</scope_note>
+  </dc-type>
 
 </dspace-dc-types>

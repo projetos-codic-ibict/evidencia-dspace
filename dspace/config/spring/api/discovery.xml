@@ -270,6 +270,14 @@
                 <!-- <ref bean="searchFilterHasGeospatialMetadata"/> -->
                 <ref bean="searchFilterEntityType"/>
                 <ref bean="searchFilterAccessStatus" />
+                <!-- RDAPP — facetas locais -->
+                <ref bean="searchFilterTipoDocumento" />
+                <ref bean="searchFilterTipoAvaliacao" />
+                <ref bean="searchFilterAreaTematica" />
+                <ref bean="searchFilterInstituicao" />
+                <ref bean="searchFilterAbrangencia" />
+                <ref bean="searchFilterOds" />
+                <ref bean="searchFilterUf" />
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
@@ -293,6 +301,16 @@
                 <ref bean="searchFilterIsPublicationOfJournalIssueRelation"/>
                 <ref bean="searchFilterIsJournalOfPublicationRelation"/>
                 <ref bean="searchFilterGeospatialPoint"/>
+                <!-- RDAPP — filtros de busca avançada -->
+                <ref bean="searchFilterTipoDocumento" />
+                <ref bean="searchFilterTipoAvaliacao" />
+                <ref bean="searchFilterPoliticaPublica" />
+                <ref bean="searchFilterAreaTematica" />
+                <ref bean="searchFilterInstituicao" />
+                <ref bean="searchFilterAbrangencia" />
+                <ref bean="searchFilterOds" />
+                <ref bean="searchFilterUf" />
+                <ref bean="searchFilterCidade" />
             </list>
         </property>
         <!--The sort filters for the discovery search-->
@@ -4182,6 +4200,137 @@
         <property name="metadataField" value="dc.date.issued"/>
         <property name="type" value="date"/>
         <property name="defaultSortOrder" value="desc"/>
+    </bean>
+
+    <!-- ================================================================ -->
+    <!-- Filtros/Facetas RDAPP — campos local.* — HU002-new v1.4           -->
+    <!-- Adicionados em 30/04/2026                                          -->
+    <!-- ================================================================ -->
+
+    <bean id="searchFilterTipoDocumento" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="tipoDocumento"/>
+        <property name="metadataFields">
+            <list>
+                <value>local.tipodocumento</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="5"/>
+        <property name="sortOrderSidebar" value="COUNT"/>
+        <property name="sortOrderFilterPage" value="COUNT"/>
+        <property name="isOpenByDefault" value="false"/>
+        <property name="pageSize" value="10"/>
+    </bean>
+
+    <bean id="searchFilterTipoAvaliacao" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="tipoAvaliacao"/>
+        <property name="metadataFields">
+            <list>
+                <value>local.tipoavaliacao</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="5"/>
+        <property name="sortOrderSidebar" value="COUNT"/>
+        <property name="sortOrderFilterPage" value="COUNT"/>
+        <property name="isOpenByDefault" value="false"/>
+        <property name="pageSize" value="10"/>
+    </bean>
+
+    <bean id="searchFilterPoliticaPublica" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="politicaPublica"/>
+        <property name="metadataFields">
+            <list>
+                <value>local.politicapublica</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="5"/>
+        <property name="sortOrderSidebar" value="COUNT"/>
+        <property name="sortOrderFilterPage" value="COUNT"/>
+        <property name="isOpenByDefault" value="false"/>
+        <property name="pageSize" value="10"/>
+    </bean>
+
+    <bean id="searchFilterAreaTematica" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="areaTematica"/>
+        <property name="metadataFields">
+            <list>
+                <value>local.areatematica</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="5"/>
+        <property name="sortOrderSidebar" value="COUNT"/>
+        <property name="sortOrderFilterPage" value="COUNT"/>
+        <property name="isOpenByDefault" value="false"/>
+        <property name="pageSize" value="10"/>
+    </bean>
+
+    <bean id="searchFilterInstituicao" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="instituicao"/>
+        <property name="metadataFields">
+            <list>
+                <value>local.instituicao</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="10"/>
+        <property name="sortOrderSidebar" value="COUNT"/>
+        <property name="sortOrderFilterPage" value="COUNT"/>
+        <property name="isOpenByDefault" value="false"/>
+        <property name="pageSize" value="10"/>
+    </bean>
+
+    <bean id="searchFilterAbrangencia" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="abrangencia"/>
+        <property name="metadataFields">
+            <list>
+                <value>local.abrangencia</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="5"/>
+        <property name="sortOrderSidebar" value="COUNT"/>
+        <property name="sortOrderFilterPage" value="COUNT"/>
+        <property name="isOpenByDefault" value="false"/>
+        <property name="pageSize" value="10"/>
+    </bean>
+
+    <bean id="searchFilterOds" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="ods"/>
+        <property name="metadataFields">
+            <list>
+                <value>local.ods</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="5"/>
+        <property name="sortOrderSidebar" value="COUNT"/>
+        <property name="sortOrderFilterPage" value="COUNT"/>
+        <property name="isOpenByDefault" value="false"/>
+        <property name="pageSize" value="10"/>
+    </bean>
+
+    <bean id="searchFilterUf" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="uf"/>
+        <property name="metadataFields">
+            <list>
+                <value>local.uf</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="5"/>
+        <property name="sortOrderSidebar" value="COUNT"/>
+        <property name="sortOrderFilterPage" value="COUNT"/>
+        <property name="isOpenByDefault" value="false"/>
+        <property name="pageSize" value="10"/>
+    </bean>
+
+    <bean id="searchFilterCidade" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="cidade"/>
+        <property name="metadataFields">
+            <list>
+                <value>local.cidade</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="5"/>
+        <property name="sortOrderSidebar" value="COUNT"/>
+        <property name="sortOrderFilterPage" value="COUNT"/>
+        <property name="isOpenByDefault" value="false"/>
+        <property name="pageSize" value="10"/>
     </bean>
 
 </beans>

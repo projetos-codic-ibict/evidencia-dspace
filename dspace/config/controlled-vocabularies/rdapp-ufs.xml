@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node id="rdapp-ufs" label="Unidades da Federação">
+    <isComposedBy>
+        <node id="AC" label="Acre - AC"/>
+        <node id="AL" label="Alagoas - AL"/>
+        <node id="AP" label="Amapá - AP"/>
+        <node id="AM" label="Amazonas - AM"/>
+        <node id="BA" label="Bahia - BA"/>
+        <node id="CE" label="Ceará - CE"/>
+        <node id="DF" label="Distrito Federal - DF"/>
+        <node id="ES" label="Espírito Santo - ES"/>
+        <node id="GO" label="Goiás - GO"/>
+        <node id="MA" label="Maranhão - MA"/>
+        <node id="MT" label="Mato Grosso - MT"/>
+        <node id="MS" label="Mato Grosso do Sul - MS"/>
+        <node id="MG" label="Minas Gerais - MG"/>
+        <node id="PA" label="Pará - PA"/>
+        <node id="PB" label="Paraíba - PB"/>
+        <node id="PR" label="Paraná - PR"/>
+        <node id="PE" label="Pernambuco - PE"/>
+        <node id="PI" label="Piauí - PI"/>
+        <node id="RJ" label="Rio de Janeiro - RJ"/>
+        <node id="RN" label="Rio Grande do Norte - RN"/>
+        <node id="RS" label="Rio Grande do Sul - RS"/>
+        <node id="RO" label="Rondônia - RO"/>
+        <node id="RR" label="Roraima - RR"/>
+        <node id="SC" label="Santa Catarina - SC"/>
+        <node id="SP" label="São Paulo - SP"/>
+        <node id="SE" label="Sergipe - SE"/>
+        <node id="TO" label="Tocantins - TO"/>
+    </isComposedBy>
+</node>
