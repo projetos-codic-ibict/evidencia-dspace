@@ -1,0 +1,1039 @@
+From f8b646d28545e9baf8f5cdf519fb441a1b1859b2 Mon Sep 17 00:00:00 2001
+From: Jesiel Viana <jesielviana@proton.me>
+Date: Wed, 18 Feb 2026 14:43:11 -0300
+Subject: [PATCH] Add CSL-based bibliography endpoint for items
+
+---
+ dspace-api/pom.xml                            |  18 +
+ .../dspace/disseminate/CSLBibliography.java   |  12 +
+ .../disseminate/CSLBibliographyGenerator.java | 600 ++++++++++++++++++
+ .../app/rest/model/BibliographyRest.java      |  58 ++
+ .../org/dspace/app/rest/model/ItemRest.java   |   2 +
+ .../model/hateoas/BibliographyResource.java   |  24 +
+ .../ItemBibliographyLinkRepository.java       |  76 +++
+ .../dspace/app/rest/matcher/ItemMatcher.java  |   2 +
+ dspace/config/dspace.cfg                      |   2 +
+ dspace/config/modules/bibliography.cfg        |  22 +
+ dspace/config/spring/api/bibliography.xml     |  97 +++
+ 11 files changed, 913 insertions(+)
+ create mode 100644 dspace-api/src/main/java/org/dspace/disseminate/CSLBibliography.java
+ create mode 100644 dspace-api/src/main/java/org/dspace/disseminate/CSLBibliographyGenerator.java
+ create mode 100644 dspace-server-webapp/src/main/java/org/dspace/app/rest/model/BibliographyRest.java
+ create mode 100644 dspace-server-webapp/src/main/java/org/dspace/app/rest/model/hateoas/BibliographyResource.java
+ create mode 100644 dspace-server-webapp/src/main/java/org/dspace/app/rest/repository/ItemBibliographyLinkRepository.java
+ create mode 100644 dspace/config/modules/bibliography.cfg
+ create mode 100644 dspace/config/spring/api/bibliography.xml
+
+diff --git a/dspace-api/pom.xml b/dspace-api/pom.xml
+index 8380dc872979..5bdb18aa61b6 100644
+--- a/dspace-api/pom.xml
++++ b/dspace-api/pom.xml
+@@ -550,6 +550,24 @@
+             <artifactId>jbibtex</artifactId>
+             <version>1.0.20</version>
+         </dependency>
++        <dependency>
++            <groupId>de.undercouch</groupId>
++            <artifactId>citeproc-java</artifactId>
++            <version>3.4.0</version>
++            <type>jar</type>
++        </dependency>
++        <dependency>
++            <groupId>org.citationstyles</groupId>
++            <artifactId>styles</artifactId>
++            <version>25.11</version>
++            <scope>runtime</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.citationstyles</groupId>
++            <artifactId>locales</artifactId>
++            <version>25.11</version>
++            <scope>runtime</scope>
++        </dependency>
+         <dependency>
+             <groupId>org.apache.httpcomponents</groupId>
+             <artifactId>httpclient</artifactId>
+diff --git a/dspace-api/src/main/java/org/dspace/disseminate/CSLBibliography.java b/dspace-api/src/main/java/org/dspace/disseminate/CSLBibliography.java
+new file mode 100644
+index 000000000000..9effdc383470
+--- /dev/null
++++ b/dspace-api/src/main/java/org/dspace/disseminate/CSLBibliography.java
+@@ -0,0 +1,12 @@
++/**
++ * The contents of this file are subject to the license and copyright
++ * detailed in the LICENSE and NOTICE files at the root of the source
++ * tree and available online at
++ *
++ * http://www.dspace.org/license/
++ */
++package org.dspace.disseminate;
++
++public record CSLBibliography(String style, String value) {
++
++}
+\ No newline at end of file
+diff --git a/dspace-api/src/main/java/org/dspace/disseminate/CSLBibliographyGenerator.java b/dspace-api/src/main/java/org/dspace/disseminate/CSLBibliographyGenerator.java
+new file mode 100644
+index 000000000000..99ec1c561882
+--- /dev/null
++++ b/dspace-api/src/main/java/org/dspace/disseminate/CSLBibliographyGenerator.java
+@@ -0,0 +1,600 @@
++/**
++ * The contents of this file are subject to the license and copyright
++ * detailed in the LICENSE and NOTICE files at the root of the source
++ * tree and available online at
++ *
++ * http://www.dspace.org/license/
++ */
++package org.dspace.disseminate;
++
++import java.io.IOException;
++import java.time.ZonedDateTime;
++import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.List;
++import java.util.Map;
++import java.util.Set;
++import java.util.TreeSet;
++
++import de.undercouch.citeproc.CSL;
++import de.undercouch.citeproc.csl.CSLDate;
++import de.undercouch.citeproc.csl.CSLDateBuilder;
++import de.undercouch.citeproc.csl.CSLItemData;
++import de.undercouch.citeproc.csl.CSLItemDataBuilder;
++import de.undercouch.citeproc.csl.CSLName;
++import de.undercouch.citeproc.csl.CSLNameBuilder;
++import de.undercouch.citeproc.csl.CSLType;
++import jakarta.inject.Named;
++import org.apache.logging.log4j.LogManager;
++import org.apache.logging.log4j.Logger;
++import org.dspace.content.MetadataField;
++import org.dspace.content.MetadataSchema;
++import org.dspace.content.MetadataValue;
++import org.dspace.util.MultiFormatDateParser;
++
++/**
++ * Generate bibliographic descriptions for DSpace objects in various formats.
++ * *
++ *
++ * @author Jesiel Viana
++ * @see https://citationstyles.org
++ */
++@Named
++public class CSLBibliographyGenerator {
++    /**
++     * Map DSpace item types to CSL types.
++     */
++    private final Map<String, String> documentTypeMap;
++
++    /**
++     * Map DSpace metadata fields to CSL fields.
++     */
++    private final Map<String, String> metadataFieldMap;
++
++    /**
++     * Map CSL styles.
++     */
++    private final List<String> bibliographyStyles;
++
++    /**
++     * CSL type of any work with an unmapped DSpace type.
++     */
++    private final String defaultType;
++
++    /**
++     * Logging context.
++     */
++    private static final Logger LOG = LogManager.getLogger();
++
++    /**
++     * Field types which hold human names (needing special formatting).
++     */
++    private static final List<String> cslNameTypes
++            = Arrays.asList("author", "editor", "translator", "recipient",
++            "interviewer", "publisher", "composer", "original-publisher",
++            "original-author", "container-author", "collection-editor");
++
++    /**
++     * Field types which hold dates (needing special treatment).
++     */
++    private static final List<String> cslDateTypes
++            = Arrays.asList("accessed", "container", "event-date", "issued",
++            "original-date", "submitted");
++
++
++    /**
++     * Configure an instance with document type and field mappings.
++     *
++     * @param documentTypes  map DSpace object types to CSL types.
++     * @param metadataFields map DSpace metadata fields to CSL fields.
++     * @param defaultType    default CSL type
++     */
++    public CSLBibliographyGenerator(Map<String, String> documentTypes,
++                                    Map<String, String> metadataFields,
++                                    List<String> bibliographyStyles,
++                                    String defaultType) {
++        this.documentTypeMap = documentTypes;
++        this.metadataFieldMap = metadataFields;
++        this.bibliographyStyles = bibliographyStyles;
++        this.defaultType = defaultType.toUpperCase();
++    }
++
++
++    /**
++     * Do not use.
++     */
++    private CSLBibliographyGenerator() {
++        this.documentTypeMap = null;
++        this.metadataFieldMap = null;
++        this.bibliographyStyles = null;
++        this.defaultType = null;
++    }
++
++
++    /**
++     * Generates a citation/bibliography string for the given metadata using
++     * the specified CSL style and output format.
++     *
++     * <p>This method converts the provided list of {@link MetadataValue} objects
++     * into a {@link CSLItemData}, then produces an ad-hoc bibliography through
++     * the CSL processor.</p>
++     *
++     * @param metadata     the list of metadata values describing the item to cite
++     * @param outputFormat the desired output format (e.g. {@code OutputFormat.HTML}, {@code OutputFormat.TEXT})
++     * @return the formatted bibliography string for the given metadata
++     * @throws IOException if an error occurs while generating the bibliography
++     */
++    public List<CSLBibliography> getBibliographies(List<MetadataValue> metadata, OutputFormat outputFormat)
++            throws IOException {
++        CSLItemData cslItemData = buildItem(metadata);
++
++        List<CSLBibliography> bibliographies = new ArrayList<>();
++
++        for (String style : bibliographyStyles) {
++            String bibliography = CSL.makeAdhocBibliography(style, outputFormat.value, cslItemData).makeString();
++            bibliographies.add(new CSLBibliography(style, bibliography));
++        }
++        return bibliographies;
++    }
++
++
++    /**
++     * Discover which bibliographic styles are supported.
++     *
++     * @return paths to defined styles, ordered alphabetically by name.
++     * @throws java.io.IOException passed through.
++     */
++    static public Set<String> getStyles()
++            throws IOException {
++        return new TreeSet<>(CSL.getSupportedStyles());
++    }
++
++    /**
++     * Construct a CSLItemData from DSpace Item metadata.
++     *
++     * @param metadata list of metadata.
++     * @return holder of data for a new entry in the bibliography.
++     */
++    private CSLItemData buildItem(List<MetadataValue> metadata) {
++        CSLItemDataBuilder builder = new CSLItemDataBuilder();
++
++        // Accumulators for multivalued fields.
++        List<String> categories = new ArrayList<>();
++        List<CSLName> authors = new ArrayList<>();
++        List<CSLName> collectionEditors = new ArrayList<>();
++        List<CSLName> composers = new ArrayList<>();
++        List<CSLName> containerAuthors = new ArrayList<>();
++        List<CSLName> directors = new ArrayList<>();
++        List<CSLName> editors = new ArrayList<>();
++        List<CSLName> editorialDirectors = new ArrayList<>();
++        List<CSLName> interviewers = new ArrayList<>();
++        List<CSLName> illustrators = new ArrayList<>();
++        List<CSLName> originalAuthors = new ArrayList<>();
++        List<CSLName> recipients = new ArrayList<>();
++        List<CSLName> reviewedAuthors = new ArrayList<>();
++        List<CSLName> translators = new ArrayList<>();
++
++
++        CSLName nameValue = null;
++        CSLDate dateValue = null;
++
++        for (MetadataValue datum : metadata) {
++            MetadataField field = datum.getMetadataField();
++            MetadataSchema schema = field.getMetadataSchema();
++
++            String schemaName = schema.getName();
++            String element = field.getElement();
++            String qualifier = field.getQualifier();
++
++            String dsFieldName = getMetadataFieldNameFrom(schemaName, element, qualifier);
++
++            // Map to CSL field
++            String cslFieldName = metadataFieldMap.get(dsFieldName);
++            LOG.debug("Map DSpace {} to CSL {}", dsFieldName, cslFieldName);
++
++            // Skip this field if not mapped.
++            if (null == cslFieldName) {
++                continue;
++            }
++
++            String value = datum.getValue();
++
++            // Figure out the CSL work type.
++            if ("type".equals(cslFieldName)) {
++                String key = value.replaceAll(" ", "_");
++                if (documentTypeMap.containsKey(key)) {
++                    value = documentTypeMap.get(key)
++                            .replaceAll("[ -]", "_")
++                            .toUpperCase();
++                } else {
++                    LOG.warn("No CSL work type for {} -- using default {}.",
++                            key, defaultType);
++                    value = defaultType;
++                }
++            } else if (cslNameTypes.contains(cslFieldName)) {
++                // If this is a name then format
++                nameValue = buildCSLName(value);
++            } else if (cslDateTypes.contains(cslFieldName)) {
++                // If this is a date then format
++                dateValue = buildCSLDate(value);
++            }
++
++            // Store in builder; multivalued fields are accumulated instead.
++            switch (cslFieldName) {
++                // id?
++                case "type":
++                    builder.type(CSLType.valueOf(value));
++                    break;
++                case "categories":
++                    categories.add(value);
++                    break;
++                case "author":
++                    authors.add(nameValue);
++                    break;
++                case "collectionEditor":
++                    collectionEditors.add(nameValue);
++                    break;
++                case "composer":
++                    composers.add(nameValue);
++                    break;
++                case "containerAuthor":
++                    containerAuthors.add(nameValue);
++                    break;
++                case "director":
++                    directors.add(nameValue);
++                    break;
++                case "editor":
++                    editors.add(nameValue);
++                    break;
++                case "interviewer":
++                    interviewers.add(nameValue);
++                    break;
++                case "editorialDirector":
++                    editorialDirectors.add(nameValue);
++                    break;
++                case "illustrator":
++                    illustrators.add(nameValue);
++                    break;
++                case "originalAuthor":
++                    originalAuthors.add(nameValue);
++                    break;
++                case "recipient":
++                    recipients.add(nameValue);
++                    break;
++                case "reviewedAuthor":
++                    reviewedAuthors.add(nameValue);
++                    break;
++                case "translator":
++                    translators.add(nameValue);
++                    break;
++                case "accessed":
++                    builder.accessed(dateValue);
++                    break;
++                case "container":
++                    builder.container(dateValue);
++                    break;
++                case "eventDate":
++                    builder.eventDate(dateValue);
++                    break;
++                case "issued":
++                    builder.issued(dateValue);
++                    break;
++                case "originalDate":
++                    builder.originalDate(dateValue);
++                    break;
++                case "submitted":
++                    builder.submitted(dateValue);
++                    break;
++                case "annote":
++                    builder.annote(value);
++                    break;
++                case "abstract":
++                    builder.abstrct(value);
++                    break;
++                case "archive":
++                    builder.archive(value);
++                    break;
++                case "archiveLocation":
++                    builder.archiveLocation(value);
++                    break;
++                case "archivePlace":
++                    builder.archivePlace(value);
++                    break;
++                case "authority":
++                    builder.authority(value);
++                    break;
++                case "callNumber":
++                    builder.callNumber(value);
++                    break;
++                case "chapterNumber":
++                    builder.chapterNumber(value);
++                    break;
++                case "citationNumber":
++                    builder.citationNumber(value);
++                    break;
++                case "citationLabel":
++                    builder.citationLabel(value);
++                    break;
++                case "collectionNumber":
++                    builder.collectionNumber(value);
++                    break;
++                case "collectionTitle":
++                    builder.collectionTitle(value);
++                    break;
++                case "containerTitle":
++                    builder.containerTitle(value);
++                    break;
++                case "containerTitleShort":
++                    builder.containerTitleShort(value);
++                    break;
++                case "dimensions":
++                    builder.dimensions(value);
++                    break;
++                case "DOI":
++                    builder.DOI(value);
++                    break;
++                case "edition":
++                    builder.edition(value);
++                    break;
++                case "event":
++                    builder.event(value);
++                    break;
++                case "eventPlace":
++                    builder.eventPlace(value);
++                    break;
++                case "firstReferenceNoteNumber":
++                    builder.firstReferenceNoteNumber(value);
++                    break;
++                case "genre":
++                    builder.genre(value);
++                    break;
++                case "ISBN":
++                    builder.ISBN(value);
++                    break;
++                case "ISSN":
++                    builder.ISSN(value);
++                    break;
++                case "issue":
++                    builder.issue(value);
++                    break;
++                case "jurisdiction":
++                    builder.jurisdiction(value);
++                    break;
++                case "keyword":
++                    builder.keyword(value);
++                    break;
++                case "locator":
++                    builder.locator(value);
++                    break;
++                case "medium":
++                    builder.medium(value);
++                    break;
++                case "note":
++                    builder.note(value);
++                    break;
++                case "number":
++                    builder.number(value);
++                    break;
++                case "numberOfPages":
++                    builder.numberOfPages(value);
++                    break;
++                case "numberOfVolumes":
++                    builder.numberOfVolumes(value);
++                    break;
++                case "originalPublisher":
++                    builder.originalPublisher(value);
++                    break;
++                case "originalPublisherPlace":
++                    builder.originalPublisherPlace(value);
++                    break;
++                case "originalTitle":
++                    builder.originalTitle(value);
++                    break;
++                case "page":
++                    builder.page(value);
++                    break;
++                case "pageFirst":
++                    // builder.pageFirst(value);
++                    System.out.println("pageFirst");
++                    break;
++                case "PMCID":
++                    builder.PMCID(value);
++                    break;
++                case "PMID":
++                    builder.PMID(value);
++                    break;
++                case "publisher":
++                    builder.publisher(value);
++                    break;
++                case "publisherPlace":
++                    builder.publisherPlace(value);
++                    break;
++                case "references":
++                    builder.references(value);
++                    break;
++                case "reviewedTitle":
++                    builder.reviewedTitle(value);
++                    break;
++                case "scale":
++                    builder.scale(value);
++                    break;
++                case "section":
++                    builder.section(value);
++                    break;
++                case "source":
++                    builder.source(value);
++                    break;
++                case "status":
++                    builder.status(value);
++                    break;
++                case "title":
++                    builder.title(value);
++                    break;
++                case "titleShort":
++                    builder.titleShort(value);
++                    break;
++                case "URL":
++                    builder.URL(value);
++                    break;
++                case "version":
++                    builder.version(value);
++                    break;
++                case "volume":
++                    builder.volume(value);
++                    break;
++                case "yearSuffix":
++                    builder.yearSuffix(value);
++                    break;
++                default:
++                    builder.note(value);
++                    break;
++            }
++        }
++
++        // Store accumulated multiple-valued fields.
++        if (!categories.isEmpty()) {
++            builder.categories(categories.toArray(String[]::new));
++        }
++        if (!authors.isEmpty()) {
++            builder.author(authors.toArray(CSLName[]::new));
++        }
++        if (!collectionEditors.isEmpty()) {
++            builder.collectionEditor(collectionEditors.toArray(CSLName[]::new));
++        }
++        if (!composers.isEmpty()) {
++            builder.composer(composers.toArray(CSLName[]::new));
++        }
++        if (!containerAuthors.isEmpty()) {
++            builder.containerAuthor(containerAuthors.toArray(CSLName[]::new));
++        }
++        if (!directors.isEmpty()) {
++            builder.director(directors.toArray(CSLName[]::new));
++        }
++        if (!editors.isEmpty()) {
++            builder.editor(editors.toArray(CSLName[]::new));
++        }
++        if (!editorialDirectors.isEmpty()) {
++            builder.editorialDirector(editorialDirectors.toArray(CSLName[]::new));
++        }
++        if (!interviewers.isEmpty()) {
++            builder.interviewer(interviewers.toArray(CSLName[]::new));
++        }
++        if (!illustrators.isEmpty()) {
++            builder.illustrator(illustrators.toArray(CSLName[]::new));
++        }
++        if (!originalAuthors.isEmpty()) {
++            builder.originalAuthor(originalAuthors.toArray(CSLName[]::new));
++        }
++        if (!recipients.isEmpty()) {
++            builder.recipient(recipients.toArray(CSLName[]::new));
++        }
++        if (!reviewedAuthors.isEmpty()) {
++            builder.reviewedAuthor(reviewedAuthors.toArray(CSLName[]::new));
++        }
++        if (!translators.isEmpty()) {
++            builder.translator(translators.toArray(CSLName[]::new));
++        }
++        return builder.build();
++    }
++
++    private String getMetadataFieldNameFrom(String schema, String element, String qualifier) {
++        StringBuilder sb = new StringBuilder(schema);
++        sb.append('.').append(element);
++        if (null != qualifier) {
++            sb.append('.').append(qualifier);
++        }
++        return sb.toString();
++    }
++
++
++    private CSLName buildCSLName(String name) {
++        if (name == null || name.isBlank()) {
++            return null;
++        }
++        CSLNameBuilder builder = new CSLNameBuilder();
++        String trimmedName = name.trim();
++
++        if (trimmedName.contains(",")) {
++            // Format: Family, Given
++            String[] parts = trimmedName.split(",", 2);
++            String family = parts[0].trim();
++            String given = parts.length > 1 ? parts[1].trim() : null;
++
++            builder.family(family);
++            if (given != null && !given.isEmpty()) {
++                builder.given(given);
++            }
++        } else {
++            // Format: Given [Middle ...] Family
++            String[] parts = trimmedName.split("\\s+");
++            if (parts.length == 1) {
++                // Single name: family only
++                builder.family(parts[0]);
++            } else {
++                // Last word = family, the rest = given
++                String family = parts[parts.length - 1];
++                String given = String.join(" ", java.util.Arrays.copyOf(parts, parts.length - 1));
++
++                builder.family(family);
++                if (!given.isEmpty()) {
++                    builder.given(given);
++                }
++            }
++        }
++
++        return builder.build();
++    }
++
++
++
++    private CSLDate buildCSLDate(String date) {
++        if (date == null || date.isBlank()) {
++            return null;
++        }
++
++        // If it's just a year
++        if (date.matches("\\d{4}")) {
++            int year = Integer.parseInt(date);
++            return new CSLDateBuilder()
++                    .dateParts(year)
++                    .build();
++        }
++
++        // Otherwise, try parsing a full date
++        ZonedDateTime zonedDateTime = MultiFormatDateParser.parse(date);
++        if (zonedDateTime == null) {
++            return null;
++        }
++
++        return new CSLDateBuilder()
++                .dateParts(
++                        zonedDateTime.getYear(),
++                        zonedDateTime.getMonthValue(),
++                        zonedDateTime.getDayOfMonth()
++                )
++                .build();
++    }
++
++    /**
++     * String constants for citation output formats accept in CSL class.
++     */
++    public static enum OutputFormat {
++        HTML("html"),
++        MARKDOWN("markdown"),
++        TEXT("text"),
++        ASCIIDOC("asciidoc"),
++        FO("fo"),
++        RTF("rtf");
++
++        private final String value;
++
++        OutputFormat(String format) {
++            this.value = format;
++        }
++
++        public String getValue() {
++            return value;
++        }
++    }
++
++}
+\ No newline at end of file
+diff --git a/dspace-server-webapp/src/main/java/org/dspace/app/rest/model/BibliographyRest.java b/dspace-server-webapp/src/main/java/org/dspace/app/rest/model/BibliographyRest.java
+new file mode 100644
+index 000000000000..a340763b4952
+--- /dev/null
++++ b/dspace-server-webapp/src/main/java/org/dspace/app/rest/model/BibliographyRest.java
+@@ -0,0 +1,58 @@
++/**
++ * The contents of this file are subject to the license and copyright
++ * detailed in the LICENSE and NOTICE files at the root of the source
++ * tree and available online at
++ *
++ * http://www.dspace.org/license/
++ */
++package org.dspace.app.rest.model;
++
++import java.util.ArrayList;
++import java.util.List;
++
++import org.dspace.disseminate.CSLBibliography;
++
++
++public class BibliographyRest extends BaseObjectRest<String> {
++
++    public static final String NAME = "bibliography";
++    public static final String PLURAL_NAME = "bibliographies";
++
++    private final List<CSLBibliography> bibliographies;
++
++    public BibliographyRest() {
++        bibliographies = new ArrayList<>();
++    }
++
++    public List<CSLBibliography> getBibliographies() {
++        return bibliographies;
++    }
++
++    public void addBibliography(CSLBibliography bibliography) {
++        bibliographies.add(bibliography);
++    }
++
++    public void addBibliographies(List<CSLBibliography> bibliographies) {
++        this.bibliographies.addAll(bibliographies);
++    }
++
++    @Override
++    public String getType() {
++        return NAME;
++    }
++
++    @Override
++    public String getTypePlural() {
++        return PLURAL_NAME;
++    }
++
++    @Override
++    public String getCategory() {
++        return null;
++    }
++
++    @Override
++    public Class getController() {
++        return null;
++    }
++}
+diff --git a/dspace-server-webapp/src/main/java/org/dspace/app/rest/model/ItemRest.java b/dspace-server-webapp/src/main/java/org/dspace/app/rest/model/ItemRest.java
+index 7125cdcc180b..22eb13783ec8 100644
+--- a/dspace-server-webapp/src/main/java/org/dspace/app/rest/model/ItemRest.java
++++ b/dspace-server-webapp/src/main/java/org/dspace/app/rest/model/ItemRest.java
+@@ -23,6 +23,7 @@
+     @LinkRest(name = ItemRest.MAPPED_COLLECTIONS, method = "getMappedCollections"),
+     @LinkRest(name = ItemRest.OWNING_COLLECTION, method = "getOwningCollection"),
+     @LinkRest(name = ItemRest.RELATIONSHIPS, method = "getRelationships"),
++    @LinkRest(name = ItemRest.BIBLIOGRAPHY, method = "getItemBibliography"),
+     @LinkRest(name = ItemRest.VERSION, method = "getItemVersion"),
+     @LinkRest(name = ItemRest.TEMPLATE_ITEM_OF, method = "getTemplateItemOf"),
+     @LinkRest(name = ItemRest.THUMBNAIL, method = "getThumbnail"),
+@@ -39,6 +40,7 @@ public class ItemRest extends DSpaceObjectRest {
+     public static final String MAPPED_COLLECTIONS = "mappedCollections";
+     public static final String OWNING_COLLECTION = "owningCollection";
+     public static final String RELATIONSHIPS = "relationships";
++    public static final String BIBLIOGRAPHY = "bibliography";
+     public static final String VERSION = "version";
+     public static final String TEMPLATE_ITEM_OF = "templateItemOf";
+     public static final String THUMBNAIL = "thumbnail";
+diff --git a/dspace-server-webapp/src/main/java/org/dspace/app/rest/model/hateoas/BibliographyResource.java b/dspace-server-webapp/src/main/java/org/dspace/app/rest/model/hateoas/BibliographyResource.java
+new file mode 100644
+index 000000000000..8b861da2a8d1
+--- /dev/null
++++ b/dspace-server-webapp/src/main/java/org/dspace/app/rest/model/hateoas/BibliographyResource.java
+@@ -0,0 +1,24 @@
++/**
++ * The contents of this file are subject to the license and copyright
++ * detailed in the LICENSE and NOTICE files at the root of the source
++ * tree and available online at
++ *
++ * http://www.dspace.org/license/
++ */
++package org.dspace.app.rest.model.hateoas;
++
++import org.dspace.app.rest.model.BibliographyRest;
++import org.dspace.app.rest.model.hateoas.annotations.RelNameDSpaceResource;
++import org.dspace.app.rest.utils.Utils;
++
++/**
++ * Boilerplate hateoas resource for BibliographyRest
++ *
++ * @author Jesiel Viana
++ */
++@RelNameDSpaceResource(BibliographyRest.NAME)
++public class BibliographyResource extends HALResource<BibliographyRest> {
++    public BibliographyResource(BibliographyRest data, Utils utils) {
++        super(data);
++    }
++}
+diff --git a/dspace-server-webapp/src/main/java/org/dspace/app/rest/repository/ItemBibliographyLinkRepository.java b/dspace-server-webapp/src/main/java/org/dspace/app/rest/repository/ItemBibliographyLinkRepository.java
+new file mode 100644
+index 000000000000..616ab4af1f69
+--- /dev/null
++++ b/dspace-server-webapp/src/main/java/org/dspace/app/rest/repository/ItemBibliographyLinkRepository.java
+@@ -0,0 +1,76 @@
++/**
++ * The contents of this file are subject to the license and copyright
++ * detailed in the LICENSE and NOTICE files at the root of the source
++ * tree and available online at
++ *
++ * http://www.dspace.org/license/
++ */
++package org.dspace.app.rest.repository;
++
++import java.io.IOException;
++import java.sql.SQLException;
++import java.util.List;
++import java.util.UUID;
++
++import jakarta.annotation.Nullable;
++import jakarta.servlet.http.HttpServletRequest;
++import org.dspace.app.rest.converter.ItemConverter;
++import org.dspace.app.rest.model.BibliographyRest;
++import org.dspace.app.rest.model.ItemRest;
++import org.dspace.app.rest.model.MetadataValueList;
++import org.dspace.app.rest.projection.Projection;
++import org.dspace.content.Item;
++import org.dspace.content.service.ItemService;
++import org.dspace.core.Context;
++import org.dspace.disseminate.CSLBibliography;
++import org.dspace.disseminate.CSLBibliographyGenerator;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.data.domain.Pageable;
++import org.springframework.data.rest.webmvc.ResourceNotFoundException;
++import org.springframework.security.access.prepost.PreAuthorize;
++import org.springframework.stereotype.Component;
++
++/**
++ * Link repository for "relationships" subresource of an individual item.
++ */
++@Component(ItemRest.CATEGORY + "." + ItemRest.PLURAL_NAME + "." + ItemRest.BIBLIOGRAPHY)
++public class ItemBibliographyLinkRepository extends AbstractDSpaceRestRepository
++        implements LinkRestRepository {
++
++    @Autowired
++    private CSLBibliographyGenerator cSLBibliographyGenerator;
++
++    @Autowired
++    private ItemService itemService;
++
++    @Autowired
++    private ItemConverter itemConverter;
++
++    @PreAuthorize("hasPermission(#itemId, 'ITEM', 'READ')")
++    public BibliographyRest getItemBibliography(@Nullable HttpServletRequest request,
++                                                UUID itemId,
++                                                @Nullable Pageable optionalPageable,
++                                                Projection projection) {
++        try {
++            Context context = obtainContext();
++            Item item = itemService.find(context, itemId);
++            if (item == null) {
++                throw new ResourceNotFoundException("No such item: " + itemId);
++            }
++            MetadataValueList metadataValues = itemConverter.getPermissionFilteredMetadata(context, item);
++
++            BibliographyRest citationRest = new BibliographyRest();
++            try {
++                List<CSLBibliography> bibliographies = cSLBibliographyGenerator.getBibliographies(metadataValues,
++                        CSLBibliographyGenerator.OutputFormat.TEXT);
++                citationRest.addBibliographies(bibliographies);
++
++            } catch (IOException e) {
++                throw new RuntimeException(e);
++            }
++            return citationRest;
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
++    }
++}
+diff --git a/dspace-server-webapp/src/test/java/org/dspace/app/rest/matcher/ItemMatcher.java b/dspace-server-webapp/src/test/java/org/dspace/app/rest/matcher/ItemMatcher.java
+index 44121b7e42d6..02f6eed1b95b 100644
+--- a/dspace-server-webapp/src/test/java/org/dspace/app/rest/matcher/ItemMatcher.java
++++ b/dspace-server-webapp/src/test/java/org/dspace/app/rest/matcher/ItemMatcher.java
+@@ -57,6 +57,7 @@ public static Matcher<? super Object> matchFullEmbeds() {
+                 "owningCollection",
+                 "version",
+                 "relationships[]",
++                "bibliography",
+                 "templateItemOf",
+                 "thumbnail",
+                 "submitter"
+@@ -74,6 +75,7 @@ public static Matcher<? super Object> matchLinks(UUID uuid) {
+                 "mappedCollections",
+                 "owningCollection",
+                 "relationships",
++                "bibliography",
+                 "self",
+                 "version",
+                 "templateItemOf",
+diff --git a/dspace/config/dspace.cfg b/dspace/config/dspace.cfg
+index 823873711a25..55a3e1f3f934 100644
+--- a/dspace/config/dspace.cfg
++++ b/dspace/config/dspace.cfg
+@@ -1737,3 +1737,5 @@ include = ${module_dir}/external-providers.cfg
+ include = ${module_dir}/ldn.cfg
+ include = ${module_dir}/contentreport.cfg
+ include = ${module_dir}/matomo.cfg
++include = ${module_dir}/bibliography.cfg
++
+diff --git a/dspace/config/modules/bibliography.cfg b/dspace/config/modules/bibliography.cfg
+new file mode 100644
+index 000000000000..e79142c5d03f
+--- /dev/null
++++ b/dspace/config/modules/bibliography.cfg
+@@ -0,0 +1,22 @@
++bibliography.author=dc.contributor.author
++bibliography.editor=dc.contributor.editor
++bibliography.issued=dc.date.issued
++bibliography.accessed=dc.date.accessioned
++bibliography.submitted=dc.date.submitted
++bibliography.ISBN=dc.identifier.isbn
++bibliography.abstract=dc.description.abstract
++bibliography.medium=dc.format.medium
++bibliography.publisher=dc.publisher
++bibliography.title=dc.title
++bibliography.title.alternative=dc.title.alternative
++bibliography.type=dc.type
++bibliography.doi=dc.identifier.uri
++bibliography.doi=dc.identifier.doi
++bibliography.journal.name=ekt.journal.name
++bibliography.volume=ekt.journal.volume
++bibliography.journal.issue=ekt.journal.issue
++bibliography.page=ekt.journal.pages
++bibliography.journal.editor=ekt.journal.editor
++
++# CSL Styles, you can list multiple styles separated by commas
++bibliography.styles=apa,modern-language-association,vancouver,bibtex
+diff --git a/dspace/config/spring/api/bibliography.xml b/dspace/config/spring/api/bibliography.xml
+new file mode 100644
+index 000000000000..16ffe6d11d57
+--- /dev/null
++++ b/dspace/config/spring/api/bibliography.xml
+@@ -0,0 +1,97 @@
++<?xml version='1.0' encoding='UTF-8'?>
++<beans xmlns='http://www.springframework.org/schema/beans'
++       xmlns:util='http://www.springframework.org/schema/util'
++       xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
++       xsi:schemaLocation='http://www.springframework.org/schema/beans
++            http://www.springframework.org/schema/beans/spring-beans.xsd
++            http://www.springframework.org/schema/util
++            http://www.springframework.org/schema/util/spring-util.xsd'>
++
++    <bean id='org.dspace.disseminate.CSLBibliographyGenerator'
++          class='org.dspace.disseminate.CSLBibliographyGenerator'
++          scope='prototype'>
++        <description>Accumulates DSpace Item IDs and formats a bibliography.</description>
++        <constructor-arg index='0'
++                         ref='csl-types'> <!-- name='documentTypes' -->
++            <description>
++                Values of the 'type' field mapped to CSL document types.
++                Differing types may have different entry formats in some styles.
++                https://github.com/citation-style-language/schema/blob/master/schemas/styles/csl-types.rnc
++            </description>
++        </constructor-arg>
++        <constructor-arg index='1'
++                         ref='csl-fields'> <!-- name='metadataFields' -->
++            <description>
++                Map DSpace metadata fields to CSL fields.
++                https://github.com/citation-style-language/schema/blob/master/schemas/styles/csl-variables.rnc
++            </description>
++        </constructor-arg>
++        <constructor-arg index='2'
++                         ref='csl-styles'> <!-- name='bibliographyStyles' -->
++            <description>
++                CSL Styles.
++                https://github.com/citation-style-language/styles
++            </description>
++        </constructor-arg>
++        <constructor-arg index='3'
++                         value='article'> <!-- name='defaultType' -->
++            <description>Default document type.</description>
++        </constructor-arg>
++    </bean>
++
++    <util:map id='csl-types'
++              map-class='java.util.HashMap'
++              key-type='java.lang.String'
++              value-type='java.lang.String'>
++        <entry key='Animation' value='motion_picture'/> <!-- XXX -->
++        <entry key='Article' value='article'/>
++        <entry key='Book' value='book'/>
++        <entry key='Book chapter' value='chapter'/>
++        <entry key='Dataset' value='dataset'/>
++        <entry key='Image' value='graphic'/>
++        <entry key='Image, 3-D' value='graphic'/>
++        <entry key='Learning Object' value='software'/> <!-- XXX -->
++        <entry key='Map' value='map'/>
++        <entry key='Musical Score' value='musical_score'/>
++        <entry key='Plan or blueprint' value='graphic'/>
++        <entry key='Preprint' value='report'/>
++        <entry key='Presentation' value='performance'/> <!-- XXX -->
++        <entry key='Recording, acoustical' value='song'/> <!-- XXX -->
++        <entry key='Recording, musical' value='song'/>
++        <entry key='Recording, oral' value='speech'/>
++        <entry key='Software' value='software'/>
++        <entry key='Technical Report' value='report'/>
++        <entry key='Thesis' value='thesis'/>
++        <entry key='Video' value='motion_picture'/>
++        <entry key='Working Paper' value='report'/> <!-- XXX -->
++        <entry key='Other' value='document'/>
++    </util:map>
++
++    <util:map id='csl-fields'
++              map-class='java.util.HashMap'
++              key-type='java.lang.String'
++              value-type='java.lang.String'>
++        <entry key='${bibliography.author}' value='author'/>
++        <entry key='${bibliography.editor}' value='editor'/>
++        <entry key='${bibliography.issued}' value='issued'/>
++        <entry key='${bibliography.accessed}' value='accessed'/>
++        <entry key='${bibliography.submitted}' value='submitted'/>
++        <entry key='${bibliography.ISBN}' value='ISBN'/>
++        <entry key='${bibliography.abstract}' value='abstract'/>
++        <entry key='${bibliography.medium}' value='medium'/>
++        <entry key='${bibliography.publisher}' value='publisher'/>
++        <entry key='${bibliography.title}' value='title'/>
++        <entry key='${bibliography.doi}' value='DOI'/>
++        <entry key='${bibliography.title.alternative}' value='container-title'/> <!-- XXX -->
++        <entry key='${bibliography.type}' value='type'/> <!-- see csl-types -->
++        <entry key='${bibliography.journal.name}' value='container-title'/>
++        <entry key='${bibliography.volume}' value='volume'/>
++        <entry key='${bibliography.journal.issue}' value='issue'/>
++        <entry key='${bibliography.page}' value='page'/>
++        <entry key='${bibliography.journal.editor}' value='editor'/>
++    </util:map>
++
++    <bean id="csl-styles" class="org.springframework.beans.factory.config.ListFactoryBean">
++        <property name="sourceList" value="#{'${bibliography.styles}'.split(',')}"/>
++    </bean>
++</beans>
+\ No newline at end of file
