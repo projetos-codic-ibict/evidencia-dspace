@@ -57,7 +57,7 @@ public class ItemBibliographyLinkRepository extends AbstractDSpaceRestRepository
             if (item == null) {
                 throw new ResourceNotFoundException("No such item: " + itemId);
             }
-            MetadataValueList metadataValues = itemConverter.getPermissionFilteredMetadata(context, item);
+            MetadataValueList metadataValues = itemConverter.getPermissionFilteredMetadata(context, item, projection);
 
             BibliographyRest citationRest = new BibliographyRest();
             try {
