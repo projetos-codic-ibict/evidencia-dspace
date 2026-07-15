@@ -316,12 +316,16 @@
         <!--The sort filters for the discovery search-->
         <property name="searchSortConfiguration">
             <bean class="org.dspace.discovery.configuration.DiscoverySortConfiguration">
+                <!-- RDAPP: busca vazia ordena por Data de Disponibilização Descendente (comm/coll ficam por último).
+                     O frontend Angular usa o 1º item de sortFields como padrão (não o defaultSortField abaixo),
+                     por isso sortDateAccessioned precisa vir primeiro na lista. -->
+                <property name="defaultSortField" ref="sortDateAccessioned" />
                 <property name="sortFields">
                     <list>
+                        <ref bean="sortDateAccessioned"/>
                         <ref bean="sortScore" />
                         <ref bean="sortTitle" />
                         <ref bean="sortDateIssued" />
-                        <ref bean="sortDateAccessioned"/>
                     </list>
                 </property>
             </bean>
