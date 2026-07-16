@@ -2608,40 +2608,40 @@
 
         <value-pairs value-pairs-name="rdapp-ods" dc-term="local_ods">
             <pair>
-                <displayed-value>1 - Erradicação da Pobreza</displayed-value>
-                <stored-value>1 - Erradicação da Pobreza</stored-value>
+                <displayed-value>01 - Erradicação da Pobreza</displayed-value>
+                <stored-value>01 - Erradicação da Pobreza</stored-value>
             </pair>
             <pair>
-                <displayed-value>2 - Fome Zero e Agricultura Sustentável</displayed-value>
-                <stored-value>2 - Fome Zero e Agricultura Sustentável</stored-value>
+                <displayed-value>02 - Fome Zero e Agricultura Sustentável</displayed-value>
+                <stored-value>02 - Fome Zero e Agricultura Sustentável</stored-value>
             </pair>
             <pair>
-                <displayed-value>3 - Saúde e Bem-Estar</displayed-value>
-                <stored-value>3 - Saúde e Bem-Estar</stored-value>
+                <displayed-value>03 - Saúde e Bem-Estar</displayed-value>
+                <stored-value>03 - Saúde e Bem-Estar</stored-value>
             </pair>
             <pair>
-                <displayed-value>4 - Educação de Qualidade</displayed-value>
-                <stored-value>4 - Educação de Qualidade</stored-value>
+                <displayed-value>04 - Educação de Qualidade</displayed-value>
+                <stored-value>04 - Educação de Qualidade</stored-value>
             </pair>
             <pair>
-                <displayed-value>5 - Igualdade de Gênero</displayed-value>
-                <stored-value>5 - Igualdade de Gênero</stored-value>
+                <displayed-value>05 - Igualdade de Gênero</displayed-value>
+                <stored-value>05 - Igualdade de Gênero</stored-value>
             </pair>
             <pair>
-                <displayed-value>6 - Água Potável e Saneamento</displayed-value>
-                <stored-value>6 - Água Potável e Saneamento</stored-value>
+                <displayed-value>06 - Água Potável e Saneamento</displayed-value>
+                <stored-value>06 - Água Potável e Saneamento</stored-value>
             </pair>
             <pair>
-                <displayed-value>7 - Energia Limpa e Acessível</displayed-value>
-                <stored-value>7 - Energia Limpa e Acessível</stored-value>
+                <displayed-value>07 - Energia Limpa e Acessível</displayed-value>
+                <stored-value>07 - Energia Limpa e Acessível</stored-value>
             </pair>
             <pair>
-                <displayed-value>8 - Trabalho Decente e Crescimento Econômico</displayed-value>
-                <stored-value>8 - Trabalho Decente e Crescimento Econômico</stored-value>
+                <displayed-value>08 - Trabalho Decente e Crescimento Econômico</displayed-value>
+                <stored-value>08 - Trabalho Decente e Crescimento Econômico</stored-value>
             </pair>
             <pair>
-                <displayed-value>9 - Indústria, Inovação e Infraestrutura</displayed-value>
-                <stored-value>9 - Indústria, Inovação e Infraestrutura</stored-value>
+                <displayed-value>09 - Indústria, Inovação e Infraestrutura</displayed-value>
+                <stored-value>09 - Indústria, Inovação e Infraestrutura</stored-value>
             </pair>
             <pair>
                 <displayed-value>10 - Redução das Desigualdades</displayed-value>
