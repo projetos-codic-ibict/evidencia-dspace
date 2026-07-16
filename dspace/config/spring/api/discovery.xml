@@ -263,21 +263,15 @@
         <!--Which sidebar facets are to be displayed-->
         <property name="sidebarFacets">
             <list>
-                <ref bean="searchFilterAuthor" />
-                <ref bean="searchFilterSubject" />
-                <ref bean="searchFilterIssued" />
-                <ref bean="searchFilterContentInOriginalBundle"/>
-                <!-- <ref bean="searchFilterHasGeospatialMetadata"/> -->
-                <ref bean="searchFilterEntityType"/>
-                <ref bean="searchFilterAccessStatus" />
-                <!-- RDAPP — facetas locais -->
-                <ref bean="searchFilterTipoDocumento" />
-                <ref bean="searchFilterTipoAvaliacao" />
-                <ref bean="searchFilterAreaTematica" />
+                <!-- RDAPP — facetas locais (ordem definida pelo produto) -->
                 <ref bean="searchFilterInstituicao" />
+                <ref bean="searchFilterIssued" />
+                <ref bean="searchFilterAreaTematica" />
+                <ref bean="searchFilterPoliticaPublica" />
+                <ref bean="searchFilterTipoAvaliacao" />
+                <ref bean="searchFilterTipoDocumento" />
                 <ref bean="searchFilterAbrangencia" />
                 <ref bean="searchFilterOds" />
-                <ref bean="searchFilterUf" />
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
