@@ -8,6 +8,8 @@
 package org.dspace.disseminate;
 
 import java.io.IOException;
+import java.io.StringWriter;
+import java.text.Normalizer;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +33,11 @@ import org.dspace.content.MetadataField;
 import org.dspace.content.MetadataSchema;
 import org.dspace.content.MetadataValue;
 import org.dspace.util.MultiFormatDateParser;
+import org.jbibtex.BibTeXDatabase;
+import org.jbibtex.BibTeXEntry;
+import org.jbibtex.BibTeXFormatter;
+import org.jbibtex.Key;
+import org.jbibtex.StringValue;
 
 /**
  * Generate bibliographic descriptions for DSpace objects in various formats.
@@ -80,6 +87,22 @@ public class CSLBibliographyGenerator {
     private static final List<String> cslDateTypes
             = Arrays.asList("accessed", "container", "event-date", "issued",
             "original-date", "submitted");
+
+    /**
+     * Estilo tratado à parte — howpublished/organization/address não são
+     * variáveis CSL (são exclusivas do BibTeX), então esse estilo não passa
+     * pelo citeproc-java, é montado direto via JBibTeX a partir do metadado bruto.
+     */
+    private static final String BIBTEX_STYLE_KEY = "bibtex";
+
+    /**
+     * Nome do repositório — fixo de propósito, não vem de metadado do item.
+     * É o valor do campo {@code howpublished} em toda referência BibTeX gerada:
+     * é o nome do próprio repositório (RDAPP), não varia de item pra item,
+     * então não existe (nem deveria existir) um metadado por item pra isso.
+     */
+    private static final String REPOSITORY_NAME =
+            "Repositório Digital de Avaliação de Políticas Públicas - RDAPP";
 
 
     /**
@@ -131,10 +154,113 @@ public class CSLBibliographyGenerator {
         List<CSLBibliography> bibliographies = new ArrayList<>();
 
         for (String style : bibliographyStyles) {
-            String bibliography = CSL.makeAdhocBibliography(style, outputFormat.value, cslItemData).makeString();
+            String bibliography = BIBTEX_STYLE_KEY.equals(style)
+                    ? buildCustomBibtex(metadata)
+                    : CSL.makeAdhocBibliography(style, outputFormat.value, cslItemData).makeString();
             bibliographies.add(new CSLBibliography(style, bibliography));
         }
         return bibliographies;
+    }
+
+    /**
+     * Monta o BibTeX manualmente a partir do metadado bruto do item via JBibTeX,
+     * em vez de usar a saída do citeproc-java (que não tem howpublished/organization/
+     * address, essas não são variáveis CSL, são exclusivas do BibTeX).
+     */
+    private String buildCustomBibtex(List<MetadataValue> metadata) throws IOException {
+        List<String> authors = new ArrayList<>();
+        String title = null;
+        String issued = null;
+        String organization = null;
+        String publisher = null;
+        String cidade = null;
+        String uf = null;
+
+        for (MetadataValue datum : metadata) {
+            MetadataField field = datum.getMetadataField();
+            MetadataSchema schema = field.getMetadataSchema();
+            String dsFieldName = getMetadataFieldNameFrom(schema.getName(), field.getElement(), field.getQualifier());
+            String value = datum.getValue();
+
+            switch (dsFieldName) {
+                case "dc.contributor.author":
+                    authors.add(value);
+                    break;
+                case "dc.title":
+                    title = title == null ? value : title;
+                    break;
+                case "dc.date.issued":
+                    issued = issued == null ? value : issued;
+                    break;
+                case "local.instituicao":
+                    organization = organization == null ? value : organization;
+                    break;
+                case "dc.publisher":
+                    publisher = publisher == null ? value : publisher;
+                    break;
+                case "local.cidade":
+                    cidade = cidade == null ? value : cidade;
+                    break;
+                case "local.uf":
+                    uf = uf == null ? value : uf;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (organization == null) {
+            organization = publisher;
+        }
+        String year = (issued != null && issued.length() >= 4) ? issued.substring(0, 4) : issued;
+        String address = (cidade != null && uf != null) ? (cidade + "/" + uf) : (cidade != null ? cidade : uf);
+
+        BibTeXEntry entry = new BibTeXEntry(
+                BibTeXEntry.TYPE_MISC,
+                new Key(buildBibtexKey(authors.isEmpty() ? null : authors.get(0), year)));
+
+        if (!authors.isEmpty()) {
+            entry.addField(BibTeXEntry.KEY_AUTHOR,
+                    new StringValue(String.join(" and ", authors), StringValue.Style.BRACED));
+        }
+        if (title != null) {
+            entry.addField(BibTeXEntry.KEY_TITLE, new StringValue(title, StringValue.Style.BRACED));
+        }
+        entry.addField(BibTeXEntry.KEY_HOWPUBLISHED, new StringValue(REPOSITORY_NAME, StringValue.Style.BRACED));
+        if (organization != null) {
+            entry.addField(BibTeXEntry.KEY_ORGANIZATION, new StringValue(organization, StringValue.Style.BRACED));
+        }
+        if (address != null) {
+            entry.addField(BibTeXEntry.KEY_ADDRESS, new StringValue(address, StringValue.Style.BRACED));
+        }
+        if (year != null) {
+            entry.addField(BibTeXEntry.KEY_YEAR, new StringValue(year, StringValue.Style.BRACED));
+        }
+
+        BibTeXDatabase database = new BibTeXDatabase();
+        database.addObject(entry);
+
+        BibTeXFormatter formatter = new BibTeXFormatter();
+        formatter.setIndent("  ");
+        StringWriter writer = new StringWriter();
+        formatter.format(database, writer);
+        return writer.toString().trim();
+    }
+
+    private String buildBibtexKey(String firstAuthor, String year) {
+        String namePart;
+        if (firstAuthor == null) {
+            namePart = "";
+        } else if (firstAuthor.contains(",")) {
+            namePart = firstAuthor.split(",", 2)[0];
+        } else {
+            String[] parts = firstAuthor.trim().split("\\s+");
+            namePart = parts[parts.length - 1];
+        }
+        String slug = Normalizer.normalize(namePart, Normalizer.Form.NFD)
+                .toLowerCase()
+                .replaceAll("[^a-z0-9]", "");
+        return slug + (year != null ? year : "");
     }
 
 
