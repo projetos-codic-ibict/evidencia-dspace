@@ -13,6 +13,7 @@ import java.text.Normalizer;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -59,9 +60,19 @@ public class CSLBibliographyGenerator {
     private final Map<String, String> metadataFieldMap;
 
     /**
+     * Map DSpace metadata fields to BibTeX-only fields (no CSL equivalent).
+     */
+    private final Map<String, String> bibtexFieldMap;
+
+    /**
      * Map CSL styles.
      */
     private final List<String> bibliographyStyles;
+
+    /**
+     * Repository name, used as the {@code howpublished} of every BibTeX entry.
+     */
+    private final String repositoryName;
 
     /**
      * CSL type of any work with an unmapped DSpace type.
@@ -96,13 +107,11 @@ public class CSLBibliographyGenerator {
     private static final String BIBTEX_STYLE_KEY = "bibtex";
 
     /**
-     * Nome do repositório — fixo de propósito, não vem de metadado do item.
-     * É o valor do campo {@code howpublished} em toda referência BibTeX gerada:
-     * é o nome do próprio repositório (RDAPP), não varia de item pra item,
-     * então não existe (nem deveria existir) um metadado por item pra isso.
+     * Logical names of the BibTeX-only fields, as configured in {@code bibtex-fields}.
      */
-    private static final String REPOSITORY_NAME =
-            "Repositório Digital de Avaliação de Políticas Públicas - RDAPP";
+    private static final String BIBTEX_ORGANIZATION = "organization";
+    private static final String BIBTEX_ADDRESS_CITY = "address-city";
+    private static final String BIBTEX_ADDRESS_STATE = "address-state";
 
 
     /**
@@ -111,15 +120,21 @@ public class CSLBibliographyGenerator {
      * @param documentTypes  map DSpace object types to CSL types.
      * @param metadataFields map DSpace metadata fields to CSL fields.
      * @param defaultType    default CSL type
+     * @param bibtexFields   map DSpace metadata fields to BibTeX-only fields.
+     * @param repositoryName repository name, used as the BibTeX {@code howpublished}.
      */
     public CSLBibliographyGenerator(Map<String, String> documentTypes,
                                     Map<String, String> metadataFields,
                                     List<String> bibliographyStyles,
-                                    String defaultType) {
+                                    String defaultType,
+                                    Map<String, String> bibtexFields,
+                                    String repositoryName) {
         this.documentTypeMap = documentTypes;
         this.metadataFieldMap = metadataFields;
         this.bibliographyStyles = bibliographyStyles;
         this.defaultType = defaultType.toUpperCase();
+        this.bibtexFieldMap = bibtexFields;
+        this.repositoryName = repositoryName;
     }
 
 
@@ -131,6 +146,8 @@ public class CSLBibliographyGenerator {
         this.metadataFieldMap = null;
         this.bibliographyStyles = null;
         this.defaultType = null;
+        this.bibtexFieldMap = null;
+        this.repositoryName = null;
     }
 
 
@@ -155,7 +172,7 @@ public class CSLBibliographyGenerator {
 
         for (String style : bibliographyStyles) {
             String bibliography = BIBTEX_STYLE_KEY.equals(style)
-                    ? buildCustomBibtex(metadata)
+                    ? buildCustomBibtex(cslItemData, metadata)
                     : CSL.makeAdhocBibliography(style, outputFormat.value, cslItemData).makeString();
             bibliographies.add(new CSLBibliography(style, bibliography));
         }
@@ -163,79 +180,37 @@ public class CSLBibliographyGenerator {
     }
 
     /**
-     * Monta o BibTeX manualmente a partir do metadado bruto do item via JBibTeX,
-     * em vez de usar a saída do citeproc-java (que não tem howpublished/organization/
-     * address, essas não são variáveis CSL, são exclusivas do BibTeX).
+     * Build a BibTeX entry through JBibTeX instead of the CSL processor.
+     *
+     * <p>Author, title, year and organization come from the {@link CSLItemData} already
+     * built for every other style, so the metadata is parsed and normalized only once.
+     * Only the fields with no CSL equivalent -- {@code howpublished}, {@code organization}
+     * and {@code address} -- are read from the raw metadata, through the configurable
+     * {@code bibtex-fields} map.</p>
+     *
+     * @param item     the item data shared with the CSL styles.
+     * @param metadata the raw metadata, for the BibTeX-only fields.
+     * @return the formatted BibTeX entry.
      */
-    private String buildCustomBibtex(List<MetadataValue> metadata) throws IOException {
-        List<String> authors = new ArrayList<>();
-        String title = null;
-        String issued = null;
-        String organization = null;
-        String publisher = null;
-        String cidade = null;
-        String uf = null;
+    private String buildCustomBibtex(CSLItemData item, List<MetadataValue> metadata) throws IOException {
+        Map<String, String> bibtexOnly = extractBibtexOnlyFields(metadata);
 
-        for (MetadataValue datum : metadata) {
-            MetadataField field = datum.getMetadataField();
-            MetadataSchema schema = field.getMetadataSchema();
-            String dsFieldName = getMetadataFieldNameFrom(schema.getName(), field.getElement(), field.getQualifier());
-            String value = datum.getValue();
+        String year = extractYear(item.getIssued());
+        String authors = formatBibtexAuthors(item.getAuthor());
 
-            switch (dsFieldName) {
-                case "dc.contributor.author":
-                    authors.add(value);
-                    break;
-                case "dc.title":
-                    title = title == null ? value : title;
-                    break;
-                case "dc.date.issued":
-                    issued = issued == null ? value : issued;
-                    break;
-                case "local.instituicao":
-                    organization = organization == null ? value : organization;
-                    break;
-                case "dc.publisher":
-                    publisher = publisher == null ? value : publisher;
-                    break;
-                case "local.cidade":
-                    cidade = cidade == null ? value : cidade;
-                    break;
-                case "local.uf":
-                    uf = uf == null ? value : uf;
-                    break;
-                default:
-                    break;
-            }
-        }
+        // The institution that produced the work; falls back to the CSL publisher.
+        String organization = bibtexOnly.getOrDefault(BIBTEX_ORGANIZATION, item.getPublisher());
+        String address = formatAddress(bibtexOnly.get(BIBTEX_ADDRESS_CITY),
+                bibtexOnly.get(BIBTEX_ADDRESS_STATE));
 
-        if (organization == null) {
-            organization = publisher;
-        }
-        String year = (issued != null && issued.length() >= 4) ? issued.substring(0, 4) : issued;
-        String address = (cidade != null && uf != null) ? (cidade + "/" + uf) : (cidade != null ? cidade : uf);
+        BibTeXEntry entry = new BibTeXEntry(BibTeXEntry.TYPE_MISC, new Key(buildBibtexKey(item, year)));
 
-        BibTeXEntry entry = new BibTeXEntry(
-                BibTeXEntry.TYPE_MISC,
-                new Key(buildBibtexKey(authors.isEmpty() ? null : authors.get(0), year)));
-
-        if (!authors.isEmpty()) {
-            entry.addField(BibTeXEntry.KEY_AUTHOR,
-                    new StringValue(String.join(" and ", authors), StringValue.Style.BRACED));
-        }
-        if (title != null) {
-            entry.addField(BibTeXEntry.KEY_TITLE, new StringValue(title, StringValue.Style.BRACED));
-        }
-        entry.addField(BibTeXEntry.KEY_HOWPUBLISHED, new StringValue(REPOSITORY_NAME, StringValue.Style.BRACED));
-        if (organization != null) {
-            entry.addField(BibTeXEntry.KEY_ORGANIZATION, new StringValue(organization, StringValue.Style.BRACED));
-        }
-        if (address != null) {
-            entry.addField(BibTeXEntry.KEY_ADDRESS, new StringValue(address, StringValue.Style.BRACED));
-        }
-        if (year != null) {
-            entry.addField(BibTeXEntry.KEY_YEAR, new StringValue(year, StringValue.Style.BRACED));
-        }
+        addBibtexField(entry, BibTeXEntry.KEY_AUTHOR, authors);
+        addBibtexField(entry, BibTeXEntry.KEY_TITLE, item.getTitle());
+        addBibtexField(entry, BibTeXEntry.KEY_HOWPUBLISHED, repositoryName);
+        addBibtexField(entry, BibTeXEntry.KEY_ORGANIZATION, organization);
+        addBibtexField(entry, BibTeXEntry.KEY_ADDRESS, address);
+        addBibtexField(entry, BibTeXEntry.KEY_YEAR, year);
 
         BibTeXDatabase database = new BibTeXDatabase();
         database.addObject(entry);
@@ -247,20 +222,90 @@ public class CSLBibliographyGenerator {
         return writer.toString().trim();
     }
 
-    private String buildBibtexKey(String firstAuthor, String year) {
-        String namePart;
-        if (firstAuthor == null) {
-            namePart = "";
-        } else if (firstAuthor.contains(",")) {
-            namePart = firstAuthor.split(",", 2)[0];
-        } else {
-            String[] parts = firstAuthor.trim().split("\\s+");
-            namePart = parts[parts.length - 1];
+    /**
+     * Collect the metadata values mapped in {@code bibtex-fields}, keeping the first
+     * value of each field.
+     */
+    private Map<String, String> extractBibtexOnlyFields(List<MetadataValue> metadata) {
+        Map<String, String> values = new HashMap<>();
+
+        for (MetadataValue datum : metadata) {
+            MetadataField field = datum.getMetadataField();
+            MetadataSchema schema = field.getMetadataSchema();
+            String dsFieldName = getMetadataFieldNameFrom(schema.getName(), field.getElement(), field.getQualifier());
+
+            String bibtexFieldName = bibtexFieldMap.get(dsFieldName);
+            if (null == bibtexFieldName) {
+                continue;
+            }
+            LOG.debug("Map DSpace {} to BibTeX {}", dsFieldName, bibtexFieldName);
+            values.putIfAbsent(bibtexFieldName, datum.getValue());
         }
-        String slug = Normalizer.normalize(namePart, Normalizer.Form.NFD)
+        return values;
+    }
+
+    /**
+     * Format CSL names the way BibTeX expects them: {@code Family, Given and Family, Given}.
+     */
+    private String formatBibtexAuthors(CSLName[] names) {
+        if (null == names || names.length == 0) {
+            return null;
+        }
+        List<String> formatted = new ArrayList<>();
+        for (CSLName name : names) {
+            if (null == name) {
+                continue;
+            }
+            String family = name.getFamily();
+            String given = name.getGiven();
+            if (null == family || family.isBlank()) {
+                continue;
+            }
+            formatted.add((null == given || given.isBlank()) ? family : family + ", " + given);
+        }
+        return formatted.isEmpty() ? null : String.join(" and ", formatted);
+    }
+
+    /**
+     * The BibTeX {@code year} field holds a year, not a full date.
+     */
+    private String extractYear(CSLDate issued) {
+        if (null == issued) {
+            return null;
+        }
+        int[][] dateParts = issued.getDateParts();
+        if (null != dateParts && dateParts.length > 0 && dateParts[0].length > 0) {
+            return String.valueOf(dateParts[0][0]);
+        }
+        String raw = issued.getRaw();
+        return (null != raw && raw.length() >= 4) ? raw.substring(0, 4) : raw;
+    }
+
+    private String formatAddress(String city, String state) {
+        if (null != city && null != state) {
+            return city + "/" + state;
+        }
+        return null != city ? city : state;
+    }
+
+    private void addBibtexField(BibTeXEntry entry, Key key, String value) {
+        if (null != value && !value.isBlank()) {
+            entry.addField(key, new StringValue(value, StringValue.Style.BRACED));
+        }
+    }
+
+    /**
+     * Build the citation key from the first author's family name plus the year.
+     */
+    private String buildBibtexKey(CSLItemData item, String year) {
+        CSLName[] names = item.getAuthor();
+        String family = (null != names && names.length > 0 && null != names[0])
+                ? names[0].getFamily()
+                : null;
+        String slug = (null == family) ? "" : Normalizer.normalize(family, Normalizer.Form.NFD)
                 .toLowerCase()
                 .replaceAll("[^a-z0-9]", "");
-        return slug + (year != null ? year : "");
+        return slug + (null != year ? year : "");
     }
 
 
