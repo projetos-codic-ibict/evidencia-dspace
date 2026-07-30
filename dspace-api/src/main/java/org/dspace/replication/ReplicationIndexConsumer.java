@@ -1,0 +1,67 @@
+/**
+ * The contents of this file are subject to the license and copyright
+ * detailed in the LICENSE and NOTICE files at the root of the source
+ * tree and available online at
+ *
+ * http://www.dspace.org/license/
+ */
+package org.dspace.replication;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.dspace.content.DSpaceObject;
+import org.dspace.content.Item;
+import org.dspace.core.Constants;
+import org.dspace.core.Context;
+import org.dspace.event.Consumer;
+import org.dspace.event.Event;
+
+public class ReplicationIndexConsumer implements Consumer {
+
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static final int SUPPORTED_EVENTS = Event.INSTALL;
+
+    private Set<UUID> itemsToReplicate;
+
+    @Override
+    public void initialize() throws Exception {
+        itemsToReplicate = new HashSet<>();
+    }
+
+    @Override
+    public void consume(Context ctx, Event event) throws Exception {
+        boolean isEventValid =
+            event.getSubjectType() == Constants.ITEM && (event.getEventType() & SUPPORTED_EVENTS) != 0;
+
+        if (!isEventValid) {
+            return;
+        }
+
+        DSpaceObject subject = event.getSubject(ctx);
+        if (subject instanceof Item) {
+            itemsToReplicate.add(subject.getID());
+        }
+    }
+
+    @Override
+    public void end(Context ctx) throws Exception {
+        if (itemsToReplicate.isEmpty()) {
+            return;
+        }
+
+        for (UUID itemId : itemsToReplicate) {
+            LOGGER.info("Item {} recebido para replicação", itemId);
+        }
+
+        itemsToReplicate.clear();
+    }
+
+    @Override
+    public void finish(Context ctx) throws Exception {
+    }
+
+}
