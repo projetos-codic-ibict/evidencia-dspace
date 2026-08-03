@@ -253,7 +253,9 @@
     <field name="_nest_path_" type="_nest_path_" indexed="true" stored="true" />
 
     <field name="vector" type="knn_vector" indexed="true" stored="false" />
+    <!-- 
     <field name="vector_multivalued" type="knn_vector" indexed="true" stored="false" multiValued="true" />
+    -->
 
     <!-- catchall field, containing all other searchable text fields (implemented
         via copyField further on in this schema  -->
