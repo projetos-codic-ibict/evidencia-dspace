@@ -47,7 +47,6 @@ public class EmbeddingApiClient implements InitializingBean {
     private static final int DEFAULT_TIMEOUT_MS = 10_000;
     private static final int DEFAULT_RETRY_MAX_ATTEMPTS = 3;
     private static final int DEFAULT_RETRY_DELAY_MS = 500;
-    private static final int DEFAULT_VECTOR_DIMENSION = 1024;
     private static final String DEFAULT_ENCODING_FORMAT = "float";
 
     @Autowired(required = true)
@@ -76,9 +75,7 @@ public class EmbeddingApiClient implements InitializingBean {
             model = configurationService.getProperty(MODEL);
         }
 
-        int expectedDimension = configurationService.getIntProperty(
-                VECTOR_DIMENSION,
-                DEFAULT_VECTOR_DIMENSION);
+        Integer expectedDimension = getConfiguredVectorDimension();
         String encodingFormat = configurationService.getProperty(
                 ENCODING_FORMAT,
                 DEFAULT_ENCODING_FORMAT);
@@ -177,7 +174,7 @@ public class EmbeddingApiClient implements InitializingBean {
                 throw new IOException("Embedding vector is empty.");
             }
 
-            if (expectedDimension > 0 &&
+                if (expectedDimension != null &&
                     vector.size() != expectedDimension) {
 
                 throw new IOException("""
@@ -193,6 +190,31 @@ public class EmbeddingApiClient implements InitializingBean {
         }
 
         return List.copyOf(vectors);
+    }
+
+    private Integer getConfiguredVectorDimension() {
+        String configuredDimension = configurationService.getProperty(VECTOR_DIMENSION);
+        if (StringUtils.isBlank(configuredDimension)) {
+            return null;
+        }
+
+        int parsedDimension;
+        try {
+            parsedDimension = Integer.parseInt(configuredDimension.trim());
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException(
+                    "Invalid value for " + VECTOR_DIMENSION + ": " + configuredDimension,
+                    exception);
+        }
+
+        if (parsedDimension <= 0) {
+            log.warn("{} must be greater than zero. Current value: {}. Dimension will be omitted.",
+                    VECTOR_DIMENSION,
+                    configuredDimension);
+            return null;
+        }
+
+        return parsedDimension;
     }
 
     private boolean isRetryableStatus(int statusCode) {
