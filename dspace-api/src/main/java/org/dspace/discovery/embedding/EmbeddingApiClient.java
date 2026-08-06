@@ -12,6 +12,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +39,7 @@ public class EmbeddingApiClient implements InitializingBean {
     private static final Logger log = LogManager.getLogger(EmbeddingApiClient.class);
 
     private static final String MODEL = "embeddings.model";
-    private static final String ENCODING_FORMAT = "embeddings.encoding_format";
+    private static final String ENCODING_FORMAT = "embeddings.encoding.format";
     private static final String TIMEOUT_MS = "embeddings.api.timeout.ms";
     private static final String RETRY_MAX_ATTEMPTS = "embeddings.api.retry.max.attempts";
     private static final String RETRY_DELAY_MS = "embeddings.api.retry.delay.ms";
@@ -47,7 +48,6 @@ public class EmbeddingApiClient implements InitializingBean {
     private static final int DEFAULT_TIMEOUT_MS = 10_000;
     private static final int DEFAULT_RETRY_MAX_ATTEMPTS = 3;
     private static final int DEFAULT_RETRY_DELAY_MS = 500;
-    private static final String DEFAULT_ENCODING_FORMAT = "float";
 
     @Autowired(required = true)
     private ConfigurationService configurationService;
@@ -62,6 +62,7 @@ public class EmbeddingApiClient implements InitializingBean {
                 DEFAULT_TIMEOUT_MS);
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofMillis(timeoutMs))
+            .version(HttpClient.Version.HTTP_1_1)
                 .build();
     }
 
@@ -74,11 +75,12 @@ public class EmbeddingApiClient implements InitializingBean {
         if (StringUtils.isBlank(model)) {
             model = configurationService.getProperty(MODEL);
         }
+        model = StringUtils.trimToNull(model);
 
         Integer expectedDimension = getConfiguredVectorDimension();
-        String encodingFormat = configurationService.getProperty(
-                ENCODING_FORMAT,
-                DEFAULT_ENCODING_FORMAT);
+        String encodingFormat = getConfiguredVectorEncodingFormat();
+
+        apiUrl = StringUtils.trimToNull(apiUrl);
 
         if (StringUtils.isBlank(apiUrl) || StringUtils.isBlank(model)) {
             return Collections.emptyList();
@@ -100,12 +102,15 @@ public class EmbeddingApiClient implements InitializingBean {
                 expectedDimension,
                 encodingFormat);
 
+        String requestBody = objectMapper.writeValueAsString(requestPayload);
+
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(apiUrl))
-                .header("Content-Type", "application/json")
+            .version(HttpClient.Version.HTTP_1_1)
+            .header("Content-Type", "application/json; charset=UTF-8")
+            .header("Accept", "application/json")
                 .timeout(Duration.ofMillis(timeoutMs))
-                .POST(HttpRequest.BodyPublishers.ofString(
-                        objectMapper.writeValueAsString(requestPayload)));
+            .POST(HttpRequest.BodyPublishers.ofString(requestBody, StandardCharsets.UTF_8));
 
         if (StringUtils.isNotBlank(apiKey)) {
             requestBuilder.header("Authorization", "Bearer " + apiKey);
@@ -174,7 +179,7 @@ public class EmbeddingApiClient implements InitializingBean {
                 throw new IOException("Embedding vector is empty.");
             }
 
-                if (expectedDimension != null &&
+            if (expectedDimension != null &&
                     vector.size() != expectedDimension) {
 
                 throw new IOException("""
@@ -215,6 +220,14 @@ public class EmbeddingApiClient implements InitializingBean {
         }
 
         return parsedDimension;
+    }
+
+    private String getConfiguredVectorEncodingFormat() {
+        String configuredFormat = configurationService.getProperty(ENCODING_FORMAT);
+        if (StringUtils.isBlank(configuredFormat)) {
+            return null;
+        }
+        return configuredFormat.trim();
     }
 
     private boolean isRetryableStatus(int statusCode) {
