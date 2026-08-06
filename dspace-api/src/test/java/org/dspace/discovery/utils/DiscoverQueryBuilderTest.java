@@ -196,7 +196,8 @@ public class DiscoverQueryBuilderTest {
                 .buildQuery(context, scope, discoveryConfiguration, query, Collections.singletonList(searchFilter),
                             "item", pageSize, offset, sortProperty, sortDirection);
 
-        assertThat(discoverQuery.getFilterQueries(), containsInAnyOrder("archived:true", "subject:\"Java\""));
+        assertThat(discoverQuery.getFilterQueries(),
+                   containsInAnyOrder("archived:true", "{!tag=subject}subject:\"Java\""));
         assertThat(discoverQuery.getQuery(), is(query));
         assertThat(discoverQuery.getDSpaceObjectFilters(), contains(IndexableItem.TYPE));
         assertThat(discoverQuery.getSortField(), is("dc.title_sort"));
@@ -215,6 +216,30 @@ public class DiscoverQueryBuilderTest {
                 discoverHitHighlightingFieldMatcher(new DiscoverHitHighlightingField("dc.title", 0, 3)),
                 discoverHitHighlightingFieldMatcher(new DiscoverHitHighlightingField("fulltext", 0, 3))
         ));
+    }
+
+    @Test
+    public void testBuildQueryMultipleValuesForSameFacetAreCombinedWithOr() throws Exception {
+        QueryBuilderSearchFilter secondValue = new QueryBuilderSearchFilter("subject", "equals", "Kotlin");
+
+        DiscoverQuery discoverQuery = queryBuilder
+                .buildQuery(context, scope, discoveryConfiguration, query, Arrays.asList(searchFilter, secondValue),
+                            "item", pageSize, offset, sortProperty, sortDirection);
+
+        assertThat(discoverQuery.getFilterQueries(), containsInAnyOrder(
+                "archived:true", "{!tag=subject}(subject:\"Java\" OR subject:\"Kotlin\")"));
+    }
+
+    @Test
+    public void testBuildQueryDateFilterIsNotTagged() throws Exception {
+        QueryBuilderSearchFilter dateFilter = new QueryBuilderSearchFilter("dateIssued", "equals", "2020");
+
+        DiscoverQuery discoverQuery = queryBuilder
+                .buildQuery(context, scope, discoveryConfiguration, query, Collections.singletonList(dateFilter),
+                            "item", pageSize, offset, sortProperty, sortDirection);
+
+        assertThat(discoverQuery.getFilterQueries(),
+                   containsInAnyOrder("archived:true", "dateIssued:\"2020\""));
     }
 
     @Test
@@ -315,7 +340,8 @@ public class DiscoverQueryBuilderTest {
                                                                    query, Collections.singletonList(searchFilter),
                                                                    "item", pageSize, offset, "subject");
 
-        assertThat(discoverQuery.getFilterQueries(), containsInAnyOrder("archived:true", "subject:\"Java\""));
+        assertThat(discoverQuery.getFilterQueries(),
+                   containsInAnyOrder("archived:true", "{!tag=subject}subject:\"Java\""));
         assertThat(discoverQuery.getQuery(), is(query));
         assertThat(discoverQuery.getDSpaceObjectFilters(), contains(IndexableItem.TYPE));
         assertThat(discoverQuery.getSortField(), isEmptyOrNullString());

@@ -918,7 +918,9 @@ public class SolrServiceImpl implements SearchService, IndexingService {
                 if (facetFieldConfig.getPrefix() != null) {
                     field = transformPrefixFacetField(facetFieldConfig, facetFieldConfig.getField(), false);
                 }
-                solrQuery.addFacetField(field);
+                // Exclude this field's own filter (tagged in DiscoverQueryBuilder#convertFiltersToString)
+                // when computing its facet counts, so selecting a value doesn't hide its siblings.
+                solrQuery.addFacetField("{!ex=" + facetFieldConfig.getField() + "}" + field);
 
                 // Setting the facet limit in this fashion ensures that each facet can have its own max
                 solrQuery
