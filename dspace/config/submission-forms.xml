@@ -1570,7 +1570,7 @@
                 </field>
             </row>
 
-            <row>
+            <!-- <row>
                 <field>
                     <dc-schema>local</dc-schema>
                     <dc-element>tipodocumento</dc-element>
@@ -1581,7 +1581,7 @@
                     <hint>Selecione o tipo principal de documento da avaliação.</hint>
                     <required>O campo Tipo de Documento é obrigatório.</required>
                 </field>
-            </row>
+            </row> -->
 
             <!-- SEÇÃO 2 — INFORMAÇÕES INSTITUCIONAIS -->
             <row>
@@ -1744,6 +1744,99 @@
             </row>
 
         </form>
+        
+            <!-- formulários para tipos de documento -->
+
+        <form name="tipo-de-documento-conselho-de-monitoramento">
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>tipodocumento</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Tipo de Documento</label>
+                    <input-type value-pairs-name="tipo-de-documento-conselho-de-monitoramento">dropdown</input-type>
+                    <hint>Selecione o tipo principal de documento da avaliação.</hint>
+                    <required>O campo Tipo de Documento é obrigatório.</required>
+                </field>
+            </row>
+        </form>
+
+        <form name="tipo-de-documento-orgaos-publicos-parceiros-avaliacao-politicas-publicas">
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>tipodocumento</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Tipo de Documento</label>
+                    <input-type value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-avaliacao-politicas-publicas">dropdown</input-type>
+                    <hint>Selecione o tipo principal de documento da avaliação.</hint>
+                    <required>O campo Tipo de Documento é obrigatório.</required>
+                </field>
+            </row>
+        </form>
+
+        <form name="tipo-de-documento-orgaos-publicos-parceiros-sintese-de-evidencias">
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>tipodocumento</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Tipo de Documento</label>
+                    <input-type value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-sintese-de-evidencias">dropdown</input-type>
+                    <hint>Selecione o tipo principal de documento da avaliação.</hint>
+                    <required>O campo Tipo de Documento é obrigatório.</required>
+                </field>
+            </row>
+        </form>
+
+        <form name="tipo-de-documento-orgaos-publicos-parceiros-producao-cientifica">
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>tipodocumento</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Tipo de Documento</label>
+                    <input-type value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-producao-cientifica">dropdown</input-type>
+                    <hint>Selecione o tipo principal de documento da avaliação.</hint>
+                    <required>O campo Tipo de Documento é obrigatório.</required>
+                </field>
+            </row>
+        </form>
+
+        <form name="tipo-de-documento-orgaos-publicos-parceiros-controle">
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>tipodocumento</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Tipo de Documento</label>
+                    <input-type value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-controle">dropdown</input-type>
+                    <hint>Selecione o tipo principal de documento da avaliação.</hint>
+                    <required>O campo Tipo de Documento é obrigatório.</required>
+                </field>
+            </row>
+        </form>
+
+        <form name="tipo-de-documento-orgaos-publicos-parceiros-metodos-e-qualidade">
+            <row>
+                <field>
+                    <dc-schema>local</dc-schema>
+                    <dc-element>tipodocumento</dc-element>
+                    <dc-qualifier></dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Tipo de Documento</label>
+                    <input-type value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-metodos-e-qualidade">dropdown</input-type>
+                    <hint>Selecione o tipo principal de documento da avaliação.</hint>
+                    <required>O campo Tipo de Documento é obrigatório.</required>
+                </field>
+            </row>
+        </form>
+
 
     </form-definitions>
 
@@ -2720,6 +2813,123 @@
             </pair>
         </value-pairs>
 
+        <value-pairs value-pairs-name="tipo-de-documento-conselho-de-monitoramento" dc-term="local_tipodocumento">
+            <pair>
+                <displayed-value>Relatório de Avaliação</displayed-value>
+                <stored-value>Relatório de Avaliação</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Relatório de Recomendações</displayed-value>
+                <stored-value>Relatório de Recomendações</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Resumo Executivo / Sumário Executivo</displayed-value>
+                <stored-value>Resumo Executivo / Sumário Executivo</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Resumo de 2 Páginas / One-page Report</displayed-value>
+                <stored-value>Resumo de 2 Páginas / One-page Report</stored-value>
+            </pair>
+        </value-pairs>
+
+        <value-pairs value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-avaliacao-politicas-publicas" dc-term="local_tipodocumento">
+            <pair>
+                <displayed-value>Relatório de Avaliação</displayed-value>
+                <stored-value>Relatório de Avaliação</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Relatório de Recomendações</displayed-value>
+                <stored-value>Relatório de Recomendações</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Resumo Executivo / Sumário Executivo</displayed-value>
+                <stored-value>Resumo Executivo / Sumário Executivo</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Resumo de 2 Páginas / One-page Report</displayed-value>
+                <stored-value>Resumo de 2 Páginas / One-page Report</stored-value>
+            </pair>
+        </value-pairs>
+
+        <value-pairs value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-sintese-de-evidencias" dc-term="local_tipodocumento">
+            <pair>
+                <displayed-value>Policy brief</displayed-value>
+                <stored-value>Policy brief</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Síntese de evidências</displayed-value>
+                <stored-value>Síntese de evidências</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Revisão sistemática</displayed-value>
+                <stored-value>Revisão sistemática</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Metanálise</displayed-value>
+                <stored-value>Metanálise</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Mapa de evidências</displayed-value>
+                <stored-value>Mapa de evidências</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Scoping review</displayed-value>
+                <stored-value>Scoping review</stored-value>
+            </pair>
+        </value-pairs>
+
+        <value-pairs value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-producao-cientifica" dc-term="local_tipodocumento">
+            <pair>
+                <displayed-value>Livro</displayed-value>
+                <stored-value>Livro</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Teses e dissertações</displayed-value>
+                <stored-value>Teses e dissertações</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Artigo acadêmico</displayed-value>
+                <stored-value>Artigo acadêmico</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Texto para discussão</displayed-value>
+                <stored-value>Texto para discussão</stored-value>
+            </pair>
+        </value-pairs>
+
+        <value-pairs value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-controle" dc-term="local_tipodocumento">
+            <pair>
+                <displayed-value>Relatório de auditoria</displayed-value>
+                <stored-value>Relatório de auditoria</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Relatório de monitoramento</displayed-value>
+                <stored-value>Relatório de monitoramento</stored-value>
+            </pair>
+        </value-pairs>
+
+        <value-pairs value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-metodos-e-qualidade" dc-term="local_tipodocumento">
+            <pair>
+                <displayed-value>Meta-avaliação</displayed-value>
+                <stored-value>Meta-avaliação</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Guia metodológico</displayed-value>
+                <stored-value>Guia metodológico</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Guia referencial e padrão de qualidade</displayed-value>
+                <stored-value>Guia referencial e padrão de qualidade</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Documento de sistematização metodológica</displayed-value>
+                <stored-value>Documento de sistematização metodológica</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Estudos sobre métodos de avaliação</displayed-value>
+                <stored-value>Estudos sobre métodos de avaliação</stored-value>
+            </pair>
+        </value-pairs>
     </form-value-pairs>
 
 </input-forms>
