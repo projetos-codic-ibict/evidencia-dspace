@@ -77,13 +77,13 @@
              Cobre automaticamente Col 01 (123456789/6) a Col 06 (123456789/11). -->
         <name-map community-handle="123456789/1" submission-name="rdapp"/>
 
-        <name-map collection-handle="123456789/96" submission-name="avaliacao-politicas-publicas-conselho-de-monitoramento"/>
+        <name-map collection-handle="123456789/2" submission-name="avaliacao-politicas-publicas-conselho-de-monitoramento"/>
 
-        <name-map collection-handle="123456789/97" submission-name="avaliacao-politicas-publicas-orgaos-publicos-parceiros"/>
-        <name-map collection-handle="123456789/98" submission-name="sintese-de-evidencias-orgaos-publicos-parceiros"/>
-        <name-map collection-handle="123456789/99" submission-name="producao-cientifica-orgaos-publicos-parceiros"/>
-        <name-map collection-handle="123456789/100" submission-name="controle-orgaos-publicos-parceiros"/>
-        <name-map collection-handle="123456789/101" submission-name="metodos-e-qualidade-orgaos-publicos-parceiros"/>
+        <name-map collection-handle="123456789/4" submission-name="avaliacao-politicas-publicas-orgaos-publicos-parceiros"/>
+        <name-map collection-handle="123456789/5" submission-name="sintese-de-evidencias-orgaos-publicos-parceiros"/>
+        <name-map collection-handle="123456789/6" submission-name="producao-cientifica-orgaos-publicos-parceiros"/>
+        <name-map collection-handle="123456789/7" submission-name="controle-orgaos-publicos-parceiros"/>
+        <name-map collection-handle="123456789/8" submission-name="metodos-e-qualidade-orgaos-publicos-parceiros"/>
         
 
     </submission-map>
