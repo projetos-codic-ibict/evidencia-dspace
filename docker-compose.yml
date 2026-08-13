@@ -100,8 +100,6 @@ services:
     - published: 8983
       target: 8983
     working_dir: /var/solr/data
-    environment:
-      SOLR_OPTS: "${SOLR_OPTS:-} -Dsolr.security.allow.urls.enabled=false"
     volumes:
     # Keep Solr data directory between reboots
     - solr_data:/var/solr/data

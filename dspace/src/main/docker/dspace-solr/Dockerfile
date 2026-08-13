@@ -22,6 +22,10 @@ FROM scratch AS solrconfigs
 # NOTE: Cannot use the "-slim" image because it doesn't include the extra modules needed for DSpace (e.g. icu4j)
 FROM ${SOLR_IMAGE}:${SOLR_VERSION}
 
+# Customize SOLR_OPTS to enable "<lib>" tags in solrconfig.xml files
+# Also set several environment variables to save configset paths used below
+ENV SOLR_OPTS="-Dsolr.config.lib.enabled=true" \
+
 # Solr 10 no longer supports <lib/> entries in solrconfig.xml. Load the
 # analysis module explicitly, which provides the ICU analysis classes DSpace uses.
 # The remaining variables save the configset paths used below.
