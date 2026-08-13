@@ -24,7 +24,7 @@ FROM ${SOLR_IMAGE}:${SOLR_VERSION}
 
 # Customize SOLR_OPTS to enable "<lib>" tags in solrconfig.xml files
 # Also set several environment variables to save configset paths used below
-ENV SOLR_OPTS="-Dsolr.config.lib.enabled=true -Dsolr.security.allow.urls.enabled=false" \
+ENV SOLR_OPTS="-Dsolr.config.lib.enabled=true -Dsolr.security.allow.urls.enabled=false"
 
 # Solr 10 no longer supports <lib/> entries in solrconfig.xml. Load the
 # analysis module explicitly, which provides the ICU analysis classes DSpace uses.
