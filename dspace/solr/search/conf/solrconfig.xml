@@ -135,6 +135,25 @@
          </lst>
     </requestHandler>
 
+    <!-- 
+    <requestHandler name="/combined" class="solr.CombinedQuerySearchHandler">
+        <lst name="defaults">
+            <str name="df">search_text</str>
+            <str name="q.op">AND</str>
+            <str name="echoParams">explicit</str>
+        </lst>
+        <arr name="last-components">
+            <str>spellcheck</str>
+        </arr>
+    </requestHandler>
+    -->
+
+    <!-- 
+    <searchComponent class="solr.CombinedQueryComponent" name="combined_query">
+        <int name="maxCombinerQueries">2</int>
+    </searchComponent>
+    -->
+
     <!-- IndexBasedSpellChecker uses Solr index as basis for a parallel index used for spell checking -->
     <searchComponent name="spellcheck" class="solr.SpellCheckComponent">
         <str name="queryAnalyzerFieldType">textSpell</str>

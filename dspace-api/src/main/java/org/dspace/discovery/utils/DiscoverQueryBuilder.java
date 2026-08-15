@@ -14,7 +14,9 @@ import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -431,10 +433,24 @@ public class DiscoverQueryBuilder implements InitializingBean {
         return queryArgs;
     }
 
+    /**
+     * Converts the given search filters into Solr filter queries (fq).
+     *
+     * Multiple values selected within the same facet field are combined with OR into a single, tagged
+     * fq (disjunctive multi-select faceting) instead of one fq per value, which Solr would otherwise
+     * AND together and which silently zeroes out results for single-valued fields. The tag matches the
+     * {!ex=} exclusion applied to that field's own facet.field request in
+     * {@link SolrServiceImpl#resolveToSolrQuery}, so the facet keeps listing all of its other values
+     * (with real counts) instead of only the ones already selected.
+     *
+     * Negated filters (operators starting with "not") are excluded from this grouping and stay
+     * individually AND-combined, since OR-ing exclusions together would change their meaning.
+     */
     private String[] convertFiltersToString(Context context, DiscoveryConfiguration discoveryConfiguration,
                                             List<QueryBuilderSearchFilter> searchFilters)
             throws IllegalArgumentException {
         ArrayList<String> filterQueries = new ArrayList<>(CollectionUtils.size(searchFilters));
+        Map<String, List<String>> clausesByField = new LinkedHashMap<>();
 
         try {
             for (QueryBuilderSearchFilter searchFilter : CollectionUtils.emptyIfNull(searchFilters)) {
@@ -457,12 +473,29 @@ public class DiscoverQueryBuilder implements InitializingBean {
                         discoveryConfiguration
                 );
 
-                if (filterQuery != null) {
-                    filterQueries.add(filterQuery.getFilterQuery());
+                if (filterQuery == null || StringUtils.isBlank(filterQuery.getFilterQuery())) {
+                    continue;
+                }
+
+                String clause = filterQuery.getFilterQuery();
+                boolean isDateFilter = DiscoveryConfigurationParameters.TYPE_DATE.equals(filter.getType());
+                if (clause.startsWith("-") || isDateFilter) {
+                    // Date ranges keep their original, untouched fq: FacetYearRange looks up previously
+                    // selected ranges by matching the raw "<field>.year:" prefix, which the {!tag=} we add
+                    // below would break.
+                    filterQueries.add(clause);
+                } else {
+                    clausesByField.computeIfAbsent(field, f -> new ArrayList<>()).add(clause);
                 }
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException("There was a problem parsing the search filters.", e);
+        }
+
+        for (Map.Entry<String, List<String>> fieldClauses : clausesByField.entrySet()) {
+            List<String> clauses = fieldClauses.getValue();
+            String combined = clauses.size() == 1 ? clauses.get(0) : "(" + String.join(" OR ", clauses) + ")";
+            filterQueries.add("{!tag=" + fieldClauses.getKey() + "}" + combined);
         }
 
         return filterQueries.toArray(new String[filterQueries.size()]);

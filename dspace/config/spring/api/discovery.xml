@@ -68,6 +68,14 @@
         <value>dc.contributor.editor</value>
     </util:list>
 
+    <!--embedding-->
+    <bean id="solrVectorIndexPlugin" class="org.dspace.discovery.SolrVectorIndexPlugin" scope="prototype"/>
+    <bean id="solrSemanticSearchPlugin" class="org.dspace.discovery.SolrSemanticSearchPlugin" scope="prototype"/>
+    <bean id="solrHybridSearchPlugin" class="org.dspace.discovery.SolrHybridSearchPlugin" scope="prototype"/>
+    <bean id="embeddingService" class="org.dspace.discovery.embedding.EmbeddingService"/>
+    <bean id="embeddingApiClient" class="org.dspace.discovery.embedding.EmbeddingApiClient" autowire-candidate="true"/>
+    <bean id="chunkingService" class="org.dspace.discovery.embedding.ChunkingService"/>
+
     <alias name="solrServiceResourceIndexPlugin" alias="org.dspace.discovery.SolrServiceResourceRestrictionPlugin"/>
 
     <!-- Additional indexing plugin make filtering by has content in original bundle (like pdf's, images) posible via SOLR -->
