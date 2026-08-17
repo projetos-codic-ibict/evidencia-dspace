@@ -2544,6 +2544,10 @@
                 <displayed-value>Ministério do Desenvolvimento Social e Combate à Fome - MDS</displayed-value>
                 <stored-value>Ministério do Desenvolvimento Social e Combate à Fome - MDS</stored-value>
             </pair>
+            <pair>
+                <displayed-value>Ministério do Planejamento e Orçamento - MPO</displayed-value>
+                <stored-value>Ministério do Planejamento e Orçamento - MPO</stored-value>
+            </pair>
         </value-pairs>
 
         <value-pairs value-pairs-name="rdapp-areas-tematicas" dc-term="local_areatematica">
@@ -2602,6 +2606,10 @@
             <pair>
                 <displayed-value>Trabalho e Emprego</displayed-value>
                 <stored-value>Trabalho e Emprego</stored-value>
+            </pair>
+            <pair>
+                <displayed-value>Demais áreas</displayed-value>
+                <stored-value>Demais áreas</stored-value>
             </pair>
         </value-pairs>
 
