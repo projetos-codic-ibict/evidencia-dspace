@@ -18,23 +18,35 @@ import org.dspace.core.Context;
 import org.dspace.event.Consumer;
 import org.dspace.event.Event;
 import org.dspace.replication.service.ReplicationService;
+import org.dspace.services.ConfigurationService;
 import org.dspace.utils.DSpace;
 
 public class ReplicationIndexConsumer implements Consumer {
 
     private static final int SUPPORTED_EVENTS = Event.INSTALL;
+    private static final String CONSUMER_ENABLED_PROPERTY = "replication.consumer.enabled";
 
     private Set<UUID> itemsToReplicate;
     private ReplicationService replicationService;
+    private boolean enabled;
 
     @Override
     public void initialize() throws Exception {
+        enabled = getConfigurationService().getBooleanProperty(CONSUMER_ENABLED_PROPERTY, true);
+        if (!enabled) {
+            return;
+        }
+
         itemsToReplicate = new HashSet<>();
         replicationService = getReplicationService();
     }
 
     @Override
     public void consume(Context ctx, Event event) throws Exception {
+        if (!enabled) {
+            return;
+        }
+
         boolean isEventValid =
             event.getSubjectType() == Constants.ITEM && (event.getEventType() & SUPPORTED_EVENTS) != 0;
 
@@ -50,6 +62,10 @@ public class ReplicationIndexConsumer implements Consumer {
 
     @Override
     public void end(Context ctx) throws Exception {
+        if (!enabled) {
+            return;
+        }
+
         if (itemsToReplicate.isEmpty()) {
             return;
         }
@@ -72,5 +88,14 @@ public class ReplicationIndexConsumer implements Consumer {
      */
     protected ReplicationService getReplicationService() {
         return new DSpace().getSingletonService(ReplicationService.class);
+    }
+
+    /**
+     * Gets the configuration service used to enable or disable this consumer.
+     *
+     * @return the DSpace configuration service
+     */
+    protected ConfigurationService getConfigurationService() {
+        return new DSpace().getConfigurationService();
     }
 }
