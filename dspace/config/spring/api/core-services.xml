@@ -188,5 +188,7 @@
 
     <bean class="org.dspace.content.BitstreamLinkingServiceImpl"/>
 
-</beans>
+    <bean id="org.dspace.replication.service.ReplicationService"
+        class="org.dspace.replication.service.impl.ReplicationServiceImpl"/>
 
+</beans>

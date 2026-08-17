@@ -11,25 +11,26 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
 import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.event.Consumer;
 import org.dspace.event.Event;
+import org.dspace.replication.service.ReplicationService;
+import org.dspace.utils.DSpace;
 
 public class ReplicationIndexConsumer implements Consumer {
 
-    private static final Logger LOGGER = LogManager.getLogger();
     private static final int SUPPORTED_EVENTS = Event.INSTALL;
 
     private Set<UUID> itemsToReplicate;
+    private ReplicationService replicationService;
 
     @Override
     public void initialize() throws Exception {
         itemsToReplicate = new HashSet<>();
+        replicationService = getReplicationService();
     }
 
     @Override
@@ -54,7 +55,7 @@ public class ReplicationIndexConsumer implements Consumer {
         }
 
         for (UUID itemId : itemsToReplicate) {
-            LOGGER.info("Item {} recebido para replicação", itemId);
+            replicationService.replicateItem(itemId);
         }
 
         itemsToReplicate.clear();
@@ -64,4 +65,12 @@ public class ReplicationIndexConsumer implements Consumer {
     public void finish(Context ctx) throws Exception {
     }
 
+    /**
+     * Gets the service responsible for replicating items to the external API.
+     *
+     * @return item replication service
+     */
+    protected ReplicationService getReplicationService() {
+        return new DSpace().getSingletonService(ReplicationService.class);
+    }
 }
