@@ -19,6 +19,7 @@ import org.dspace.core.Context;
 import org.dspace.event.Event;
 import org.dspace.replication.service.ReplicationService;
 import org.dspace.services.ConfigurationService;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -41,6 +42,7 @@ public class ReplicationIndexConsumerTest {
         when(event.getSubject(context)).thenReturn(item);
         when(item.getID()).thenReturn(itemId);
         when(configurationService.getBooleanProperty("replication.consumer.enabled", true)).thenReturn(true);
+        when(configurationService.getLongProperty("replication.consumer.test-async-delay-ms", 0)).thenReturn(0L);
 
         ReplicationIndexConsumer consumer = new ReplicationIndexConsumer() {
             @Override
@@ -59,6 +61,53 @@ public class ReplicationIndexConsumerTest {
         consumer.end(context);
 
         verify(replicationService).replicateItem(itemId);
+    }
+
+    @Test
+    public void endSchedulesReplicationWhenDiagnosticDelayIsEnabled() throws Exception {
+        UUID itemId = UUID.fromString("6c14971d-a4ca-4b5e-a790-e5a73660f80f");
+        long delayMs = 5000L;
+
+        ReplicationService replicationService = mock(ReplicationService.class);
+        ConfigurationService configurationService = mock(ConfigurationService.class);
+        Context context = mock(Context.class);
+        Event event = mock(Event.class);
+        Item item = mock(Item.class);
+        UUID[] scheduledItemId = new UUID[1];
+        long[] scheduledDelayMs = new long[1];
+
+        when(event.getSubjectType()).thenReturn(Constants.ITEM);
+        when(event.getEventType()).thenReturn(Event.INSTALL);
+        when(event.getSubject(context)).thenReturn(item);
+        when(item.getID()).thenReturn(itemId);
+        when(configurationService.getBooleanProperty("replication.consumer.enabled", true)).thenReturn(true);
+        when(configurationService.getLongProperty("replication.consumer.test-async-delay-ms", 0))
+            .thenReturn(delayMs);
+
+        ReplicationIndexConsumer consumer = new ReplicationIndexConsumer() {
+            @Override
+            protected ReplicationService getReplicationService() {
+                return replicationService;
+            }
+
+            @Override
+            protected ConfigurationService getConfigurationService() {
+                return configurationService;
+            }
+
+            @Override
+            protected void scheduleReplicationForTest(UUID id, long delay) {
+                scheduledItemId[0] = id;
+                scheduledDelayMs[0] = delay;
+            }
+        };
+
+        consumer.initialize();
+        consumer.consume(context, event);
+        consumer.end(context);
+
+        Assert.assertEquals(itemId, scheduledItemId[0]);
+        Assert.assertEquals(delayMs, scheduledDelayMs[0]);
     }
 
     @Test

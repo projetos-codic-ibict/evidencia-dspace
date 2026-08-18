@@ -10,6 +10,8 @@ package org.dspace.replication;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
@@ -25,10 +27,12 @@ public class ReplicationIndexConsumer implements Consumer {
 
     private static final int SUPPORTED_EVENTS = Event.INSTALL;
     private static final String CONSUMER_ENABLED_PROPERTY = "replication.consumer.enabled";
+    private static final String TEST_ASYNC_DELAY_PROPERTY = "replication.consumer.test-async-delay-ms";
 
     private Set<UUID> itemsToReplicate;
     private ReplicationService replicationService;
     private boolean enabled;
+    private long testAsyncDelayMs;
 
     @Override
     public void initialize() throws Exception {
@@ -39,6 +43,8 @@ public class ReplicationIndexConsumer implements Consumer {
 
         itemsToReplicate = new HashSet<>();
         replicationService = getReplicationService();
+        testAsyncDelayMs = Math.max(0,
+                                    getConfigurationService().getLongProperty(TEST_ASYNC_DELAY_PROPERTY, 0));
     }
 
     @Override
@@ -71,7 +77,13 @@ public class ReplicationIndexConsumer implements Consumer {
         }
 
         for (UUID itemId : itemsToReplicate) {
-            replicationService.replicateItem(itemId);
+            if (testAsyncDelayMs > 0) 
+            {
+                scheduleReplicationForTest(itemId, testAsyncDelayMs);
+            } 
+            else {
+                replicationService.replicateItem(itemId);
+            }
         }
 
         itemsToReplicate.clear();
@@ -88,6 +100,20 @@ public class ReplicationIndexConsumer implements Consumer {
      */
     protected ReplicationService getReplicationService() {
         return new DSpace().getSingletonService(ReplicationService.class);
+    }
+
+    /**
+     * Schedules a delayed asynchronous replication.
+     *
+     * <p>It must remain disabled in normal operation: it does not provide transactional delivery guarantees.
+     * It merely lets the current transaction complete before the external API is called.</p>
+     *
+     * @param itemId item UUID to replicate
+     * @param delayMs delay in milliseconds
+     */
+    protected void scheduleReplicationForTest(UUID itemId, long delayMs) {
+        CompletableFuture.delayedExecutor(delayMs, TimeUnit.MILLISECONDS)
+                         .execute(() -> replicationService.replicateItem(itemId));
     }
 
     /**
