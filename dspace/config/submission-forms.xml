@@ -1632,6 +1632,7 @@
                     <input-type>onebox</input-type>
                     <hint>Selecione o município associado à instituição responsável pela avaliação.</hint>
                     <required>O campo Cidade é obrigatório.</required>
+                    <vocabulary closed="true">rdapp-cidades</vocabulary>
                 </field>
             </row>
 
