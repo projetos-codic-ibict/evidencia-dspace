@@ -54,9 +54,9 @@ COPY --from=ant_build /dspace $dspace__P__dir
 WORKDIR $dspace__P__dir
 # Give java extra memory (1GB)
 ENV JAVA_OPTS=-Xmx1000m
-# Install unzip for AIPs
+# Install unzip for AIPs and binaries needed by media processing workflows
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends unzip \
+    && apt-get install -y --no-install-recommends unzip imagemagick ghostscript \
     && apt-get purge -y --auto-remove \
     && rm -rf /var/lib/apt/lists/*
 
