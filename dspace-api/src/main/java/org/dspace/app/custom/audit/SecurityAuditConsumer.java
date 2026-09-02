@@ -91,7 +91,8 @@ public class SecurityAuditConsumer implements Consumer {
     private String getEventTypeText(int eventType) {
         switch (eventType) {
             case Event.CREATE: return "CREATE";
-            case Event.MODIFY: return "MODIFY";
+            case Event.MODIFY:
+            case Event.MODIFY_METADATA: return "MODIFY";
             case Event.DELETE: return "DELETE";
             case Event.ADD: return "ADD_MEMBER";
             case Event.REMOVE: return "REMOVE_MEMBER";
