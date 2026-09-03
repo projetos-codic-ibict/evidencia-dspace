@@ -47,6 +47,8 @@
         <property name="actions">
             <util:list>
                 <ref bean="reviewaction"/>
+
+
             </util:list>
         </property>
     </bean>
