@@ -75,6 +75,28 @@ public class AuditEventRestRepository extends DSpaceRestRepository<AuditEventRes
 
     }
 
+    /**
+     * Search audit events by subject type (RDAPP: usado pra focar a auditoria em EPerson/Group).
+     *
+     * @param types    comma-separated list of subject types (e.g. "EPerson,Group")
+     * @param pageable pagination info
+     * @return the matching audit events
+     */
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @SearchRestMethod(name = "findBySubjectType")
+    public Page<AuditEventRest> findBySubjectType(@Parameter(value = "types", required = true) String types,
+            Pageable pageable) {
+        returnNotFoundIfDisabled();
+        Context context = obtainContext();
+        Sort sort = pageable.getSort();
+        boolean asc = sort.isUnsorted() || (sort.isSorted() && sort.getOrderFor("timeStamp").isAscending());
+        String[] subjectTypes = types.split(",");
+        List<AuditEvent> events = auditSolrService.findEventsBySubjectType(subjectTypes, pageable.getPageSize(),
+                (int) pageable.getOffset(), asc);
+        long total = auditSolrService.countEventsBySubjectType(subjectTypes);
+        return converter.toRestPage(events, pageable, total, utils.obtainProjection());
+    }
+
     @Override
     public Class<AuditEventRest> getDomainClass() {
         return AuditEventRest.class;

@@ -32,6 +32,7 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
 import org.dspace.content.Bitstream;
@@ -436,6 +437,67 @@ public class AuditSolrServiceImpl implements AuditService {
             listResourceSyncEvent.add(rse);
         }
         return listResourceSyncEvent;
+    }
+
+    /**
+     * Return the list of events whose subject is one of the given DSpace object types
+     * (e.g. "EPerson", "Group"), most recent first unless asc is true.
+     *
+     * @param subjectTypes the subject types to filter by (RDAPP: focar em EPerson/Group)
+     * @param limit        the number of results to return
+     * @param offset       the offset for the pagination (0 based)
+     * @param asc          if true sort the result in ascending order (by timeStamp)
+     * @return the list of events matching the given subject types
+     */
+    public List<AuditEvent> findEventsBySubjectType(String[] subjectTypes, int limit, int offset,
+            boolean asc) {
+        SolrQuery solrQuery = new SolrQuery(buildSubjectTypeQuery(subjectTypes));
+        solrQuery.addSort(new SortClause(DATETIME_FIELD, asc ? ORDER.asc : ORDER.desc));
+        solrQuery.setRows(limit);
+        solrQuery.setStart(offset);
+        QueryResponse queryResponse;
+        try {
+            queryResponse = getSolr().query(solrQuery);
+        } catch (SolrServerException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        List<AuditEvent> events = new ArrayList<>();
+        for (SolrDocument sd : queryResponse.getResults()) {
+            events.add(getAuditEventFromSolrDoc(sd));
+        }
+        return events;
+    }
+
+    /**
+     * Count the events whose subject is one of the given DSpace object types.
+     *
+     * @param subjectTypes the subject types to filter by
+     * @return the total number of matching events
+     */
+    public long countEventsBySubjectType(String[] subjectTypes) {
+        SolrQuery solrQuery = new SolrQuery(buildSubjectTypeQuery(subjectTypes));
+        solrQuery.setRows(0);
+        QueryResponse queryResponse;
+        try {
+            queryResponse = getSolr().query(solrQuery);
+        } catch (SolrServerException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        return queryResponse.getResults().getNumFound();
+    }
+
+    private String buildSubjectTypeQuery(String[] subjectTypes) {
+        if (subjectTypes == null || subjectTypes.length == 0) {
+            return "*:*";
+        }
+        StringBuilder query = new StringBuilder(SUBJECT_TYPE_FIELD).append(":(");
+        for (int i = 0; i < subjectTypes.length; i++) {
+            if (i > 0) {
+                query.append(" OR ");
+            }
+            query.append(ClientUtils.escapeQueryChars(subjectTypes[i].trim()));
+        }
+        return query.append(")").toString();
     }
 
     public AuditEvent findEvent(Context context, UUID id) {
