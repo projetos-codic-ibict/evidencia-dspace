@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.dspace.app.custom.workflow.CustomXmlWorkflowServiceImpl;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.DCDate;
 import org.dspace.content.MetadataSchemaEnum;
@@ -63,18 +64,22 @@ public class CustomReviewAction extends ReviewAction {
             itemService.update(c, wfi.getItem());
 
             try {
-                Email email = Email.getEmail(I18nUtil.getEmailFilename(c.getCurrentLocale(), "return_for_adjustment"));
+                Email email = Email.getEmail(
+                        I18nUtil.getEmailFilename(I18nUtil.getEPersonLocale(submitter), "return_for_adjustment"));
                 email.addRecipient(submitter.getEmail());
-                email.addArgument(wfi.getItem().getName()); 
-                email.addArgument(wfi.getItem().getHandle()); 
-                email.addArgument(reason); 
+                email.addArgument(wfi.getItem().getName());
+                email.addArgument(wfi.getItem().getHandle());
+                email.addArgument(reason);
                 email.send();
             } catch (Exception e) {
                 log.error("Erro ao enviar e-mail de devolução para ajuste", e);
             }
 
-            XmlWorkflowServiceFactory.getInstance().getXmlWorkflowService()
-                .sendWorkflowItemBackSubmission(c, wfi, currentUser, provDescription, reason);
+            // Usa o serviço de workflow customizado (não o sendWorkflowItemBackSubmission nativo)
+            // pra devolver o item sem caracterizar rejeição: sem "Rejected by" na proveniência e
+            // sem o e-mail nativo de rejeição, que o nativo dispararia por dentro.
+            ((CustomXmlWorkflowServiceImpl) XmlWorkflowServiceFactory.getInstance().getXmlWorkflowService())
+                .sendWorkflowItemBackForAdjustment(c, wfi, currentUser);
 
             return new ActionResult(ActionResult.TYPE.TYPE_SUBMISSION_PAGE);
         }

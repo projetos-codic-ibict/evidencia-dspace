@@ -145,7 +145,7 @@
     <bean class="org.dspace.xmlworkflow.storedcomponents.PoolTaskServiceImpl"/>
     <bean class="org.dspace.xmlworkflow.storedcomponents.WorkflowItemRoleServiceImpl"/>
     <bean class="org.dspace.xmlworkflow.storedcomponents.XmlWorkflowItemServiceImpl"/>
-    <bean class="org.dspace.xmlworkflow.XmlWorkflowServiceImpl"/>
+    <bean class="org.dspace.app.custom.workflow.CustomXmlWorkflowServiceImpl"/>
     <bean class="org.dspace.xmlworkflow.WorkflowRequirementsServiceImpl"/>
 
     <!-- Discovery indexable object services -->
