@@ -145,6 +145,11 @@ public class AuditSolrServiceImpl implements AuditService {
      * @return true if the event is processable, false otherwise
      */
     private boolean isProcessableEvent(Event event) {
+        // HU009 CA09: CREATE de usuário/grupo não tem detail e ADD/REMOVE de membro usa EPERSON_EMAIL/DSO_NAME,
+        // então sem isso só DELETE e edição de metadado de grupo chegavam na trilha
+        if (event.getSubjectType() == Constants.EPERSON || event.getSubjectType() == Constants.GROUP) {
+            return true;
+        }
         List<DetailType> detailTypes = event.getDetailList().stream()
                 .map(EventDetail::getDetailType)
                 .toList();

@@ -617,6 +617,10 @@ public class EPersonServiceImpl extends DSpaceObjectServiceImpl<EPerson> impleme
             ePerson.clearModified();
         }
         if (ePerson.isMetadataModified()) {
+            // HU009 CA09: mesmo evento do GroupServiceImpl; sem ele editar nome não gerava auditoria
+            context.addEvent(new Event(Event.MODIFY_METADATA, Constants.EPERSON, ePerson.getID(),
+                ePerson.getMetadataEventDetails(), DetailType.DSO_SUMMARY,
+                getIdentifiers(context, ePerson)));
             ePerson.clearDetails();
         }
     }

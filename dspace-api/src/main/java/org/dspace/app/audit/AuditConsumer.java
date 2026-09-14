@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.dspace.app.audit.factory.AuditServiceFactory;
+import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.event.Consumer;
 import org.dspace.event.Event;
@@ -62,11 +63,16 @@ public class AuditConsumer implements Consumer {
      * @return true if the event is meaningful, false otherwise
      */
     private boolean isEventMeaningful(Event event) {
-        if (meaningfulEvents.contains(event.getEventType())) {
+        if (meaningfulEvents.contains(event.getEventType()) || isIdentityEvent(event)) {
             return true;
         }
         UUID relatedObjectId = event.getObjectID();
         return relatedObjectId != null;
+    }
+
+    // HU009 CA09: toda ação sobre usuário ou grupo é auditada, inclusive MODIFY sem objeto relacionado
+    private boolean isIdentityEvent(Event event) {
+        return event.getSubjectType() == Constants.EPERSON || event.getSubjectType() == Constants.GROUP;
     }
 
     @Override
