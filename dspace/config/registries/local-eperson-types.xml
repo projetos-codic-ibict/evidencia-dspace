@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+  - local-eperson-types.xml
+  -
+  - Metadados customizados do schema "eperson" (RDAPP/EvidencIA). O schema em si já é
+  - registrado por eperson-types.xml (base DSpace) — este arquivo só soma os elementos
+  - locais, sem editar o registry base.
+  -->
+<dspace-dc-types>
+
+    <dspace-header>
+        <title>Registro de metadados customizados do EPerson (RDAPP/EvidencIA)</title>
+    </dspace-header>
+
+    <dc-type>
+        <schema>eperson</schema>
+        <element>institution</element>
+        <scope_note>Instituição parceira à qual o usuário está vinculado (HU013 CA09). Lista controlada em rdapp-instituicoes.</scope_note>
+    </dc-type>
+
+</dspace-dc-types>
