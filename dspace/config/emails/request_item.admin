@@ -8,13 +8,14 @@
 ##             {4} the approver's email address
 ## See org.dspace.core.Email for information on the format of this file.
 ##
-#set($subject = "${config.get('dspace.name')}: Request for Open Access")
+#set($subject = "${config.get('dspace.name')}: Solitação para o acesso aberto")
 
-${params[3]}, with address ${params[4]},
-requested the following document/file to be in Open Access:
+${params[3]}, com o endereço ${params[4]},
+solicitou que o seguinte documento seja colocado em acesso aberto:
 
 Document Handle: ${params[1]}
 File ID: ${params[0]}
 Token: ${params[2]}
 
-The ${config.get('dspace.name')} Team
+Obrigado,
+Equipe do Repositório

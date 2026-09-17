@@ -6,19 +6,20 @@
 ## {3}  Description of task
 ## {4}  link to 'my DSpace' page
 ##
-#set($subject = "${config.get('dspace.name')}: You have a new task")
+#set($subject = "${config.get('dspace.name')}: Você tem uma nova tarefa no EvidencIA")
 
-A new item has been submitted:
+Um novo documento foi depositado:
 
-Title:        ${params[0]}
-Collection:   ${params[1]}
-Submitted by: ${params[2]}
+Título:        ${params[0]}
+Coleção:   ${params[1]}
+Submetido por: ${params[2]}
 
-${params[3]}
+A submissão deve ser verificada antes da inclusão no EvidencIA.
 
-To claim this task, please visit your "My${config.get('dspace.shortname')}"
-page:  ${params[4]}
+Para executar essa tarefa, por favor visite o "Meu EvidencIA" na
+página:  ${params[4]}
 
-Many thanks!
+Agradecemos sua colaboração!
 
-The ${config.get('dspace.name')} Team
+Obrigado,
+Equipe do Repositório

@@ -10,9 +10,9 @@
 ##
 ## See org.dspace.core.Email for information on the format of this file.
 ##
-#set($subject = "${config.get('dspace.name')}: Feedback Form Information")
+#set($subject = "Formulário de feedback")
 
-Comments:
+Comentários:
 
 ${params[6]}
 
@@ -24,4 +24,5 @@ Referring Page: ${params[3]}
 User Agent: ${params[4]}
 Session: ${params[5]}
 
-The ${config.get('dspace.name')} Team
+Obrigado,
+Equipe do Repositório

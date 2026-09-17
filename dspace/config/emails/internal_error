@@ -10,8 +10,8 @@
 ##
 ## See org.dspace.core.Email for information on the format of this file.
 ##
-#set($subject = "${config.get('dspace.name')}: Internal Server Error")
-An internal server error occurred on ${params[0]}:
+#set($subject = "${config.get('dspace.name')}: Erro interno do sistema")
+Um erro do sistema aconteceu em ${params[0]}:
 
 Date:       ${params[1]}
 Session ID: ${params[2]}
@@ -22,3 +22,6 @@ ${params[3]}
 
 Exception:
 ${params[4]}
+
+Obrigado,
+Equipe do Repositório

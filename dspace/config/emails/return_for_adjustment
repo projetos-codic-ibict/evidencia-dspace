@@ -1,12 +1,19 @@
-Subject: EvidencIA: Seu item foi devolvido para ajustes
+## E-mail de devolução para ajustes (Custom Workflow)
+##
+## Parâmetros passados pelo CustomReviewAction.java:
+## ${params[0]}  Nome do Item (wfi.getItem().getName())
+## ${params[1]}  Handle do Item (wfi.getItem().getHandle())
+## ${params[2]}  Motivo da devolução (reason)
+##
+#set($subject = "EvidencIA: Seu item foi devolvido para ajustes")
 
 Olá,
 
-O item "{0}" que você submeteu ao nosso repositório foi analisado e devolvido para o seu Workspace para que alguns ajustes sejam realizados.
+O item "${params[0]}" que você submeteu ao nosso repositório foi analisado e devolvido para o seu Workspace para que alguns ajustes sejam realizados.
 
 O avaliador deixou a seguinte mensagem com as orientações para correção:
 ---------------------------------------------------------
-{2}
+${params[2]}
 ---------------------------------------------------------
 
 Por favor, acesse o sistema, faça as alterações solicitadas e submeta o item novamente.

@@ -4,18 +4,19 @@
 ## {1}  Name of collection
 ## {2}  handle
 ##
-#set($subject = "${config.get('dspace.name')}: Submission Approved and Archived")
+#set($subject = "${config.get('dspace.name')}: Depósito aprovado")
 
-You submitted: ${params[0]}
+Você depositou: ${params[0]}
 
-To collection: ${params[1]}
+Na coleção: ${params[1]}
 
-Your submission has been accepted and archived in ${config.get('dspace.name')},
-and it has been assigned the following identifier:
+Seu depósito foi aceito e arquivado no EvidencIA
+e a ele foi destinado o seguinte identificador:
 ${params[2]}
 
-Please use this identifier when citing your submission.
+Por favor use este identificador para citar seu documento depositado.
 
-Many thanks!
+Agradecemos sua colaboração!
 
-The ${config.get('dspace.name')} Team
+Obrigado,
+Equipe do Repositório
