@@ -1,133 +1,54 @@
+# EvidencIA
 
-# DSpace
+**Repositório Digital de Avaliação de Políticas Públicas.**
 
-[![Build Status](https://github.com/DSpace/DSpace/workflows/Build/badge.svg)](https://github.com/DSpace/DSpace/actions?query=workflow%3ABuild)
+Este repositório contém o backend do EvidencIA, baseado no [DSpace](https://github.com/DSpace/DSpace). A interface web está no repositório [evidencia-dspace-angular](https://github.com/projetos-codic-ibict/evidencia-dspace-angular).
 
-[DSpace Documentation](https://wiki.lyrasis.org/display/DSDOC/) |
-[DSpace Releases](https://github.com/DSpace/DSpace/releases) |
-[DSpace Wiki](https://wiki.lyrasis.org/display/DSPACE/Home) |
-[Support](https://wiki.lyrasis.org/display/DSPACE/Support)
+## Instalação recomendada
 
-## Overview
+Para instalar e executar o EvidencIA, incluindo backend, interface e dependências, utilize o instalador Docker do projeto: [ibict-dspace-docker](https://github.com/projetos-codic-ibict/ibict-dspace-docker).
 
-DSpace open source software is a turnkey repository application used by more than
-2,000 organizations and institutions worldwide to provide durable access to digital resources.
-For more information, visit https://dspace.org/
+## Execução standalone para desenvolvimento
 
-DSpace consists of both a Java-based backend and an Angular-based frontend.
+Para executar o backend localmente, configure o arquivo `dspace/config/local.cfg` de acordo com o seu ambiente (banco de dados, diretórios e serviços necessários) e execute:
 
-* Backend (this codebase) provides a REST API, along with other machine-based interfaces (e.g. OAI-PMH, SWORD, etc)
-    * The REST Contract is at https://github.com/DSpace/RestContract
-* Frontend (https://github.com/DSpace/dspace-angular/) is the User Interface built on the REST API
+```bash
+mvn clean package
+cd dspace/target/dspace-installer
+ant fresh_install
+# Em instalações já existentes, use: ant update
+```
 
-## Downloads
+## Depuração no VS Code
 
-* Backend (REST API): https://github.com/DSpace/DSpace/releases
-* Frontend (User Interface): https://github.com/DSpace/dspace-angular/releases
+Após a instalação standalone, crie ou ajuste `.vscode/launch.json` e inicie a configuração pelo painel **Run and Debug** do VS Code:
 
-On our wiki, you may also find a [list of all past releases, including their current levels of support](https://wiki.lyrasis.org/spaces/DSPACE/pages/69010426/Releases).
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "EvidencIA Server",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "org.dspace.app.ServerBootApplication",
+      "cwd": "${workspaceFolder}/dspace/target/dspace-installer",
+      "vmArgs": "-Ddspace.dir=${workspaceFolder}/dspace/target/dspace-installer -Dlogging.config=file://${workspaceFolder}/dspace/target/dspace-installer/config/log4j2.xml",
+      "projectName": "server-boot"
+    }
+  ]
+}
+```
 
-## Documentation / Installation
+## Créditos
 
-Documentation for each release may be viewed online or downloaded via our [Documentation Wiki](https://wiki.lyrasis.org/display/DSDOC/).
+O EvidencIA é uma customização do [DSpace](https://github.com/DSpace/DSpace), projeto original mantido pela comunidade DSpace e pela Lyrasis.
 
-The latest DSpace Installation instructions are available at:
-https://wiki.lyrasis.org/display/DSDOC10x/Installing+DSpace
+A funcionalidade de busca semântica e híbrida do EvidencIA utiliza a implementação do projeto LA Referencia/Lyrasis. A implementação de referência está documentada em:
 
-Please be aware that, as a Java web application, DSpace requires a database (PostgreSQL)
-and a servlet container (usually Tomcat) in order to function.
-More information about these and all other prerequisites can be found in the Installation instructions above.
+- [DSpace — Semantic Search Overview](https://github.com/LA-Referencia-Lyrasis-Project/DSpace/blob/vector-search/docs/semantic-search-overview.md)
+- [dspace-angular — Semantic Search Overview](https://github.com/LA-Referencia-Lyrasis-Project/dspace-angular/blob/vector-search/docs/semantic-search-overview.md)
 
-## Running DSpace in Docker
+## Licença
 
-NOTE: At this time, we do not have production-ready Docker images for DSpace.
-That said, we do have quick-start Docker Compose scripts for development or testing purposes.
-
-See [Running DSpace with Docker Compose](dspace/src/main/docker-compose/README.md)
-
-## Contributing
-
-See our [Contributing guidelines](CONTRIBUTING.md) for general tips on contributing back to DSpace.
-
-For developers, we also provide guidelines for:
-* [Code Style](CODE_STYLE.md) - our code formatting rules
-* [Code Conventions](CODE_CONVENTIONS.md) - our established coding best practices
-
-## Getting Help
-
-DSpace provides public mailing lists where you can post questions or raise topics for discussion.
-We welcome everyone to participate in these lists:
-
-* [dspace-community@googlegroups.com](https://groups.google.com/d/forum/dspace-community) : General discussion about DSpace platform, announcements, sharing of best practices
-* [dspace-tech@googlegroups.com](https://groups.google.com/d/forum/dspace-tech) : Technical support mailing list. See also our guide for [How to troubleshoot an error](https://wiki.lyrasis.org/display/DSPACE/Troubleshoot+an+error).
-* [dspace-devel@googlegroups.com](https://groups.google.com/d/forum/dspace-devel) : Developers / Development mailing list
-
-Great Q&A is also available under the [DSpace tag on Stackoverflow](http://stackoverflow.com/questions/tagged/dspace)
-
-Additional support options are at https://wiki.lyrasis.org/display/DSPACE/Support
-
-DSpace also has an active service provider network. If you'd rather hire a service provider to
-install, upgrade, customize, or host DSpace, then we recommend getting in touch with one of our
-[Registered Service Providers](https://dspace.org/registered-service-providers/).
-
-## Issue Tracker
-
-DSpace uses GitHub to track issues:
-* Backend (REST API) issues: https://github.com/DSpace/DSpace/issues
-* Frontend (User Interface) issues: https://github.com/DSpace/dspace-angular/issues
-
-## Testing
-
-### Running Tests
-
-By default, in DSpace, Unit Tests and Integration Tests are disabled. However, they are
-run automatically by [GitHub Actions](https://github.com/DSpace/DSpace/actions?query=workflow%3ABuild) for all Pull Requests and code commits.
-
-* How to run both Unit Tests (via `maven-surefire-plugin`) and Integration Tests (via `maven-failsafe-plugin`):
-  ```
-  mvn install -DskipUnitTests=false -DskipIntegrationTests=false
-  ```
-* How to run _only_ Unit Tests:
-  ```
-  mvn test -DskipUnitTests=false
-  ```
-* How to run a *single* Unit Test
-  ```
-  # Run all tests in a specific test class
-  # NOTE: failIfNoTests=false is required to skip tests in other modules
-  mvn test -DskipUnitTests=false -Dtest=[full.package.testClassName] -DfailIfNoTests=false
-
-  # Run one test method in a specific test class
-  mvn test -DskipUnitTests=false -Dtest=[full.package.testClassName]#[testMethodName] -DfailIfNoTests=false
-  ```
-* How to run _only_ Integration Tests
-  ```
-  mvn install -DskipIntegrationTests=false
-  ```
-* How to run a *single* Integration Test
-  ```
-  # Run all integration tests in a specific test class
-  # NOTE: failIfNoTests=false is required to skip tests in other modules
-  mvn install -DskipIntegrationTests=false -Dit.test=[full.package.testClassName] -DfailIfNoTests=false
-
-  # Run one test method in a specific test class
-  mvn install -DskipIntegrationTests=false -Dit.test=[full.package.testClassName]#[testMethodName] -DfailIfNoTests=false
-  ```
-* How to run only tests of a specific DSpace module
-  ```
-  # Before you can run only one module's tests, other modules may need to be installed into your ~/.m2
-  cd [dspace-src]
-  mvn clean install
-
-  # Then, move into a module subdirectory, and run the test command
-  cd [dspace-src]/dspace-server-webapp
-  # Choose your test command from the lists above
-  ```
-
-## License
-
-DSpace source code is freely available under a standard [BSD 3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
-The full license is available in the [LICENSE](LICENSE) file or online at https://dspace.org/license/
-
-DSpace uses third-party libraries which may be distributed under different licenses. Those licenses are listed
-in the [LICENSES_THIRD_PARTY](LICENSES_THIRD_PARTY) file.
+Este projeto é disponibilizado sob a [licença BSD 3-Clause](LICENSE), a mesma licença do DSpace original. As licenças de dependências de terceiros estão em [LICENSES_THIRD_PARTY](LICENSES_THIRD_PARTY).
