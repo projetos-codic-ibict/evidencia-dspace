@@ -10,6 +10,7 @@ package org.dspace.authorize;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,8 @@ import java.util.UUID;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.logging.log4j.Logger;
+import org.dspace.app.audit.AuditEvent;
+import org.dspace.app.audit.factory.AuditServiceFactory;
 import org.dspace.authorize.dao.ResourcePolicyDAO;
 import org.dspace.authorize.service.AuthorizeService;
 import org.dspace.authorize.service.ResourcePolicyService;
@@ -91,6 +94,10 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
         policyToBeCreated.setEPerson(ePerson);
         policyToBeCreated.setGroup(group);
         ResourcePolicy resourcePolicy = resourcePolicyDAO.create(context, policyToBeCreated);
+        
+        // HU009 CA09: Auditoria de criação da política
+        auditPolicyChange(context, resourcePolicy, "CREATE");
+        
         return resourcePolicy;
     }
 
@@ -155,6 +162,10 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
     @Override
     public void delete(Context context, ResourcePolicy resourcePolicy) throws SQLException, AuthorizeException {
         // FIXME: authorizations
+        
+        // HU009 CA09: Auditoria de exclusão da política (Feito antes do delete para preservar os dados do objeto)
+        auditPolicyChange(context, resourcePolicy, "DELETE");
+
         // Remove ourself
         resourcePolicyDAO.delete(context, resourcePolicy);
 
@@ -333,6 +344,9 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
 
                 // FIXME: Check authorisation
                 resourcePolicyDAO.save(context, resourcePolicy);
+                
+                // HU009 CA09: Auditoria de atualização da política
+                auditPolicyChange(context, resourcePolicy, "MODIFY");
             }
 
             //Update the last modified timestamp of all related DSpace Objects
@@ -430,5 +444,48 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
             isMy = true;
         }
         return isMy || authorizeService.isAdmin(context, eperson, resourcePolicy.getdSpaceObject());
+    }
+    
+    /**
+     * HU009 CA09: Método auxiliar para formatar e persistir eventos de alteração
+     * de políticas/permissões diretamente no AuditService (Solr).
+     */
+    private void auditPolicyChange(Context context, ResourcePolicy policy, String action) {
+        try {
+            AuditEvent audit = new AuditEvent();
+            audit.setDatetime(new Date());
+            audit.setEventType("POLICY_" + action); // Ex: POLICY_CREATE, POLICY_MODIFY, POLICY_DELETE
+
+            // Registra quem executou a alteração (administrador/usuário logado)
+            if (context.getCurrentUser() != null) {
+                audit.setEpersonUUID(context.getCurrentUser().getID());
+            }
+
+            // Sujeito: O Grupo ou Usuário que está recebendo/perdendo a permissão
+            if (policy.getGroup() != null) {
+                audit.setSubjectType(Constants.typeText[Constants.GROUP]);
+                audit.setSubjectUUID(policy.getGroup().getID());
+            } else if (policy.getEPerson() != null) {
+                audit.setSubjectType(Constants.typeText[Constants.EPERSON]);
+                audit.setSubjectUUID(policy.getEPerson().getID());
+            } else {
+                return; // Política sem associado válido, ignora auditoria
+            }
+
+            // Objeto: A Comunidade, Coleção, Item ou Bitstream alvo da política
+            if (policy.getdSpaceObject() != null) {
+                audit.setObjectType(Constants.typeText[policy.getdSpaceObject().getType()]);
+                audit.setObjectUUID(policy.getdSpaceObject().getID());
+            }
+
+            // Detalhamento do que a política faz
+            String actionText = getActionText(policy);
+            audit.setDetail("Ação: " + actionText + " | Tipo: " + policy.getRpType());
+
+            // Envia o registro formatado direto para o Solr
+            AuditServiceFactory.getInstance().getAuditService().store(audit);
+        } catch (Exception e) {
+            log.error("Erro ao registrar auditoria de politica no Solr", e);
+        }
     }
 }
