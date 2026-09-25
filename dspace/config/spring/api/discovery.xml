@@ -4064,6 +4064,7 @@
 
     <!--Sort properties-->
     <bean id="sortScore" class="org.dspace.discovery.configuration.DiscoverySortFieldConfiguration">
+        <property name="metadataField" value="score"/>
         <property name="defaultSortOrder" value="desc"/>
     </bean>
 
