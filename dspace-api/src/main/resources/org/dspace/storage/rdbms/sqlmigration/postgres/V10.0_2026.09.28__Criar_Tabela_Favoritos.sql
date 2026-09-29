@@ -6,17 +6,7 @@
 -- http://www.dspace.org/license/
 --
 
--- 1. Criação do Metadado local.favorite
-INSERT INTO metadatafieldregistry (metadata_field_id, metadata_schema_id, element, qualifier, scope_note)
-VALUES (
-    getnextid('metadatafieldregistry'),
-    (SELECT metadata_schema_id FROM metadataschemaregistry WHERE short_id = 'local'),
-    'favorite',
-    NULL,
-    'Metadado para auxiliar na contagem ou marcacao de favoritos'
-);
-
--- 2. Criação da Tabela Relacional
+-- 1. Criação da Tabela Relacional
 CREATE SEQUENCE user_favorite_item_seq;
 
 CREATE TABLE user_favorite_item (
