@@ -13,15 +13,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.dspace.app.rest.utils.ContextUtil;
-import org.dspace.authorize.service.AuthorizeService;
 import org.dspace.content.Item;
 import org.dspace.content.service.ItemService;
-import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.eperson.EPerson;
 import org.dspace.favorite.service.FavoriteItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,9 +43,6 @@ public class FavoriteItemRestController {
 
     @Autowired
     private ItemService itemService;
-
-    @Autowired
-    private AuthorizeService authorizeService;
 
     @GetMapping("/ids")
     @PreAuthorize("isAuthenticated()")
@@ -76,9 +70,6 @@ public class FavoriteItemRestController {
         Item item = itemService.find(context, itemUuid);
         if (item == null) {
             return ResponseEntity.notFound().build();
-        }
-        if (!authorizeService.authorizeActionBoolean(context, item, Constants.READ)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         favoriteItemService.addFavorite(context, currentUser, item);
