@@ -19,6 +19,5 @@ public interface FavoriteItemDAO {
     void addFavorite(Context context, EPerson eperson, Item item) throws SQLException;
     void removeFavorite(Context context, EPerson eperson, Item item) throws SQLException;
     boolean isFavorite(Context context, EPerson eperson, Item item) throws SQLException;
-    List<Item> getFavoriteItems(Context context, EPerson eperson) throws SQLException;
     List<UUID> getFavoriteItemIds(Context context, EPerson eperson) throws SQLException;
 }

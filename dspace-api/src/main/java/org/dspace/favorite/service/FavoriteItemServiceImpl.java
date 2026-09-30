@@ -40,11 +40,6 @@ public class FavoriteItemServiceImpl implements FavoriteItemService {
     }
 
     @Override
-    public List<Item> getFavoriteItems(Context context, EPerson eperson) throws SQLException {
-        return favoriteItemDAO.getFavoriteItems(context, eperson);
-    }
-
-    @Override
     public List<UUID> getFavoriteItemIds(Context context, EPerson eperson) throws SQLException {
         return favoriteItemDAO.getFavoriteItemIds(context, eperson);
     }
