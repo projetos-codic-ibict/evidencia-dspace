@@ -50,7 +50,7 @@ public class FavoriteItemDAOImpl extends AbstractHibernateDAO<Item> implements F
 
     @Override
     public boolean isFavorite(Context context, EPerson eperson, Item item) throws SQLException {
-        String sql = "SELECT id FROM user_favorite_item WHERE eperson_id = :epersonId AND item_id = :itemId";
+        String sql = "SELECT 1 FROM user_favorite_item WHERE eperson_id = :epersonId AND item_id = :itemId LIMIT 1";
         NativeQuery query = getHibernateSession(context).createNativeQuery(sql);
         query.setParameter("epersonId", eperson.getID());
         query.setParameter("itemId", item.getID());
