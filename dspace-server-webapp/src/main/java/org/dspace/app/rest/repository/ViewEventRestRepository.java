@@ -9,15 +9,18 @@ package org.dspace.app.rest.repository;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.dspace.app.rest.exception.DSpaceBadRequestException;
+import org.dspace.app.rest.exception.TooManyRequestsException;
 import org.dspace.app.rest.exception.UnprocessableEntityException;
 import org.dspace.app.rest.model.ViewEventRest;
 import org.dspace.authorize.AuthorizeException;
@@ -34,6 +37,12 @@ import org.springframework.stereotype.Component;
 @Component(ViewEventRest.CATEGORY + "." + ViewEventRest.PLURAL_NAME)
 public class ViewEventRestRepository extends AbstractDSpaceRestRepository {
 
+    /** Usage event type used to log a "user copied the item's citation/reference" event. */
+    private static final String EVENT_TYPE_REFERENCE_COPY = "reference_copy";
+
+    /** Minimum interval between accepted reference-copy events from the same client for the same target. */
+    private static final long REFERENCE_COPY_MIN_INTERVAL_SECONDS = 3;
+
     @Autowired
     private EventService eventService;
 
@@ -41,6 +50,9 @@ public class ViewEventRestRepository extends AbstractDSpaceRestRepository {
     private ObjectMapper mapper;
 
     private final List<String> typeList = Arrays.asList(Constants.typeText);
+
+    /** Last accepted reference-copy event time, keyed by "clientIp:targetId". */
+    private final ConcurrentHashMap<String, Instant> lastReferenceCopyByClientAndTarget = new ConcurrentHashMap<>();
 
     public ViewEventRest createViewEvent() throws AuthorizeException, SQLException {
 
@@ -66,9 +78,30 @@ public class ViewEventRestRepository extends AbstractDSpaceRestRepository {
             throw new UnprocessableEntityException(
                 "The given targetId does not resolve to a DSpaceObject: " + viewEventRest.getTargetId());
         }
-        UsageEvent usageEvent = new UsageEvent(UsageEvent.Action.VIEW, req, context, dSpaceObject,
+
+        UsageEvent.Action action = UsageEvent.Action.VIEW;
+        if (EVENT_TYPE_REFERENCE_COPY.equalsIgnoreCase(viewEventRest.getEventType())) {
+            checkReferenceCopyRateLimit(req, viewEventRest.getTargetId().toString());
+            action = UsageEvent.Action.REFERENCE_COPY;
+        }
+
+        UsageEvent usageEvent = new UsageEvent(action, req, context, dSpaceObject,
                 viewEventRest.getReferrer());
         eventService.fireEvent(usageEvent);
         return viewEventRest;
+    }
+
+    /**
+     * Rejects reference-copy events sent faster than {@link #REFERENCE_COPY_MIN_INTERVAL_SECONDS} by the same
+     * client IP for the same target, to avoid a repeated/scripted click inflating the count.
+     */
+    private void checkReferenceCopyRateLimit(HttpServletRequest req, String targetId) {
+        String key = req.getRemoteAddr() + ":" + targetId;
+        Instant now = Instant.now();
+        Instant previous = lastReferenceCopyByClientAndTarget.put(key, now);
+        if (previous != null && now.minusSeconds(REFERENCE_COPY_MIN_INTERVAL_SECONDS).isBefore(previous)) {
+            throw new TooManyRequestsException(
+                "Too many reference-copy events for target " + targetId + ", please wait a few seconds");
+        }
     }
 }

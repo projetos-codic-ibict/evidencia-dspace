@@ -29,12 +29,15 @@ import org.dspace.core.Context;
 import org.dspace.handle.service.HandleService;
 import org.dspace.services.ConfigurationService;
 import org.dspace.statistics.Dataset;
+import org.dspace.statistics.ObjectCount;
+import org.dspace.statistics.SolrLoggerServiceImpl;
 import org.dspace.statistics.content.DatasetDSpaceObjectGenerator;
 import org.dspace.statistics.content.DatasetTimeGenerator;
 import org.dspace.statistics.content.DatasetTypeGenerator;
 import org.dspace.statistics.content.StatisticsDataVisits;
 import org.dspace.statistics.content.StatisticsListing;
 import org.dspace.statistics.content.StatisticsTable;
+import org.dspace.statistics.service.SolrLoggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
@@ -53,11 +56,15 @@ public class UsageReportUtils {
     @Autowired
     private HandleService handleService;
 
+    @Autowired
+    private SolrLoggerService solrLoggerService;
+
     public static final String TOTAL_VISITS_REPORT_ID = "TotalVisits";
     public static final String TOTAL_VISITS_PER_MONTH_REPORT_ID = "TotalVisitsPerMonth";
     public static final String TOTAL_DOWNLOADS_REPORT_ID = "TotalDownloads";
     public static final String TOP_COUNTRIES_REPORT_ID = "TopCountries";
     public static final String TOP_CITIES_REPORT_ID = "TopCities";
+    public static final String TOTAL_REFERENCE_COPIES_REPORT_ID = "TotalReferenceCopies";
 
     /**
      * Get list of usage reports that are applicable to the DSO (of given UUID)
@@ -81,6 +88,9 @@ public class UsageReportUtils {
         }
         if (dso instanceof Item || dso instanceof Bitstream) {
             usageReports.add(this.createUsageReport(context, dso, TOTAL_DOWNLOADS_REPORT_ID));
+        }
+        if (dso instanceof Item) {
+            usageReports.add(this.createUsageReport(context, dso, TOTAL_REFERENCE_COPIES_REPORT_ID));
         }
         return usageReports;
     }
@@ -119,10 +129,15 @@ public class UsageReportUtils {
                     usageReportRest = resolveTopCities(context, dso);
                     usageReportRest.setReportType(TOP_CITIES_REPORT_ID);
                     break;
+                case TOTAL_REFERENCE_COPIES_REPORT_ID:
+                    usageReportRest = resolveTotalReferenceCopies(context, dso);
+                    usageReportRest.setReportType(TOTAL_REFERENCE_COPIES_REPORT_ID);
+                    break;
                 default:
                     throw new ResourceNotFoundException("The given report id can't be resolved: " + reportId + "; " +
                                                         "available reports: TotalVisits, TotalVisitsPerMonth, " +
-                                                        "TotalDownloads, TopCountries, TopCities");
+                                                        "TotalDownloads, TopCountries, TopCities, " +
+                                                        "TotalReferenceCopies");
             }
             usageReportRest.setId(dso.getID() + "_" + reportId);
             return usageReportRest;
@@ -270,6 +285,32 @@ public class UsageReportUtils {
             return usageReportRest;
         }
         throw new IllegalArgumentException("TotalDownloads report only available for items and bitstreams");
+    }
+
+    /**
+     * Create a stat usage report for the amount of TotalReferenceCopies on an Item, containing one point with the
+     * amount of times the item's bibliographic reference has been copied. If there are no reference-copy events on
+     * the item this point contains views=0.
+     *
+     * @param context DSpace context
+     * @param dso     Item we want usage report with TotalReferenceCopies on
+     * @return Rest object containing the TotalReferenceCopies usage report of the given Item
+     */
+    private UsageReportRest resolveTotalReferenceCopies(Context context, DSpaceObject dso)
+        throws SolrServerException, IOException {
+        String query = "type:" + dso.getType() + " AND id:" + dso.getID();
+        String filterQuery = "statistics_type:" + SolrLoggerServiceImpl.StatisticsType.REFERENCE_COPY.text();
+        ObjectCount objectCount = solrLoggerService.queryTotal(query, filterQuery, 0);
+
+        UsageReportRest usageReportRest = new UsageReportRest();
+        UsageReportPointDsoTotalVisitsRest totalReferenceCopiesPoint = new UsageReportPointDsoTotalVisitsRest();
+        totalReferenceCopiesPoint.setType(StringUtils.substringAfterLast(dso.getClass().getName().toLowerCase(),
+                                                                         "."));
+        totalReferenceCopiesPoint.setId(dso.getID().toString());
+        totalReferenceCopiesPoint.setLabel(dso.getName());
+        totalReferenceCopiesPoint.addValue("views", (int) objectCount.getCount());
+        usageReportRest.addPoint(totalReferenceCopiesPoint);
+        return usageReportRest;
     }
 
     /**

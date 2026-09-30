@@ -73,6 +73,17 @@ public interface SolrLoggerService {
     public void postView(DSpaceObject dspaceObject,
                          String ip, String userAgent, String xforwardedfor, EPerson currentUser, String referrer);
 
+    /**
+     * Store a reference-copy usage event into Solr (user copied the item's citation/reference).
+     *
+     * @param dspaceObject the object used.
+     * @param request      the current request context.
+     * @param currentUser  the current session's user.
+     * @param referrer     the optional referrer.
+     */
+    public void postReferenceCopy(DSpaceObject dspaceObject, HttpServletRequest request,
+                                  EPerson currentUser, String referrer);
+
     public void postSearch(DSpaceObject resultObject, HttpServletRequest request, EPerson currentUser,
                            List<String> queries, int rpp, String sortBy, String order, int page, DSpaceObject scope);
 

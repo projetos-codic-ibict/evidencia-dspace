@@ -25,6 +25,8 @@ public class ViewEventRest extends BaseObjectRest<UUID> {
     private UUID targetId;
     private String targetType;
     private String referrer;
+    /** Optional discriminator for the kind of usage event to log. Defaults to a page view when absent. */
+    private String eventType;
 
     @Override
     @JsonIgnore
@@ -54,6 +56,14 @@ public class ViewEventRest extends BaseObjectRest<UUID> {
 
     public void setReferrer(String referrer) {
         this.referrer = referrer;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
     }
 
     public String getCategory() {

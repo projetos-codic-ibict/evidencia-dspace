@@ -162,7 +162,8 @@ public class SolrLoggerServiceImpl implements SolrLoggerService, InitializingBea
         VIEW("view"),
         SEARCH("search"),
         SEARCH_RESULT("search_result"),
-        WORKFLOW("workflow");
+        WORKFLOW("workflow"),
+        REFERENCE_COPY("reference_copy");
 
         private final String text;
 
@@ -270,6 +271,48 @@ public class SolrLoggerServiceImpl implements SolrLoggerService, InitializingBea
         } catch (Exception e) {
             String email = null == currentUser ? "[anonymous]" : currentUser.getEmail();
             log.error("Error saving VIEW event to Solr for DSpaceObject {} by EPerson {}",
+                      dspaceObject.getID(), email, e);
+        }
+    }
+
+    @Override
+    public void postReferenceCopy(DSpaceObject dspaceObject, HttpServletRequest request,
+                                  EPerson currentUser, String referrer) {
+        Context context = new Context();
+        // Do not record statistics for Admin users
+        try {
+            if (authorizeService.isAdmin(context, currentUser)) {
+                return;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (solr == null) {
+            return;
+        }
+        initSolrYearCores();
+
+        try {
+            SolrInputDocument doc1 = getCommonSolrDoc(dspaceObject, request, currentUser, referrer);
+            if (doc1 == null) {
+                return;
+            }
+
+            doc1.addField("statistics_type", StatisticsType.REFERENCE_COPY.text());
+
+            solr.add(doc1);
+            // commits are executed automatically using the solr autocommit
+            boolean useAutoCommit = configurationService.getBooleanProperty("solr-statistics.autoCommit", true);
+            if (!useAutoCommit) {
+                solr.commit(false, false);
+            }
+
+        } catch (RuntimeException re) {
+            throw re;
+        } catch (Exception e) {
+            String email = null == currentUser ? "[anonymous]" : currentUser.getEmail();
+            log.error("Error saving REFERENCE_COPY event to Solr for DSpaceObject {} by EPerson {}",
                       dspaceObject.getID(), email, e);
         }
     }

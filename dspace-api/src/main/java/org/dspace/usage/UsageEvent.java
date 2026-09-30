@@ -32,7 +32,8 @@ public class UsageEvent extends Event {
         SUBSCRIBE("subscribe"),
         UNSUBSCRIBE("unsubscribe"),
         WITHDRAW("withdraw"),
-        REINSTATE("reinstate");
+        REINSTATE("reinstate"),
+        REFERENCE_COPY("reference_copy");
 
         private final String text;
 
