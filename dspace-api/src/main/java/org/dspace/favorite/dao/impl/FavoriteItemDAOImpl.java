@@ -88,4 +88,21 @@ public class FavoriteItemDAOImpl extends AbstractHibernateDAO<Item> implements F
         }
         return favorites;
     }
+
+    @Override
+    public List<UUID> getFavoriteItemIds(Context context, EPerson eperson) throws SQLException {
+        String sql = "SELECT item_id FROM user_favorite_item WHERE eperson_id = :epersonId ORDER BY created_at DESC";
+        NativeQuery query = getHibernateSession(context).createNativeQuery(sql);
+        query.setParameter("epersonId", eperson.getID());
+
+        List<UUID> ids = new ArrayList<>();
+        for (Object result : query.getResultList()) {
+            if (result instanceof UUID) {
+                ids.add((UUID) result);
+            } else if (result != null) {
+                ids.add(UUID.fromString(result.toString()));
+            }
+        }
+        return ids;
+    }
 }

@@ -8,7 +8,8 @@
 package org.dspace.app.rest;
 
 import java.sql.SQLException;
-import java.util.HashMap; // Se o seu serviço estiver em outro pacote, ajuste aqui
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -18,12 +19,15 @@ import org.dspace.app.rest.converter.ConverterService;
 import org.dspace.app.rest.model.ItemRest;
 import org.dspace.app.rest.utils.ContextUtil;
 import org.dspace.app.rest.utils.Utils;
+import org.dspace.authorize.service.AuthorizeService;
 import org.dspace.content.Item;
 import org.dspace.content.service.ItemService;
+import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.eperson.EPerson;
 import org.dspace.favorite.service.FavoriteItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,13 +55,22 @@ public class FavoriteItemRestController {
     @Autowired
     private Utils utils;
 
+    @Autowired
+    private AuthorizeService authorizeService;
+
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getUserFavorites(HttpServletRequest request) throws SQLException {
         Context context = ContextUtil.obtainContext(request);
         EPerson currentUser = context.getCurrentUser();
 
-        List<Item> favoriteItems = favoriteItemService.getFavoriteItems(context, currentUser);
+        List<Item> favoriteItems = new ArrayList<>();
+        for (Item item : favoriteItemService.getFavoriteItems(context, currentUser)) {
+            // Item que virou privado ou foi retirado depois de favoritado não pode aparecer na lista
+            if (authorizeService.authorizeActionBoolean(context, item, Constants.READ)) {
+                favoriteItems.add(item);
+            }
+        }
 
         List<ItemRest> itemsRest = favoriteItems.stream()
                 .map(item -> (ItemRest) converterService.toRest(item, utils.obtainProjection()))
@@ -71,6 +84,19 @@ public class FavoriteItemRestController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/ids")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<String>> getUserFavoriteIds(HttpServletRequest request) throws SQLException {
+        Context context = ContextUtil.obtainContext(request);
+        EPerson currentUser = context.getCurrentUser();
+
+        List<String> ids = favoriteItemService.getFavoriteItemIds(context, currentUser).stream()
+                .map(UUID::toString)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(ids);
+    }
+
     @PostMapping("/{itemId}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> addFavorite(@PathVariable String itemId, HttpServletRequest request) throws Exception {
@@ -80,6 +106,9 @@ public class FavoriteItemRestController {
         Item item = itemService.find(context, UUID.fromString(itemId));
         if (item == null) {
             return ResponseEntity.notFound().build();
+        }
+        if (!authorizeService.authorizeActionBoolean(context, item, Constants.READ)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         favoriteItemService.addFavorite(context, currentUser, item);

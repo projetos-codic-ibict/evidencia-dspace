@@ -9,6 +9,7 @@ package org.dspace.favorite.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 import org.dspace.content.Item;
 import org.dspace.core.Context;
@@ -41,5 +42,10 @@ public class FavoriteItemServiceImpl implements FavoriteItemService {
     @Override
     public List<Item> getFavoriteItems(Context context, EPerson eperson) throws SQLException {
         return favoriteItemDAO.getFavoriteItems(context, eperson);
+    }
+
+    @Override
+    public List<UUID> getFavoriteItemIds(Context context, EPerson eperson) throws SQLException {
+        return favoriteItemDAO.getFavoriteItemIds(context, eperson);
     }
 }
