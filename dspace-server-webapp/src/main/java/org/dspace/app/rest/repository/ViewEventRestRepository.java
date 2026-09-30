@@ -30,6 +30,7 @@ import org.dspace.content.service.DSpaceObjectService;
 import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.services.EventService;
+import org.dspace.service.ClientInfoService;
 import org.dspace.usage.UsageEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -50,6 +51,12 @@ public class ViewEventRestRepository extends AbstractDSpaceRestRepository {
     private ObjectMapper mapper;
 
     private final List<String> typeList = Arrays.asList(Constants.typeText);
+
+    /** Above this many entries, stale ones are purged so the map does not grow forever. */
+    private static final int REFERENCE_COPY_MAX_TRACKED_KEYS = 10000;
+
+    @Autowired
+    private ClientInfoService clientInfoService;
 
     /** Last accepted reference-copy event time, keyed by "clientIp:targetId". */
     private final ConcurrentHashMap<String, Instant> lastReferenceCopyByClientAndTarget = new ConcurrentHashMap<>();
@@ -96,10 +103,23 @@ public class ViewEventRestRepository extends AbstractDSpaceRestRepository {
      * client IP for the same target, to avoid a repeated/scripted click inflating the count.
      */
     private void checkReferenceCopyRateLimit(HttpServletRequest req, String targetId) {
-        String key = req.getRemoteAddr() + ":" + targetId;
+        // Mesmo IP que o logger do Solr usa (respeita X-Forwarded-For), senão atrás de proxy todos dividem a chave
+        String key = clientInfoService.getClientIp(req) + ":" + targetId;
         Instant now = Instant.now();
-        Instant previous = lastReferenceCopyByClientAndTarget.put(key, now);
-        if (previous != null && now.minusSeconds(REFERENCE_COPY_MIN_INTERVAL_SECONDS).isBefore(previous)) {
+        if (lastReferenceCopyByClientAndTarget.size() > REFERENCE_COPY_MAX_TRACKED_KEYS) {
+            Instant cutoff = now.minusSeconds(REFERENCE_COPY_MIN_INTERVAL_SECONDS);
+            lastReferenceCopyByClientAndTarget.values().removeIf(lastAccepted -> lastAccepted.isBefore(cutoff));
+        }
+        boolean[] tooSoon = {false};
+        // O horário só é regravado quando o evento é aceito, para cliques repetidos não prolongarem o bloqueio
+        lastReferenceCopyByClientAndTarget.compute(key, (k, previous) -> {
+            if (previous != null && now.minusSeconds(REFERENCE_COPY_MIN_INTERVAL_SECONDS).isBefore(previous)) {
+                tooSoon[0] = true;
+                return previous;
+            }
+            return now;
+        });
+        if (tooSoon[0]) {
             throw new TooManyRequestsException(
                 "Too many reference-copy events for target " + targetId + ", please wait a few seconds");
         }

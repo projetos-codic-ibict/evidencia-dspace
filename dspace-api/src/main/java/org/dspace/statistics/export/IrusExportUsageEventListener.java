@@ -42,6 +42,10 @@ public class IrusExportUsageEventListener extends AbstractUsageEventListener {
         if (configurationService.getBooleanProperty("irus.statistics.tracker.enabled", false)) {
             if (event instanceof UsageEvent) {
                 UsageEvent ue = (UsageEvent) event;
+                // Cópia de referência é métrica interna, não é investigação de item para o IRUS
+                if (ue.getAction() == UsageEvent.Action.REFERENCE_COPY) {
+                    return;
+                }
                 Context context = ue.getContext();
 
                 try {
