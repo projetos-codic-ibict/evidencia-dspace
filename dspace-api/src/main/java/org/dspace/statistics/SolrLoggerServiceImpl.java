@@ -278,9 +278,8 @@ public class SolrLoggerServiceImpl implements SolrLoggerService, InitializingBea
     @Override
     public void postReferenceCopy(DSpaceObject dspaceObject, HttpServletRequest request,
                                   EPerson currentUser, String referrer) {
-        Context context = new Context();
-        // Do not record statistics for Admin users
-        try {
+        // Do not record statistics for Admin users. The context is closed here so its DB connection is released
+        try (Context context = new Context()) {
             if (authorizeService.isAdmin(context, currentUser)) {
                 return;
             }
