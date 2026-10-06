@@ -7,9 +7,11 @@
  */
 package org.dspace.app.rest;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.InputStream;
@@ -519,6 +521,92 @@ public class ViewEventRestRepositoryIT extends AbstractControllerIntegrationTest
         SolrDocumentList responseList = queryResponse.getResults();
         assertEquals(1, responseList.size());
         assertEquals("test-referrer", responseList.get(0).get("referrer"));
+    }
+
+    @Test
+    public void postReferenceCopyTestLogsReferenceCopyEvent() throws Exception {
+        Item publicItem = createPublicItem();
+
+        getClient().perform(post("/api/statistics/viewevents")
+                                .content(mapper.writeValueAsBytes(referenceCopyEvent(publicItem)))
+                                .contentType(contentType))
+                   .andExpect(status().isCreated());
+
+        assertEquals(1, countStatisticsDocs(publicItem, "reference_copy"));
+        // A cópia da referência não pode contar como visita
+        assertEquals(0, countStatisticsDocs(publicItem, "view"));
+    }
+
+    @Test
+    public void postReferenceCopyTestSecondEventInsideIntervalIsRejected() throws Exception {
+        Item publicItem = createPublicItem();
+        byte[] body = mapper.writeValueAsBytes(referenceCopyEvent(publicItem));
+
+        getClient().perform(post("/api/statistics/viewevents").content(body).contentType(contentType))
+                   .andExpect(status().isCreated());
+        getClient().perform(post("/api/statistics/viewevents").content(body).contentType(contentType))
+                   .andExpect(status().isTooManyRequests());
+
+        assertEquals(1, countStatisticsDocs(publicItem, "reference_copy"));
+    }
+
+    @Test
+    public void postReferenceCopyTestAdminIsNotCounted() throws Exception {
+        Item publicItem = createPublicItem();
+        String adminToken = getAuthToken(admin.getEmail(), password);
+
+        getClient(adminToken).perform(post("/api/statistics/viewevents")
+                                          .content(mapper.writeValueAsBytes(referenceCopyEvent(publicItem)))
+                                          .contentType(contentType))
+                             .andExpect(status().isCreated());
+
+        assertEquals(0, countStatisticsDocs(publicItem, "reference_copy"));
+    }
+
+    @Test
+    public void totalReferenceCopiesReportReturnsTheLoggedCopies() throws Exception {
+        Item publicItem = createPublicItem();
+
+        getClient().perform(post("/api/statistics/viewevents")
+                                .content(mapper.writeValueAsBytes(referenceCopyEvent(publicItem)))
+                                .contentType(contentType))
+                   .andExpect(status().isCreated());
+        solrStatisticsCore.getSolr().commit();
+
+        String adminToken = getAuthToken(admin.getEmail(), password);
+        getClient(adminToken).perform(get("/api/statistics/usagereports/" + publicItem.getID()
+                                              + "_TotalReferenceCopies"))
+                             .andExpect(status().isOk())
+                             .andExpect(jsonPath("$.report-type", is("TotalReferenceCopies")))
+                             .andExpect(jsonPath("$.points[0].values.views", is(1)));
+    }
+
+    private Item createPublicItem() throws Exception {
+        context.turnOffAuthorisationSystem();
+        parentCommunity = CommunityBuilder.createCommunity(context).withName("Parent Community").build();
+        Collection col = CollectionBuilder.createCollection(context, parentCommunity)
+                                          .withName("Collection 1").build();
+        Item publicItem = ItemBuilder.createItem(context, col)
+                                     .withTitle("Public item 1")
+                                     .withIssueDate("2017-10-17")
+                                     .withAuthor("Smith, Donald")
+                                     .build();
+        context.restoreAuthSystemState();
+        return publicItem;
+    }
+
+    private ViewEventRest referenceCopyEvent(Item item) {
+        ViewEventRest viewEventRest = new ViewEventRest();
+        viewEventRest.setTargetType("item");
+        viewEventRest.setTargetId(item.getID());
+        viewEventRest.setEventType("reference_copy");
+        return viewEventRest;
+    }
+
+    private long countStatisticsDocs(Item item, String statisticsType) throws Exception {
+        solrStatisticsCore.getSolr().commit();
+        SolrQuery solrQuery = new SolrQuery("id:" + item.getID() + " AND statistics_type:" + statisticsType);
+        return solrStatisticsCore.getSolr().query(solrQuery).getResults().getNumFound();
     }
 
 
