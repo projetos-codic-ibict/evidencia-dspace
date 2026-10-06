@@ -8,16 +8,11 @@
 package org.dspace.app.rest;
 
 import java.sql.SQLException;
-import java.util.HashMap; // Se o seu serviço estiver em outro pacote, ajuste aqui
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.dspace.app.rest.converter.ConverterService;
-import org.dspace.app.rest.model.ItemRest;
 import org.dspace.app.rest.utils.ContextUtil;
-import org.dspace.app.rest.utils.Utils;
 import org.dspace.content.Item;
 import org.dspace.content.service.ItemService;
 import org.dspace.core.Context;
@@ -35,8 +30,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * Favoritos do usuário logado. O frontend guarda só os IDs (GET /ids) e carrega cada item pelo endpoint
+ * padrão de itens, então aqui não há listagem de itens completos.
+ */
 @RestController
-@RequestMapping("/api/favorites") 
+@RequestMapping("/api/favorites")
 public class FavoriteItemRestController {
 
     @Autowired
@@ -45,39 +44,30 @@ public class FavoriteItemRestController {
     @Autowired
     private ItemService itemService;
 
-    @Autowired
-    private ConverterService converterService;
-
-    @Autowired
-    private Utils utils;
-
-    @GetMapping
+    @GetMapping("/ids")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> getUserFavorites(HttpServletRequest request) throws SQLException {
+    public ResponseEntity<List<String>> getUserFavoriteIds(HttpServletRequest request) throws SQLException {
         Context context = ContextUtil.obtainContext(request);
         EPerson currentUser = context.getCurrentUser();
 
-        List<Item> favoriteItems = favoriteItemService.getFavoriteItems(context, currentUser);
-
-        List<ItemRest> itemsRest = favoriteItems.stream()
-                .map(item -> (ItemRest) converterService.toRest(item, utils.obtainProjection()))
+        List<String> ids = favoriteItemService.getFavoriteItemIds(context, currentUser).stream()
+                .map(UUID::toString)
                 .collect(Collectors.toList());
 
-        Map<String, Object> embedded = new HashMap<>();
-        embedded.put("favorites", itemsRest);
-        Map<String, Object> response = new HashMap<>();
-        response.put("_embedded", embedded);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ids);
     }
 
     @PostMapping("/{itemId}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> addFavorite(@PathVariable String itemId, HttpServletRequest request) throws Exception {
+        UUID itemUuid = parseUuid(itemId);
+        if (itemUuid == null) {
+            return ResponseEntity.badRequest().build();
+        }
         Context context = ContextUtil.obtainContext(request);
         EPerson currentUser = context.getCurrentUser();
 
-        Item item = itemService.find(context, UUID.fromString(itemId));
+        Item item = itemService.find(context, itemUuid);
         if (item == null) {
             return ResponseEntity.notFound().build();
         }
@@ -91,10 +81,14 @@ public class FavoriteItemRestController {
     @DeleteMapping("/{itemId}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> removeFavorite(@PathVariable String itemId, HttpServletRequest request) throws Exception {
+        UUID itemUuid = parseUuid(itemId);
+        if (itemUuid == null) {
+            return ResponseEntity.badRequest().build();
+        }
         Context context = ContextUtil.obtainContext(request);
         EPerson currentUser = context.getCurrentUser();
 
-        Item item = itemService.find(context, UUID.fromString(itemId));
+        Item item = itemService.find(context, itemUuid);
         if (item == null) {
             return ResponseEntity.notFound().build();
         }
@@ -107,16 +101,29 @@ public class FavoriteItemRestController {
 
     @GetMapping("/check/{itemId}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Boolean> checkFavorite(@PathVariable String itemId, HttpServletRequest request) throws Exception {
+    public ResponseEntity<Boolean> checkFavorite(@PathVariable String itemId, HttpServletRequest request)
+        throws Exception {
+        UUID itemUuid = parseUuid(itemId);
+        if (itemUuid == null) {
+            return ResponseEntity.badRequest().build();
+        }
         Context context = ContextUtil.obtainContext(request);
         EPerson currentUser = context.getCurrentUser();
 
-        Item item = itemService.find(context, UUID.fromString(itemId));
+        Item item = itemService.find(context, itemUuid);
         if (item == null) {
             return ResponseEntity.ok(false);
         }
 
-        boolean isFav = favoriteItemService.isFavorite(context, currentUser, item);
-        return ResponseEntity.ok(isFav);
+        return ResponseEntity.ok(favoriteItemService.isFavorite(context, currentUser, item));
+    }
+
+    /** Devolve null quando o texto não é um UUID, para o endpoint responder 400 em vez de 500. */
+    private UUID parseUuid(String value) {
+        try {
+            return UUID.fromString(value);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 }

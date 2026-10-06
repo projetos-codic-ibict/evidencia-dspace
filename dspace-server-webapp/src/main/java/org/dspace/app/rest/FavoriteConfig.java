@@ -13,5 +13,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = "org.dspace.favorite")
 public class FavoriteConfig {
-    
 }

@@ -9,6 +9,7 @@ package org.dspace.favorite.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 import org.dspace.content.Item;
 import org.dspace.core.Context;
@@ -18,5 +19,5 @@ public interface FavoriteItemService {
     void addFavorite(Context context, EPerson eperson, Item item) throws SQLException;
     void removeFavorite(Context context, EPerson eperson, Item item) throws SQLException;
     boolean isFavorite(Context context, EPerson eperson, Item item) throws SQLException;
-    List<Item> getFavoriteItems(Context context, EPerson eperson) throws SQLException;
+    List<UUID> getFavoriteItemIds(Context context, EPerson eperson) throws SQLException;
 }
