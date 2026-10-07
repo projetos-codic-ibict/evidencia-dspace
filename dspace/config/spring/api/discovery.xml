@@ -3245,13 +3245,13 @@
             </list>
         </property>
         <property name="type" value="text"/>
-        <!-- Todos os anos numa página só: o Solr ordena por valor só em ordem crescente, então o frontend
-             (search-text-filter do tema rdapp) inverte a lista para mostrar do ano mais recente ao mais antigo. -->
-        <property name="facetLimit" value="50"/>
+        <!-- Ordem por valor (anos). O Solr só ordena em ordem crescente, então o search-text-filter do tema rdapp
+             busca todos os anos e os mostra do mais recente ao mais antigo, paginando de facetLimit em facetLimit. -->
+        <property name="facetLimit" value="5"/>
         <property name="sortOrderSidebar" value="VALUE"/>
         <property name="sortOrderFilterPage" value="VALUE"/>
         <property name="isOpenByDefault" value="false"/>
-        <property name="pageSize" value="50"/>
+        <property name="pageSize" value="10"/>
         <!-- <property name="exposeMinAndMaxValue" value="true"/> -->
     </bean>
 
