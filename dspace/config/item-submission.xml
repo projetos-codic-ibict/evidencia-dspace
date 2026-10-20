@@ -291,37 +291,37 @@
         </step-definition>
 
         <step-definition id="tipo-de-documento-conselho-de-monitoramento" mandatory="true">
-            <heading>submit.progressbar.describe.stepone</heading>
+            <heading>submit.progressbar.tipo-documento</heading>
             <processing-class>org.dspace.app.rest.submit.step.DescribeStep</processing-class>
             <type>submission-form</type>
         </step-definition>
 
         <step-definition id="tipo-de-documento-orgaos-publicos-parceiros-avaliacao-politicas-publicas" mandatory="true">
-            <heading>submit.progressbar.describe.stepone</heading>
+            <heading>submit.progressbar.tipo-documento</heading>
             <processing-class>org.dspace.app.rest.submit.step.DescribeStep</processing-class>
             <type>submission-form</type>
         </step-definition>
 
         <step-definition id="tipo-de-documento-orgaos-publicos-parceiros-sintese-de-evidencias" mandatory="true">
-            <heading>submit.progressbar.describe.stepone</heading>
+            <heading>submit.progressbar.tipo-documento</heading>
             <processing-class>org.dspace.app.rest.submit.step.DescribeStep</processing-class>
             <type>submission-form</type>
         </step-definition>
 
         <step-definition id="tipo-de-documento-orgaos-publicos-parceiros-producao-cientifica" mandatory="true">
-            <heading>submit.progressbar.describe.stepone</heading>
+            <heading>submit.progressbar.tipo-documento</heading>
             <processing-class>org.dspace.app.rest.submit.step.DescribeStep</processing-class>
             <type>submission-form</type>
         </step-definition>
 
         <step-definition id="tipo-de-documento-orgaos-publicos-parceiros-controle" mandatory="true">
-            <heading>submit.progressbar.describe.stepone</heading>
+            <heading>submit.progressbar.tipo-documento</heading>
             <processing-class>org.dspace.app.rest.submit.step.DescribeStep</processing-class>
             <type>submission-form</type>
         </step-definition>
 
         <step-definition id="tipo-de-documento-orgaos-publicos-parceiros-metodos-e-qualidade" mandatory="true">
-            <heading>submit.progressbar.describe.stepone</heading>
+            <heading>submit.progressbar.tipo-documento</heading>
             <processing-class>org.dspace.app.rest.submit.step.DescribeStep</processing-class>
             <type>submission-form</type>
         </step-definition>
