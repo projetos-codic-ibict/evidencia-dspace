@@ -25,10 +25,11 @@
         <property name="metadataAuthorityService" ref="org.dspace.content.authority.MetadataAuthorityServiceImpl"/>
     </bean>
 
-    <bean name="uploadValidation" class="org.dspace.validation.UploadValidator">
+    <bean name="uploadValidation" class="org.dspace.validation.RdappUploadValidator">
         <property name="name" value="upload"/>
         <property name="itemService" ref="org.dspace.content.ItemServiceImpl"/>
         <property name="uploadConfigurationService" ref="uploadConfigurationService"/>
+        <property name="configurationService" ref="org.dspace.services.ConfigurationService"/>
     </bean>
 
     <bean name="cclicenseValidation" class="org.dspace.validation.CclicenseValidator">
