@@ -31,6 +31,7 @@ import org.dspace.core.Context;
 import org.dspace.eperson.EPerson;
 import org.dspace.eperson.Group;
 import org.dspace.eperson.service.GroupService;
+import org.dspace.services.factory.DSpaceServicesFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -45,6 +46,13 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
      * log4j logger
      */
     private static final Logger log = org.apache.logging.log4j.LogManager.getLogger(ResourcePolicyServiceImpl.class);
+
+    /**
+     * D9 / HU009 CA09: Rastreia IDs de políticas recém-criadas na thread atual.
+     * No método create(), a política ainda não possui DSpaceObject, Action ou RpType vinculados.
+     * Armazenamos o ID aqui para que o primeiro update() registre o evento como POLICY_CREATE já com o UUID do objeto.
+     */
+    private static final ThreadLocal<Set<Integer>> NEWLY_CREATED_POLICIES = ThreadLocal.withInitial(HashSet::new);
 
     @Autowired(required = true)
     protected ContentServiceFactory contentServiceFactory;
@@ -94,10 +102,13 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
         policyToBeCreated.setEPerson(ePerson);
         policyToBeCreated.setGroup(group);
         ResourcePolicy resourcePolicy = resourcePolicyDAO.create(context, policyToBeCreated);
-        
-        // HU009 CA09: Auditoria de criação da política
-        auditPolicyChange(context, resourcePolicy, "CREATE");
-        
+
+        // HU009 CA09 (Correção D9): Não disparamos auditPolicyChange aqui pois getdSpaceObject() ainda é null.
+        // Marcamos o ID para auditar como POLICY_CREATE no momento em que o update() persistir o objeto alvo.
+        if (resourcePolicy.getID() != null) {
+            NEWLY_CREATED_POLICIES.get().add(resourcePolicy.getID());
+        }
+
         return resourcePolicy;
     }
 
@@ -105,7 +116,6 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
     public List<ResourcePolicy> find(Context c, DSpaceObject o) throws SQLException {
         return resourcePolicyDAO.findByDso(c, o);
     }
-
 
     @Override
     public List<ResourcePolicy> find(Context c, DSpaceObject o, String type) throws SQLException {
@@ -150,7 +160,6 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
         return resourcePolicyDAO.findByTypeGroupActionExceptId(context, dso, group, action, notPolicyID);
     }
 
-
     /**
      * Delete an ResourcePolicy
      *
@@ -162,7 +171,10 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
     @Override
     public void delete(Context context, ResourcePolicy resourcePolicy) throws SQLException, AuthorizeException {
         // FIXME: authorizations
-        
+        if (resourcePolicy.getID() != null) {
+            NEWLY_CREATED_POLICIES.get().remove(resourcePolicy.getID());
+        }
+
         // HU009 CA09: Auditoria de exclusão da política (Feito antes do delete para preservar os dados do objeto)
         auditPolicyChange(context, resourcePolicy, "DELETE");
 
@@ -171,13 +183,12 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
 
         context.turnOffAuthorisationSystem();
         if (resourcePolicy.getdSpaceObject() != null) {
-            //A policy for a DSpace Object has been modified, fire a modify event on the DSpace object
+            // A policy for a DSpace Object has been modified, fire a modify event on the DSpace object
             contentServiceFactory.getDSpaceObjectService(resourcePolicy.getdSpaceObject())
                                  .updateLastModified(context, resourcePolicy.getdSpaceObject());
         }
         context.restoreAuthSystemState();
     }
-
 
     /**
      * @param resourcePolicy resource policy
@@ -281,7 +292,6 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
         context.turnOffAuthorisationSystem();
         contentServiceFactory.getDSpaceObjectService(dso).updateLastModified(context, dso);
         context.restoreAuthSystemState();
-
     }
 
     @Override
@@ -315,7 +325,6 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
         c.restoreAuthSystemState();
     }
 
-
     /**
      * Update the ResourcePolicy
      *
@@ -344,15 +353,19 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
 
                 // FIXME: Check authorisation
                 resourcePolicyDAO.save(context, resourcePolicy);
-                
-                // HU009 CA09: Auditoria de atualização da política
-                auditPolicyChange(context, resourcePolicy, "MODIFY");
+
+                // HU009 CA09 (Correção D9): Se a política foi recém-criada no create(),
+                // agora ela possui dSpaceObject e action definidos, então auditamos como CREATE.
+                // Caso já existisse, auditamos como MODIFY.
+                boolean isNewlyCreated = resourcePolicy.getID() != null
+                    && NEWLY_CREATED_POLICIES.get().remove(resourcePolicy.getID());
+                auditPolicyChange(context, resourcePolicy, isNewlyCreated ? "CREATE" : "MODIFY");
             }
 
-            //Update the last modified timestamp of all related DSpace Objects
+            // Update the last modified timestamp of all related DSpace Objects
             context.turnOffAuthorisationSystem();
             for (DSpaceObject dSpaceObject : relatedDSpaceObjects) {
-                //A policy for a DSpace Object has been modified, fire a modify event on the DSpace object
+                // A policy for a DSpace Object has been modified, fire a modify event on the DSpace object
                 contentServiceFactory.getDSpaceObjectService(dSpaceObject).updateLastModified(context, dSpaceObject);
             }
             context.restoreAuthSystemState();
@@ -445,13 +458,35 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
         }
         return isMy || authorizeService.isAdmin(context, eperson, resourcePolicy.getdSpaceObject());
     }
-    
+
     /**
      * HU009 CA09: Método auxiliar para formatar e persistir eventos de alteração
      * de políticas/permissões diretamente no AuditService (Solr).
      */
     private void auditPolicyChange(Context context, ResourcePolicy policy, String action) {
         try {
+            // Verifica se a auditoria está ativa na configuração
+            boolean auditEnabled = DSpaceServicesFactory.getInstance()
+                .getConfigurationService().getBooleanProperty("audit.enabled", false);
+            if (!auditEnabled) {
+                return;
+            }
+
+            // D9: Ignora políticas transitórias/automáticas de workflow, submissão e herança
+            // para evitar mais de 150 eventos POLICY gerados a cada tramitação de item.
+            String rpType = policy.getRpType();
+            if (ResourcePolicy.TYPE_WORKFLOW.equals(rpType)
+                || ResourcePolicy.TYPE_SUBMISSION.equals(rpType)
+                || ResourcePolicy.TYPE_INHERITED.equals(rpType)) {
+                return;
+            }
+
+            // D9: Garante que não sejam gravados eventos sem objeto DSpace vinculado ou sem ação válida
+            DSpaceObject dso = policy.getdSpaceObject();
+            if (dso == null || dso.getID() == null || policy.getAction() == -1) {
+                return;
+            }
+
             AuditEvent audit = new AuditEvent();
             audit.setDatetime(new Date());
             audit.setEventType("POLICY_" + action); // Ex: POLICY_CREATE, POLICY_MODIFY, POLICY_DELETE
@@ -472,15 +507,14 @@ public class ResourcePolicyServiceImpl implements ResourcePolicyService {
                 return; // Política sem associado válido, ignora auditoria
             }
 
-            // Objeto: A Comunidade, Coleção, Item ou Bitstream alvo da política
-            if (policy.getdSpaceObject() != null) {
-                audit.setObjectType(Constants.typeText[policy.getdSpaceObject().getType()]);
-                audit.setObjectUUID(policy.getdSpaceObject().getID());
-            }
+            // Objeto: A Comunidade, Coleção, Item ou Bitstream alvo da política (Sempre preenchido)
+            audit.setObjectType(Constants.typeText[dso.getType()]);
+            audit.setObjectUUID(dso.getID());
 
             // Detalhamento do que a política faz
             String actionText = getActionText(policy);
-            audit.setDetail("Ação: " + actionText + " | Tipo: " + policy.getRpType());
+            String typeLabel = (rpType != null) ? rpType : "CUSTOM";
+            audit.setDetail("Ação: " + actionText + " | Tipo: " + typeLabel);
 
             // Envia o registro formatado direto para o Solr
             AuditServiceFactory.getInstance().getAuditService().store(audit);

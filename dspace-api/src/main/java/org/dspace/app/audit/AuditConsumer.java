@@ -8,7 +8,6 @@
 package org.dspace.app.audit;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.dspace.app.audit.factory.AuditServiceFactory;
 import org.dspace.core.Constants;
@@ -24,23 +23,26 @@ import org.dspace.services.factory.DSpaceServicesFactory;
  * @author Andrea Bollini (andrea.bollini at 4science.it)
  * @author Stefano Maffei (stefano.maffei at 4science.com)
  */
-
 public class AuditConsumer implements Consumer {
     private AuditService auditService;
     private ConfigurationService configurationService;
     private List<Integer> meaningfulEvents;
 
-
+    @Override
     public void initialize() throws Exception {
         auditService = AuditServiceFactory.getInstance().getAuditService();
         configurationService = DSpaceServicesFactory.getInstance().getConfigurationService();
-        meaningfulEvents = List.of(Event.MODIFY_METADATA, Event.CREATE, Event.DELETE,
-            Event.REMOVE);
+        meaningfulEvents = List.of(
+            Event.MODIFY_METADATA,
+            Event.CREATE,
+            Event.DELETE,
+            Event.REMOVE
+        );
     }
 
     /**
      * Consume a content event
-     * 
+     *
      * @param ctx   DSpace context
      * @param event Content event
      */
@@ -55,19 +57,15 @@ public class AuditConsumer implements Consumer {
     /**
      * Checks if the given event is meaningful for audit purposes.
      * An event is considered meaningful if its type is present in the meaningfulEvents list,
-     * or if it has a non-null related object ID.
-     * Some events, may not be in the meaningfulEvents list, eighter because they contain
-     * duplicated information or because they are not relevant for auditing.
+     * or if it is an identity event (EPerson / Group).
      *
      * @param event the event to check
      * @return true if the event is meaningful, false otherwise
      */
     private boolean isEventMeaningful(Event event) {
-        if (meaningfulEvents.contains(event.getEventType()) || isIdentityEvent(event)) {
-            return true;
-        }
-        UUID relatedObjectId = event.getObjectID();
-        return relatedObjectId != null;
+        // D9: Audita apenas eventos significativos da lista ou eventos de identidade (usuário/grupo),
+        // evitando que eventos transitórios de workflow (como ADD/MODIFY com relatedObjectId != null) inundem o Solr.
+        return meaningfulEvents.contains(event.getEventType()) || isIdentityEvent(event);
     }
 
     // HU009 CA09: toda ação sobre usuário ou grupo é auditada, inclusive MODIFY sem objeto relacionado
@@ -84,5 +82,4 @@ public class AuditConsumer implements Consumer {
     public void finish(Context ctx) throws Exception {
         // No-op
     }
-
 }

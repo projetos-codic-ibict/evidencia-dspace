@@ -627,4 +627,112 @@ public class AuditSolrServiceImpl implements AuditService {
     public void setHttpSolrClientFactory(HttpSolrClientFactory httpSolrClientFactory) {
         this.httpSolrClientFactory = httpSolrClientFactory;
     }
+
+    /**
+     * D9 / CA09.3: Busca avançada combinando múltiplos filtros opcionais no Solr.
+     */
+    public List<AuditEvent> findEventsByFilters(String[] subjectTypes, String eventType, UUID objectUuid,
+                                                UUID epersonUuid, String dateFrom, String dateTo,
+                                                int limit, int offset, boolean asc) {
+        List<AuditEvent> results = new ArrayList<>();
+        try {
+            SolrQuery solrQuery = new SolrQuery("*:*");
+
+            // 1. Filtro por subject_type
+            if (subjectTypes != null && subjectTypes.length > 0) {
+                List<String> validTypes = new ArrayList<>();
+                for (String t : subjectTypes) {
+                    if (StringUtils.isNotBlank(t)) {
+                        validTypes.add(SUBJECT_TYPE_FIELD + ":" + ClientUtils.escapeQueryChars(t.trim()));
+                    }
+                }
+                if (!validTypes.isEmpty()) {
+                    solrQuery.addFilterQuery("(" + String.join(" OR ", validTypes) + ")");
+                }
+            }
+
+            // 2. Filtro por event_type
+            if (StringUtils.isNotBlank(eventType)) {
+                solrQuery.addFilterQuery(EVENT_TYPE_FIELD + ":" + ClientUtils.escapeQueryChars(eventType.trim()));
+            }
+
+            // 3. Filtro por object_uuid ou subject_uuid
+            if (objectUuid != null) {
+                String idStr = objectUuid.toString();
+                solrQuery.addFilterQuery("(" + OBJECT_UUID_FIELD + ":" + idStr + " OR " + SUBJECT_UUID_FIELD + ":" + idStr + ")");
+            }
+
+            // 4. Filtro por eperson_uuid (executor)
+            if (epersonUuid != null) {
+                solrQuery.addFilterQuery(EPERSON_UUID_FIELD + ":" + epersonUuid.toString());
+            }
+
+            // 5. Filtro por intervalo de datas (YYYY-MM-DD)
+            if (StringUtils.isNotBlank(dateFrom) || StringUtils.isNotBlank(dateTo)) {
+                String from = StringUtils.isNotBlank(dateFrom) ? dateFrom.trim() + "T00:00:00Z" : "*";
+                String to = StringUtils.isNotBlank(dateTo) ? dateTo.trim() + "T23:59:59Z" : "*";
+                solrQuery.addFilterQuery(DATETIME_FIELD + ":[" + from + " TO " + to + "]");
+            }
+
+            solrQuery.setRows(limit);
+            solrQuery.setStart(offset);
+            solrQuery.addSort(new SortClause(DATETIME_FIELD, asc ? ORDER.asc : ORDER.desc));
+
+            QueryResponse response = getSolr().query(solrQuery);
+            for (SolrDocument doc : response.getResults()) {
+                results.add(getAuditEventFromSolrDoc(doc));
+            }
+        } catch (Exception e) {
+            log.error("Erro ao buscar eventos de auditoria com filtros no Solr", e);
+        }
+        return results;
+    }
+
+    /**
+     * D9 / CA09.3: Contagem total para paginação da busca avançada por filtros.
+     */
+    public long countEventsByFilters(String[] subjectTypes, String eventType, UUID objectUuid,
+                                     UUID epersonUuid, String dateFrom, String dateTo) {
+        try {
+            SolrQuery solrQuery = new SolrQuery("*:*");
+
+            if (subjectTypes != null && subjectTypes.length > 0) {
+                List<String> validTypes = new ArrayList<>();
+                for (String t : subjectTypes) {
+                    if (StringUtils.isNotBlank(t)) {
+                        validTypes.add(SUBJECT_TYPE_FIELD + ":" + ClientUtils.escapeQueryChars(t.trim()));
+                    }
+                }
+                if (!validTypes.isEmpty()) {
+                    solrQuery.addFilterQuery("(" + String.join(" OR ", validTypes) + ")");
+                }
+            }
+
+            if (StringUtils.isNotBlank(eventType)) {
+                solrQuery.addFilterQuery(EVENT_TYPE_FIELD + ":" + ClientUtils.escapeQueryChars(eventType.trim()));
+            }
+
+            if (objectUuid != null) {
+                String idStr = objectUuid.toString();
+                solrQuery.addFilterQuery("(" + OBJECT_UUID_FIELD + ":" + idStr + " OR " + SUBJECT_UUID_FIELD + ":" + idStr + ")");
+            }
+
+            if (epersonUuid != null) {
+                solrQuery.addFilterQuery(EPERSON_UUID_FIELD + ":" + epersonUuid.toString());
+            }
+
+            if (StringUtils.isNotBlank(dateFrom) || StringUtils.isNotBlank(dateTo)) {
+                String from = StringUtils.isNotBlank(dateFrom) ? dateFrom.trim() + "T00:00:00Z" : "*";
+                String to = StringUtils.isNotBlank(dateTo) ? dateTo.trim() + "T23:59:59Z" : "*";
+                solrQuery.addFilterQuery(DATETIME_FIELD + ":[" + from + " TO " + to + "]");
+            }
+
+            solrQuery.setRows(0);
+            QueryResponse response = getSolr().query(solrQuery);
+            return response.getResults().getNumFound();
+        } catch (Exception e) {
+            log.error("Erro ao contar eventos de auditoria com filtros no Solr", e);
+            return 0;
+        }
+    }
 }
