@@ -1528,7 +1528,7 @@
         <!-- Formulário RDAPP — HU002 v1.4 (homologada 29/04/2026)        -->
         <!-- Campos customizados usam schema local.*                       -->
         <!-- ============================================================ -->
-        <form name="rdappStep">
+        <form name="rdappIdentificacao">
 
             <!-- SEÇÃO 1 — IDENTIFICAÇÃO -->
             <row>
@@ -1581,9 +1581,13 @@
                     <label>Tipo de Documento</label>
                     <input-type value-pairs-name="rdapp-tipos-documento">dropdown</input-type>
                     <hint>Selecione o tipo principal de documento da avaliação.</hint>
-                    <required>O campo Tipo de Documento é obrigatório.</required>
+                    <required>O campo Tipo de Documento é obrigatório. Selecione uma das opções da lista.</required>
                 </field>
             </row> -->
+
+        </form>
+
+        <form name="rdappInstitucional">
 
             <!-- SEÇÃO 2 — INFORMAÇÕES INSTITUCIONAIS -->
             <row>
@@ -1638,6 +1642,10 @@
                     <vocabulary closed="true">rdapp-cidades</vocabulary>
                 </field>
             </row>
+
+        </form>
+
+        <form name="rdappCaracterizacao">
 
             <!-- SEÇÃO 3 — CARACTERIZAÇÃO -->
             <row>
@@ -1706,6 +1714,10 @@
                 </field>
             </row>
 
+        </form>
+
+        <form name="rdappComplementar">
+
             <!-- SEÇÃO 4 — INFORMAÇÕES COMPLEMENTARES -->
             <row>
                 <field>
@@ -1762,7 +1774,7 @@
                     <label>Tipo de Documento</label>
                     <input-type value-pairs-name="tipo-de-documento-conselho-de-monitoramento">dropdown</input-type>
                     <hint>Selecione o tipo principal de documento da avaliação.</hint>
-                    <required>O campo Tipo de Documento é obrigatório.</required>
+                    <required>O campo Tipo de Documento é obrigatório. Selecione uma das opções da lista.</required>
                 </field>
             </row>
         </form>
@@ -1777,7 +1789,7 @@
                     <label>Tipo de Documento</label>
                     <input-type value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-avaliacao-politicas-publicas">dropdown</input-type>
                     <hint>Selecione o tipo principal de documento da avaliação.</hint>
-                    <required>O campo Tipo de Documento é obrigatório.</required>
+                    <required>O campo Tipo de Documento é obrigatório. Selecione uma das opções da lista.</required>
                 </field>
             </row>
         </form>
@@ -1792,7 +1804,7 @@
                     <label>Tipo de Documento</label>
                     <input-type value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-sintese-de-evidencias">dropdown</input-type>
                     <hint>Selecione o tipo principal de documento da avaliação.</hint>
-                    <required>O campo Tipo de Documento é obrigatório.</required>
+                    <required>O campo Tipo de Documento é obrigatório. Selecione uma das opções da lista.</required>
                 </field>
             </row>
         </form>
@@ -1807,7 +1819,7 @@
                     <label>Tipo de Documento</label>
                     <input-type value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-producao-cientifica">dropdown</input-type>
                     <hint>Selecione o tipo principal de documento da avaliação.</hint>
-                    <required>O campo Tipo de Documento é obrigatório.</required>
+                    <required>O campo Tipo de Documento é obrigatório. Selecione uma das opções da lista.</required>
                 </field>
             </row>
         </form>
@@ -1822,7 +1834,7 @@
                     <label>Tipo de Documento</label>
                     <input-type value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-controle">dropdown</input-type>
                     <hint>Selecione o tipo principal de documento da avaliação.</hint>
-                    <required>O campo Tipo de Documento é obrigatório.</required>
+                    <required>O campo Tipo de Documento é obrigatório. Selecione uma das opções da lista.</required>
                 </field>
             </row>
         </form>
@@ -1837,7 +1849,7 @@
                     <label>Tipo de Documento</label>
                     <input-type value-pairs-name="tipo-de-documento-orgaos-publicos-parceiros-metodos-e-qualidade">dropdown</input-type>
                     <hint>Selecione o tipo principal de documento da avaliação.</hint>
-                    <required>O campo Tipo de Documento é obrigatório.</required>
+                    <required>O campo Tipo de Documento é obrigatório. Selecione uma das opções da lista.</required>
                 </field>
             </row>
         </form>

@@ -284,8 +284,26 @@
         </step-definition>
 
         <!-- RDAPP — HU002 v1.4 (homologada 29/04/2026) -->
-        <step-definition id="rdappStep" mandatory="true">
-            <heading>submit.progressbar.describe.stepone</heading>
+        <step-definition id="rdappIdentificacao" mandatory="true">
+            <heading>submit.progressbar.rdapp-identificacao</heading>
+            <processing-class>org.dspace.app.rest.submit.step.DescribeStep</processing-class>
+            <type>submission-form</type>
+        </step-definition>
+
+        <step-definition id="rdappInstitucional" mandatory="true">
+            <heading>submit.progressbar.rdapp-institucional</heading>
+            <processing-class>org.dspace.app.rest.submit.step.DescribeStep</processing-class>
+            <type>submission-form</type>
+        </step-definition>
+
+        <step-definition id="rdappCaracterizacao" mandatory="true">
+            <heading>submit.progressbar.rdapp-caracterizacao</heading>
+            <processing-class>org.dspace.app.rest.submit.step.DescribeStep</processing-class>
+            <type>submission-form</type>
+        </step-definition>
+
+        <step-definition id="rdappComplementar" mandatory="true">
+            <heading>submit.progressbar.rdapp-complementar</heading>
             <processing-class>org.dspace.app.rest.submit.step.DescribeStep</processing-class>
             <type>submission-form</type>
         </step-definition>
@@ -628,7 +646,10 @@
         <!-- RDAPP — processo de submissão para todas as 6 coleções -->
         <submission-process name="rdapp" is-default="false">
             <step id="collection"/>
-            <step id="rdappStep"/>
+            <step id="rdappIdentificacao"/>
+            <step id="rdappInstitucional"/>
+            <step id="rdappCaracterizacao"/>
+            <step id="rdappComplementar"/>
             <step id="upload"/>
             <step id="license"/>
         </submission-process>
@@ -636,7 +657,10 @@
         <submission-process name="avaliacao-politicas-publicas-conselho-de-monitoramento">
             <step id="collection"/>
             <step id="tipo-de-documento-conselho-de-monitoramento"/>
-            <step id="rdappStep"/>
+            <step id="rdappIdentificacao"/>
+            <step id="rdappInstitucional"/>
+            <step id="rdappCaracterizacao"/>
+            <step id="rdappComplementar"/>
             <step id="upload"/>
             <step id="license"/>
         </submission-process>
@@ -644,7 +668,10 @@
         <submission-process name="avaliacao-politicas-publicas-orgaos-publicos-parceiros">
             <step id="collection"/>
             <step id="tipo-de-documento-orgaos-publicos-parceiros-avaliacao-politicas-publicas"/>
-            <step id="rdappStep"/>
+            <step id="rdappIdentificacao"/>
+            <step id="rdappInstitucional"/>
+            <step id="rdappCaracterizacao"/>
+            <step id="rdappComplementar"/>
             <step id="upload"/>
             <step id="license"/>
         </submission-process>
@@ -652,7 +679,10 @@
         <submission-process name="sintese-de-evidencias-orgaos-publicos-parceiros">
             <step id="collection"/>
             <step id="tipo-de-documento-orgaos-publicos-parceiros-sintese-de-evidencias"/>
-            <step id="rdappStep"/>
+            <step id="rdappIdentificacao"/>
+            <step id="rdappInstitucional"/>
+            <step id="rdappCaracterizacao"/>
+            <step id="rdappComplementar"/>
             <step id="upload"/>
             <step id="license"/>
         </submission-process>
@@ -660,7 +690,10 @@
         <submission-process name="producao-cientifica-orgaos-publicos-parceiros">
             <step id="collection"/>
             <step id="tipo-de-documento-orgaos-publicos-parceiros-producao-cientifica"/>
-            <step id="rdappStep"/>
+            <step id="rdappIdentificacao"/>
+            <step id="rdappInstitucional"/>
+            <step id="rdappCaracterizacao"/>
+            <step id="rdappComplementar"/>
             <step id="upload"/>
             <step id="license"/>
         </submission-process>
@@ -668,7 +701,10 @@
         <submission-process name="controle-orgaos-publicos-parceiros">
             <step id="collection"/>
             <step id="tipo-de-documento-orgaos-publicos-parceiros-controle"/>
-            <step id="rdappStep"/>
+            <step id="rdappIdentificacao"/>
+            <step id="rdappInstitucional"/>
+            <step id="rdappCaracterizacao"/>
+            <step id="rdappComplementar"/>
             <step id="upload"/>
             <step id="license"/>
         </submission-process>
@@ -676,7 +712,10 @@
         <submission-process name="metodos-e-qualidade-orgaos-publicos-parceiros">
             <step id="collection"/>
             <step id="tipo-de-documento-orgaos-publicos-parceiros-metodos-e-qualidade"/>
-            <step id="rdappStep"/>
+            <step id="rdappIdentificacao"/>
+            <step id="rdappInstitucional"/>
+            <step id="rdappCaracterizacao"/>
+            <step id="rdappComplementar"/>
             <step id="upload"/>
             <step id="license"/>
         </submission-process>
