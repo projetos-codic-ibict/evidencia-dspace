@@ -1541,6 +1541,7 @@
                     <input-type>onebox</input-type>
                     <hint>Informe o título completo da avaliação. Inclua o subtítulo, se aplicável. Limite de 300 caracteres.</hint>
                     <required>O campo Título é obrigatório.</required>
+                    <regex>^[\s\S]{0,300}$</regex>
                 </field>
             </row>
 
@@ -1554,6 +1555,7 @@
                     <input-type>textarea</input-type>
                     <hint>Preencha com a descrição sintética da avaliação, incluindo objetivos, método e resultados. Limite de 2000 caracteres.</hint>
                     <required>O campo Resumo é obrigatório.</required>
+                    <regex>^[\s\S]{0,2000}$</regex>
                 </field>
             </row>
 
@@ -1607,6 +1609,7 @@
                     <input-type>onebox</input-type>
                     <hint>Quando houver autoria, informe o nome completo dos autores responsáveis pela elaboração do documento. Limite de 300 caracteres.</hint>
                     <required></required>
+                    <regex>^[\s\S]{0,300}$</regex>
                 </field>
             </row>
 
@@ -1741,6 +1744,7 @@
                     <input-type>onebox</input-type>
                     <hint>Quando houver, informe o endereço eletrônico (URL) da fonte primária de hospedagem do documento. Limite de 300 caracteres.</hint>
                     <required></required>
+                    <regex>^[\s\S]{0,300}$</regex>
                 </field>
             </row>
 
