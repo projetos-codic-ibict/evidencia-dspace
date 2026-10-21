@@ -1132,7 +1132,7 @@
         <property name="sidebarFacets">
             <list>
                 <ref bean="searchFilterObjectNamedType" />
-                <ref bean="searchFilterType" />
+                <ref bean="searchFilterTipoDocumento" />
                 <ref bean="searchFilterIssued" />
                 <ref bean="searchFilterSubmitter" />
             </list>
@@ -1141,7 +1141,7 @@
         <property name="searchFilters">
             <list>
                 <ref bean="searchFilterObjectNamedType" />
-                <ref bean="searchFilterType" />
+                <ref bean="searchFilterTipoDocumento" />
                 <ref bean="searchFilterIssued" />
                 <ref bean="searchFilterSubmitter" />
             </list>
