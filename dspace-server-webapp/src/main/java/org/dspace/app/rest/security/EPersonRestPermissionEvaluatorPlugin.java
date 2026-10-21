@@ -7,6 +7,7 @@
  */
 package org.dspace.app.rest.security;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
@@ -24,12 +25,17 @@ import org.dspace.app.rest.repository.patch.operation.EPersonPasswordAddOperatio
 import org.dspace.app.rest.repository.patch.operation.PatchOperation;
 import org.dspace.app.rest.utils.ContextUtil;
 import org.dspace.app.util.AuthorizeUtil;
+import org.dspace.authorize.AuthorizeException;
 import org.dspace.authorize.service.AuthorizeService;
 import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.eperson.EPerson;
 import org.dspace.services.RequestService;
 import org.dspace.services.model.Request;
+import org.dspace.xmlworkflow.storedcomponents.ClaimedTask;
+import org.dspace.xmlworkflow.storedcomponents.PoolTask;
+import org.dspace.xmlworkflow.storedcomponents.service.ClaimedTaskService;
+import org.dspace.xmlworkflow.storedcomponents.service.PoolTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -48,6 +54,12 @@ public class EPersonRestPermissionEvaluatorPlugin extends RestObjectPermissionEv
 
     @Autowired
     private RequestService requestService;
+
+    @Autowired
+    private PoolTaskService poolTaskService;
+
+    @Autowired
+    private ClaimedTaskService claimedTaskService;
 
     @Override
     public boolean hasDSpacePermission(Authentication authentication, Serializable targetId,
@@ -86,6 +98,9 @@ public class EPersonRestPermissionEvaluatorPlugin extends RestObjectPermissionEv
             } else if (authorizeService.isCollectionAdmin(context)
                 && AuthorizeUtil.canCollectionAdminManageAccounts()) {
                 return true;
+            } else if (DSpaceRestPermission.READ.equals(restPermission)
+                && isSubmitterOfAssignedTask(context, ePerson, dsoId)) {
+                return true;
             }
         } catch (SQLException e) {
             log.error(e::getMessage, e);
@@ -93,6 +108,32 @@ public class EPersonRestPermissionEvaluatorPlugin extends RestObjectPermissionEv
 
 
         return false;
+    }
+
+    /**
+     * Quem tem tarefa de curadoria (no conjunto ou reservada) pode ler o depositante do item da tarefa. Sem isso o
+     * curador que não é admin da coleção vê "N/D" no lugar do nome do depositante (HU012 CA02.5). Só leitura.
+     */
+    private boolean isSubmitterOfAssignedTask(Context context, EPerson curator, UUID submitterId) {
+        try {
+            for (PoolTask task : poolTaskService.findByEperson(context, curator)) {
+                if (isSubmitter(task.getWorkflowItem().getSubmitter(), submitterId)) {
+                    return true;
+                }
+            }
+            for (ClaimedTask task : claimedTaskService.findByEperson(context, curator)) {
+                if (isSubmitter(task.getWorkflowItem().getSubmitter(), submitterId)) {
+                    return true;
+                }
+            }
+        } catch (SQLException | AuthorizeException | IOException e) {
+            log.error(e::getMessage, e);
+        }
+        return false;
+    }
+
+    private boolean isSubmitter(EPerson submitter, UUID submitterId) {
+        return submitter != null && submitterId.equals(submitter.getID());
     }
 
     @Override

@@ -23,9 +23,12 @@
                          value='file:${dspace.dir}/config/workflow-curation.xml'/>
     </bean>
 
-    <!--Standard DSpace workflow-->
+    <!--RDAP workflow: o Curador é o passo Editores (aprova, rejeita, edita, devolve ao conjunto e devolve para
+        ajuste), decisão de 21/10/2026 para as HUs 010 e 012. Os passos de revisão e de edição final continuam
+        listados só para itens que já estavam neles; a submissão nova entra direto em Editores, e o item é
+        arquivado quando o Editor aprova.-->
     <bean name="defaultWorkflow" class="org.dspace.xmlworkflow.state.Workflow">
-        <property name="firstStep" ref="reviewstep"/>
+        <property name="firstStep" ref="editstep"/>
         <property name="steps">
             <util:list>
                 <ref bean="reviewstep"/>
@@ -63,12 +66,6 @@
     <bean name="editstep" class="org.dspace.xmlworkflow.state.Step">
         <property name="userSelectionMethod" ref="claimaction"/>
         <property name="role" ref="editor" />
-        <property name="outcomes">
-            <util:map>
-                <entry key="#{ T(org.dspace.xmlworkflow.state.actions.ActionResult).OUTCOME_COMPLETE}"
-                       value-ref="finaleditstep"/>
-            </util:map>
-        </property>
         <property name="actions">
             <list>
                 <ref bean="editaction"/>
