@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Strings;
 import org.apache.logging.log4j.LogManager;
@@ -52,10 +54,6 @@ import org.springframework.hateoas.Link;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 
 /**
@@ -99,7 +97,7 @@ public class EPersonRestRepository extends DSpaceObjectRestRepository<EPerson, E
         this.es = dsoService;
     }
 
-@Override
+    @Override
     protected EPersonRest createAndReturn(Context context)
             throws AuthorizeException {
         // this need to be revisited we should receive an EPersonRest as input
@@ -110,13 +108,13 @@ public class EPersonRestRepository extends DSpaceObjectRestRepository<EPerson, E
             if (StringUtils.isNotBlank(epersonRest.getEmail())) {
                 EPerson existing = es.findByEmail(context, epersonRest.getEmail().trim());
                 if (existing != null) {
-                    throw new UnprocessableEntityException("O endereço de e-mail informado já está cadastrado.");
+                    throw new UnprocessableEntityException("The email address is already registered.");
                 }
             }
         } catch (IOException e1) {
             throw new UnprocessableEntityException("error parsing the body... maybe this is not the right error code");
         } catch (SQLException e2) {
-            log.error("Erro ao verificar duplicidade de e-mail", e2);
+            log.error("Error while checking for a duplicate email address", e2);
             throw new RuntimeException(e2.getMessage(), e2);
         }
         String token = req.getParameter("token");
