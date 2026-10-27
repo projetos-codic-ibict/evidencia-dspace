@@ -83,19 +83,13 @@
     </query>
 
     <!-- Controls how the Solr HTTP RequestDispatcher responds to requests -->
-    <requestDispatcher>
+    <requestDispatcher handleSelect="true" >
         <requestParsers enableRemoteStreaming="true" multipartUploadLimitInKB="-1" />
 
         <httpCaching lastModifiedFrom="openTime" etagSeed="Solr"></httpCaching>
     </requestDispatcher>
 
-    <!--
-        Solr 10 removed the legacy requestDispatcher@handleSelect routing.
-        DSpace's SolrJ client queries this core at /select, so expose that
-        endpoint explicitly instead of relying on the former "standard"
-        default handler.
-    -->
-    <requestHandler name="/select" class="solr.SearchHandler">
+    <requestHandler name="standard" class="solr.SearchHandler" default="true">
         <lst name="defaults">
             <str name="echoParams">explicit</str>
             <str name="df">all_labels</str>

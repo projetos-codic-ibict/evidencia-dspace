@@ -7,12 +7,10 @@
 #
 
 # To build use root as context for (easier) access to solr cfgs
-# docker build --build-arg SOLR_IMAGE=apache/solr-nightly --build-arg SOLR_VERSION=10.1.0-SNAPSHOT \
-#   -f ./dspace/src/main/docker/dspace-solr/Dockerfile .
+# docker build -f ./dspace/src/main/docker/dspace-solr/Dockerfile .
 # This will be published as dspace/dspace-solr:$DSPACE_VERSION
 
-ARG SOLR_IMAGE=apache/solr-nightly
-ARG SOLR_VERSION=10.1.0-SNAPSHOT
+ARG SOLR_VERSION=9.11.0
 
 # NOTE: "solrconfigs" is a placeholder stage. It MUST be populated at runtime.
 # usage: docker build --build-context solrconfigs=[path-to-dspace/solr]
@@ -20,16 +18,11 @@ ARG SOLR_VERSION=10.1.0-SNAPSHOT
 FROM scratch AS solrconfigs
 
 # NOTE: Cannot use the "-slim" image because it doesn't include the extra modules needed for DSpace (e.g. icu4j)
-FROM ${SOLR_IMAGE}:${SOLR_VERSION}
+FROM docker.io/solr:${SOLR_VERSION}
 
 # Customize SOLR_OPTS to enable "<lib>" tags in solrconfig.xml files
 # Also set several environment variables to save configset paths used below
-ENV SOLR_OPTS="-Dsolr.config.lib.enabled=true -Dsolr.security.allow.urls.enabled=false"
-
-# Solr 10 no longer supports <lib/> entries in solrconfig.xml. Load the
-# analysis module explicitly, which provides the ICU analysis classes DSpace uses.
-# The remaining variables save the configset paths used below.
-ENV SOLR_MODULES="analysis-extras" \
+ENV SOLR_OPTS="-Dsolr.config.lib.enabled=true -Dsolr.allowUrls=localhost:8983/solr" \
     AUTHORITY_CONFIGSET_PATH=/opt/solr/server/solr/configsets/authority/conf \
     OAI_CONFIGSET_PATH=/opt/solr/server/solr/configsets/oai/conf \
     SEARCH_CONFIGSET_PATH=/opt/solr/server/solr/configsets/search/conf \
