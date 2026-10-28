@@ -16,7 +16,7 @@ services:
       SOLR_HEAP: "${SOLR_HEAP:-2g}"
       SOLR_OPTS: >-
         -Dsolr.config.lib.enabled=true
-        -Dsolr.allowUrls=localhost:8983/solr
+        -Dsolr.allowUrls=localhost:8983/solr,dspacesolr:8983/solr,dspace-solr:8983/solr
         -Dsolr.logs.dir=/var/solr/logs
         -XX:+UseG1GC
         -XX:MaxGCPauseMillis=200

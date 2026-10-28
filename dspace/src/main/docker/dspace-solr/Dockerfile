@@ -22,7 +22,7 @@ FROM docker.io/solr:${SOLR_VERSION}
 
 # Customize SOLR_OPTS to enable "<lib>" tags in solrconfig.xml files
 # Also set several environment variables to save configset paths used below
-ENV SOLR_OPTS="-Dsolr.config.lib.enabled=true -Dsolr.allowUrls=localhost:8983/solr" \
+ENV SOLR_OPTS="-Dsolr.config.lib.enabled=true -Dsolr.allowUrls=localhost:8983/solr,dspacesolr:8983/solr,dspace-solr:8983/solr" \
     AUTHORITY_CONFIGSET_PATH=/opt/solr/server/solr/configsets/authority/conf \
     OAI_CONFIGSET_PATH=/opt/solr/server/solr/configsets/oai/conf \
     SEARCH_CONFIGSET_PATH=/opt/solr/server/solr/configsets/search/conf \
